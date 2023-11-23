@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import Main from './Components/Layout/Main.jsx';
 import Home from './Components/Home/Home.jsx';
+import FindTicket from './Components/Find_Ticket/findTicket.jsx';
 import { StyledEngineProvider } from '@mui/material';
 
 const router = createBrowserRouter([
@@ -21,6 +22,16 @@ const router = createBrowserRouter([
         path:"/",
         element:<Home></Home>
       }
+    ]
+  },
+  {
+    path : "/",
+    element: <Main></Main>,
+    children:[
+      {
+        path: "/find-ticket",
+        element: <FindTicket></FindTicket>
+      } 
     ]
   },
 ]);
