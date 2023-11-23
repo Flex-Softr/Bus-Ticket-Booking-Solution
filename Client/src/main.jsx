@@ -11,6 +11,7 @@ import {
 import Main from './Components/Layout/Main.jsx';
 import Home from './Components/Home/Home.jsx';
 import { StyledEngineProvider } from '@mui/material';
+import FixSeat from './Components/FixSeat/FixSeat.jsx';
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,11 @@ const router = createBrowserRouter([
       {
         path:"/",
         element:<Home></Home>
-      }
+      },
+      {
+        path:"/fixSeat",
+        element: <FixSeat></FixSeat>
+      },
     ]
   },
 ]);
