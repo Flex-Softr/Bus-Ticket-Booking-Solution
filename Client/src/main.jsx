@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import Main from './Components/Layout/Main.jsx';
 import Home from './Components/Home/Home.jsx';
+import FindTicket from './Components/Find_Ticket/findTicket.jsx';
 import { StyledEngineProvider } from '@mui/material';
 import FixSeat from './Components/FixSeat/FixSeat.jsx';
 
@@ -26,6 +27,20 @@ const router = createBrowserRouter([
         path:"/fixSeat",
         element: <FixSeat></FixSeat>
       },
+      {
+        path: "/find-ticket",
+        element: <FindTicket></FindTicket>
+      } 
+    ]
+  },
+  {
+    path : "/",
+    element: <Main></Main>,
+    children:[
+      {
+        path: "/find-ticket",
+        element: <FindTicket></FindTicket>
+      } 
     ]
   },
 ]);
