@@ -14,7 +14,7 @@ import FindTicket from './Components/Find_Ticket/findTicket.jsx';
 import { StyledEngineProvider } from '@mui/material';
 import FixSeat from './Components/FixSeat/FixSeat.jsx';
 import Login from './Components/Login/Login.jsx';
-import AddAccount from './Dashboard/AddAccount/AddAccount.jsx';
+import AddCounter from './Dashboard/AddCounter/AddCounter.jsx';
 
 const router = createBrowserRouter([
   {
@@ -48,8 +48,8 @@ const router = createBrowserRouter([
         element: <FindTicket></FindTicket>
       },
       {
-        path:'/add-account',
-        element:<AddAccount></AddAccount>
+        path:'/add-counter',
+        element:<AddCounter></AddCounter>
       }
     ]
   },
