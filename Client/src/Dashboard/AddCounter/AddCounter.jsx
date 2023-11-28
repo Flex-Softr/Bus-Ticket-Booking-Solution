@@ -19,7 +19,7 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 
 const theme = createTheme();
-const AddAccount = () => {
+const AddCounter = () => {
     const {
         handleSubmit,
         control,
@@ -116,4 +116,4 @@ const AddAccount = () => {
   );
 };
 
-export default AddAccount;
+export default AddCounter;
