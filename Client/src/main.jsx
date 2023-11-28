@@ -13,6 +13,7 @@ import Home from './Components/Home/Home.jsx';
 import FindTicket from './Components/Find_Ticket/findTicket.jsx';
 import { StyledEngineProvider } from '@mui/material';
 import FixSeat from './Components/FixSeat/FixSeat.jsx';
+import Login from './Components/Login/Login.jsx';
 
 const router = createBrowserRouter([
   {
@@ -30,7 +31,11 @@ const router = createBrowserRouter([
       {
         path: "/find-ticket",
         element: <FindTicket></FindTicket>
-      } 
+      },
+      {
+        path:"/login",
+        element:<Login></Login>
+      }
     ]
   },
   {
