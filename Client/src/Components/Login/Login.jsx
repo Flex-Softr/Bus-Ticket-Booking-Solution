@@ -42,10 +42,10 @@ const defaultTheme = createTheme();
 
   return (
     <div className='grid md:grid-cols-2 sm:grid-cols-1'>
-        <div><ThemeProvider theme={defaultTheme}>
+        <div ><ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box
+        <Box className='login-section px-6 py-4'
           sx={{
             marginTop: 8,
             display: 'flex',
@@ -71,7 +71,7 @@ const defaultTheme = createTheme();
               autoFocus
               {...register('email', { required: 'Email is required' })}
             />
-            {errors.email && <p>{errors.email.message}</p>}
+            {errors.email && <p className='text-red-600'>{errors.email.message}</p>}
             <TextField
               margin="normal"
               required
@@ -83,7 +83,7 @@ const defaultTheme = createTheme();
               autoComplete="current-password"
               {...register('password', { required: 'Password is required' })}
             />
-            {errors.password && <p>{errors.password.message}</p>}
+            {errors.password && <p className='text-red-600'>{errors.password.message}</p>}
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
@@ -105,7 +105,7 @@ const defaultTheme = createTheme();
       </Container>
     </ThemeProvider></div>
         <div>
-            <img className='loginPhoto img-fluid mt-20' src="https://i.ibb.co/0VsCnxL/Login-Photo-1.jpg" alt="" />
+            <img className='loginPhoto img-fluid mt-14' src="https://i.ibb.co/0VsCnxL/Login-Photo-1.jpg" alt="" />
         </div>
     </div>
   );
