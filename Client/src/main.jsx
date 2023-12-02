@@ -10,11 +10,12 @@ import {
 } from "react-router-dom";
 import Main from './Components/Layout/Main.jsx';
 import Home from './Components/Home/Home.jsx';
-import FindTicket from './Components/Find_Ticket/findTicket.jsx';
+import FindTicket from './Components/Find Ticket/FindTicket.jsx';
 import { StyledEngineProvider } from '@mui/material';
 import FixSeat from './Components/FixSeat/FixSeat.jsx';
 import Login from './Components/Login/Login.jsx';
 import AddCounter from './Dashboard/AddCounter/AddCounter.jsx';
+import SupervisorAccount from './Components/Supervisor_Account/SupervisorAccount.jsx';
 
 const router = createBrowserRouter([
   {
@@ -44,8 +45,8 @@ const router = createBrowserRouter([
     element: <Main></Main>,
     children:[
       {
-        path: "/find-ticket",
-        element: <FindTicket></FindTicket>
+        path: "/supervisor",
+        element: <SupervisorAccount></SupervisorAccount>
       },
       {
         path:'/add-counter',
