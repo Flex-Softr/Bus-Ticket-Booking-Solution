@@ -90,7 +90,7 @@ const Header = () => {
             <div className="border-2 text-lg flex gap-3 rounded border-gray-400 p-2">
               <Link
                 className="flex items-center text-blue-600 gap-1"
-                to="/signin"
+                to="/login"
               >
                 <MdLogin /> Sign In
               </Link>
