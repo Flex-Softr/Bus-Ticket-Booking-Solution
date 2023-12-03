@@ -1,0 +1,388 @@
+[
+    {
+       
+        "name": "Comilla",
+        "bangla_name": "কুমিল্লা",
+        "web_link": "www.comilla.gov.bd"
+    },
+
+    {
+     
+        "name": "Feni",
+        "bangla_name": "ফেনী",
+        "web_link": "www.feni.gov.bd"
+    },
+
+    {
+      
+        "name": "Brahmanbaria",
+        "bangla_name": "ব্রাহ্মণবাড়িয়া",
+        "web_link": "www.brahmanbaria.gov.bd"
+    },
+    {
+     
+        "name": "Rangamati",
+        "bangla_name": "রাঙ্গামাটি",
+        "web_link": "www.rangamati.gov.bd"
+    },
+    {
+       
+        "name": "Noakhali",
+        "bangla_name": "নোয়াখালী",
+        "web_link": "www.noakhali.gov.bd"
+    },
+    {
+    
+        "name": "Chandpur",
+        "bangla_name": "চাঁদপুর",
+        "web_link": "www.chandpur.gov.bd"
+    },
+    {
+   
+        "name": "Lakshmipur",
+        "bangla_name": "লক্ষ্মীপুর",
+        "web_link": "www.lakshmipur.gov.bd"
+    },
+    {
+     
+        "name": "Chattogram",
+        "bangla_name": "চট্টগ্রাম",
+        "web_link": "www.chittagong.gov.bd"
+    },
+    {
+    
+        "name": "Coxsbazar",
+        "bangla_name": "কক্সবাজার",
+        "web_link": "www.coxsbazar.gov.bd"
+    },
+    {
+     
+        "name": "Khagrachhari",
+        "bangla_name": "খাগড়াছড়ি",
+        "web_link": "www.khagrachhari.gov.bd"
+    },
+    {
+       
+        "name": "Bandarban",
+        "bangla_name": "বান্দরবান",
+        "web_link": "www.bandarban.gov.bd"
+    },
+    {
+      
+        "name": "Sirajganj",
+        "bangla_name": "সিরাজগঞ্জ",
+        "web_link": "www.sirajganj.gov.bd"
+    },
+    {
+     
+        "name": "Pabna",
+        "bangla_name": "পাবনা",
+        "web_link": "www.pabna.gov.bd"
+    },
+    {
+      
+        "name": "Bogura",
+        "bangla_name": "বগুড়া",
+        "web_link": "www.bogra.gov.bd"
+    },
+    {
+    
+        "name": "Rajshahi",
+        "bangla_name": "রাজশাহী",
+        "web_link": "www.rajshahi.gov.bd"
+    },
+    {
+      
+        "name": "Natore",
+        "bangla_name": "নাটোর",
+        "web_link": "www.natore.gov.bd"
+    },
+    {
+      
+        "name": "Joypurhat",
+        "bangla_name": "জয়পুরহাট",
+        "web_link": "www.joypurhat.gov.bd"
+    },
+    {
+   
+        "name": "Chapainawabganj",
+        "bangla_name": "চাঁপাইনবাবগঞ্জ",
+        "web_link": "www.chapainawabganj.gov.bd"
+    },
+    {
+    
+        "name": "Naogaon",
+        "bangla_name": "নওগাঁ",
+        "web_link": "www.naogaon.gov.bd"
+    },
+    {
+     
+        "name": "Jashore",
+        "bangla_name": "যশোর",
+        "web_link": "www.jessore.gov.bd"
+    },
+    {
+    
+        "name": "Satkhira",
+        "bangla_name": "সাতক্ষীরা",
+        "web_link": "www.satkhira.gov.bd"
+    },
+    {
+     
+        "name": "Meherpur",
+        "bangla_name": "মেহেরপুর",
+        "web_link": "www.meherpur.gov.bd"
+    },
+    {
+       
+        "name": "Narail",
+        "bangla_name": "নড়াইল",
+        "web_link": "www.narail.gov.bd"
+    },
+    {
+    
+        "name": "Chuadanga",
+        "bangla_name": "চুয়াডাঙ্গা",
+        "web_link": "www.chuadanga.gov.bd"
+    },
+    {
+   
+        "name": "Kushtia",
+        "bangla_name": "কুষ্টিয়া",
+        "web_link": "www.kushtia.gov.bd"
+    },
+    {
+    
+        "name": "Magura",
+        "bangla_name": "মাগুরা",
+        "web_link": "www.magura.gov.bd"
+    },
+    {
+      
+        "name": "Khulna",
+        "bangla_name": "খুলনা",
+        "web_link": "www.khulna.gov.bd"
+    },
+    {
+     
+        "name": "Bagerhat",
+        "bangla_name": "বাগেরহাট",
+        "web_link": "www.bagerhat.gov.bd"
+    },
+    {
+      
+        "name": "Jhenaidah",
+        "bangla_name": "ঝিনাইদহ",
+        "web_link": "www.jhenaidah.gov.bd"
+    },
+    {
+     
+        "name": "Jhalakathi",
+        "bangla_name": "ঝালকাঠি",
+        "web_link": "www.jhalakathi.gov.bd"
+    },
+    {
+      
+        "name": "Patuakhali",
+        "bangla_name": "পটুয়াখালী",
+        "web_link": "www.patuakhali.gov.bd"
+    },
+    {
+    
+        "name": "Pirojpur",
+        "bangla_name": "পিরোজপুর",
+        "web_link": "www.pirojpur.gov.bd"
+    },
+    {
+     
+        "name": "Barisal",
+        "bangla_name": "বরিশাল",
+        "web_link": "www.barisal.gov.bd"
+    },
+    {
+     
+        "name": "Bhola",
+        "bangla_name": "ভোলা",
+        "web_link": "www.bhola.gov.bd"
+    },
+    {
+     
+        "name": "Barguna",
+        "bangla_name": "বরগুনা",
+        "web_link": "www.barguna.gov.bd"
+    },
+    {
+     
+        "name": "Sylhet",
+        "bangla_name": "সিলেট",
+        "web_link": "www.sylhet.gov.bd"
+    },
+    {
+      
+        "name": "Habiganj",
+        "bangla_name": "হবিগঞ্জ",
+        "web_link": "www.habiganj.gov.bd"
+    },
+    {
+     
+        "name": "Sunamganj",
+        "bangla_name": "সুনামগঞ্জ",
+        "web_link": "www.sunamganj.gov.bd"
+    },
+    {
+      
+        "name": "Narsingdi",
+        "bangla_name": "নরসিংদী",
+        "web_link": "www.narsingdi.gov.bd"
+    },
+    {
+      
+        "name": "Gazipur",
+        "bangla_name": "গাজীপুর",
+        "web_link": "www.gazipur.gov.bd"
+    },
+    {
+      
+        "name": "Shariatpur",
+        "bangla_name": "শরীয়তপুর",
+        "web_link": "www.shariatpur.gov.bd"
+    },
+    {
+   
+        "name": "Narayanganj",
+        "bangla_name": "নারায়ণগঞ্জ",
+        "web_link": "www.narayanganj.gov.bd"
+    },
+    {
+     
+        "name": "Tangail",
+        "bangla_name": "টাঙ্গাইল",
+        "web_link": "www.tangail.gov.bd"
+    },
+    {
+        
+        "name": "Kishoreganj",
+        "bangla_name": "কিশোরগঞ্জ",
+        "web_link": "www.kishoreganj.gov.bd"
+    },
+    {
+   
+        "name": "Manikganj",
+        "bangla_name": "মানিকগঞ্জ",
+        "web_link": "www.manikganj.gov.bd"
+    },
+    {
+     
+        "name": "Dhaka",
+        "bangla_name": "ঢাকা",
+        "web_link": "www.dhaka.gov.bd"
+    },
+    {
+      
+        "name": "Munshiganj",
+        "bangla_name": "মুন্সিগঞ্জ",
+        "web_link": "www.munshiganj.gov.bd"
+    },
+    {
+      
+        "name": "Rajbari",
+        "bangla_name": "রাজবাড়ী",
+        "web_link": "www.rajbari.gov.bd"
+    },
+    {
+     
+        "name": "Madaripur",
+        "bangla_name": "মাদারীপুর",
+        "web_link": "www.madaripur.gov.bd"
+    },
+    {
+   
+        "name": "Gopalganj",
+        "bangla_name": "গোপালগঞ্জ",
+        "web_link": "www.gopalganj.gov.bd"
+    },
+    {
+     
+        "name": "Faridpur",
+        "bangla_name": "ফরিদপুর",
+        "web_link": "www.faridpur.gov.bd"
+    },
+    {
+     
+        "name": "Panchagarh",
+        "bangla_name": "পঞ্চগড়",
+        "web_link": "www.panchagarh.gov.bd"
+    },
+    {
+     
+        "name": "Dinajpur",
+        "bangla_name": "দিনাজপুর",
+        "web_link": "www.dinajpur.gov.bd"
+    },
+    {
+      
+        "name": "Lalmonirhat",
+        "bangla_name": "লালমনিরহাট",
+        "web_link": "www.lalmonirhat.gov.bd"
+    },
+    {
+     
+        "name": "Nilphamari",
+        "bangla_name": "নীলফামারী",
+        "web_link": "www.nilphamari.gov.bd"
+    },
+    {
+   
+        "name": "Gaibandha",
+        "bangla_name": "গাইবান্ধা",
+        "web_link": "www.gaibandha.gov.bd"
+    },
+    {
+     
+        "name": "Thakurgaon",
+        "bangla_name": "ঠাকুরগাঁও",
+        "web_link": "www.thakurgaon.gov.bd"
+    },
+    {
+       
+        "name": "Rangpur",
+        "bangla_name": "রংপুর",
+        "web_link": "www.rangpur.gov.bd"
+    },
+    {
+      
+        "name": "Kurigram",
+        "bangla_name": "কুড়িগ্রাম",
+        "web_link": "www.kurigram.gov.bd"
+    },
+    {
+      
+        "name": "Sherpur",
+        "bangla_name": "শেরপুর",
+        "web_link": "www.sherpur.gov.bd"
+    },
+    {
+     
+        "name": "Mymensingh",
+        "bangla_name": "ময়মনসিংহ",
+        "web_link": "www.mymensingh.gov.bd"
+    },
+    {
+      
+        "name": "Jamalpur",
+        "bangla_name": "জামালপুর",
+        "web_link": "www.jamalpur.gov.bd"
+    },
+    {
+      
+        "name": "Netrokona",
+        "bangla_name": "নেত্রকোণা",
+        "web_link": "www.netrokona.gov.bd"
+    },
+    {
+     
+        "name": "Shylet",
+        "bangla_name": "নেত্রকোণা",
+        "web_link": "www.netrokona.gov.bd"
+    }
+]
