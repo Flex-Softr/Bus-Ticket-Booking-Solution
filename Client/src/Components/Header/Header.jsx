@@ -16,6 +16,8 @@ import { useState } from "react";
 import Modal from "@mui/material/Modal";
 import Divider from "@mui/material/Divider";
 import { CiMenuKebab } from "react-icons/ci";
+// import { FaIconSet, MdIconSet, LuIconSet, CiIconSet } from 'react-icons';
+
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -88,7 +90,7 @@ const Header = () => {
             <div className="border-2 text-lg flex gap-3 rounded border-gray-400 p-2">
               <Link
                 className="flex items-center text-blue-600 gap-1"
-                to="/signin"
+                to="/login"
               >
                 <MdLogin /> Sign In
               </Link>

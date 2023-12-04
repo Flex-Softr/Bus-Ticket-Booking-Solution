@@ -1,76 +1,101 @@
-import React from 'react';
-import "./Home.css"
+import React, { useEffect, useState } from 'react';
+import "./Home.css";
 import { useForm, Controller } from 'react-hook-form';
-// import { FaCaretUp } from "react-icons/fa";
+import Select from 'react-select';
+import { useNavigate } from 'react-router-dom';
+
 const Home = () => {
   const { handleSubmit, control } = useForm();
+  const navigate = useNavigate();
+
+  const [tickets, setTickets] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/ticket') // Replace with your actual endpoint
+      .then(res => res.json())
+      .then(data => {
+        // Assuming the array of tickets is in the response
+        setTickets(data || []);
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
+
+  // Convert the tickets array to options format required by react-select
+  const ticketOptions = tickets.map(ticket => ({
+    value: ticket.name,
+    label: ticket.name,
+  }));
 
   const onSubmit = (data) => {
     // Handle form submission logic here
+
+    // Save data to local storage
+    localStorage.setItem('formData', JSON.stringify(data));
     console.log(data);
+
+    // Corrected navigation
+    navigate('/find-ticket');
   };
 
   return (
-   <div className='find-ticket-Section'>
-     <div className=" grid md:grid-cols-2 sm:grid-cols-1">
-      <div>
-        <img className='home-img mx-auto mt-24' src="https://i.ibb.co/8PtKyKn/bus-tickets-2.jpg" alt="" />
-      </div>
-      <div className='form-section text-center mt-36'> {/* Move text-center class here */}
-        <form className='mt-7' onSubmit={handleSubmit(onSubmit)}>
-          <div className='md:flex mx-auto md:gap-6  md:ms-6'>
-            <div>
-              <Controller
-                name="pickupPoint"
-                control={control}
-                
-                render={({ field }) => (
-                  <select {...field} className="md:w-60 field-style p-2">
-                    
-                    <option value="place1">PickUp Point</option>
-                    <option value="place2">Dhaka</option>
-                    <option value="place3">Cumilla</option>
-                    <option value="place4">cox's Bazar</option>
-                    {/* Add more options as needed */}
-                  </select>
-                )}
-              />
+    <div className='find-ticket-Section'>
+      <div className="grid md:grid-cols-2 sm:grid-cols-1">
+        <div>
+          <img className='home-img mx-auto mt-24' src="https://i.ibb.co/8PtKyKn/bus-tickets-2.jpg" alt="" />
+        </div>
+        <div className='form-section text-center mt-36'>
+          <form className='mt-7' onSubmit={handleSubmit(onSubmit)}>
+            <div className='md:flex mx-auto md:gap-6 md:ms-6'>
+              <div>
+                <Controller
+                  name="pickupPoint"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      className="md:w-60 field-style p-2"
+                      options={ticketOptions}
+                      isSearchable
+                      placeholder="Select PickUp Point"
+                    />
+                  )}
+                />
+              </div>
+
+              <div>
+                <Controller
+                  name="droppingPoint"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      className="md:w-60 field-style p-2"
+                      options={ticketOptions}
+                      isSearchable
+                      placeholder="Select Dropping Point"
+                    />
+                  )}
+                />
+              </div>
             </div>
 
             <div>
               <Controller
-                name="droppingPoint"
+                name="departureDate"
                 control={control}
                 render={({ field }) => (
-                  <select {...field} className="md:w-60  field-style p-2">
-                    <option value="place1">Dropping Point</option>
-                    <option value="place2">Dhaka</option>
-                    <option value="place3">Cumilla</option>
-                    <option value="place4">cox's Bazar</option>
-                    {/* Add more options as needed */}
-                  </select>
+                  <input type="date" placeholder='Select Date' {...field} className="w-11/12 p-2 field-style my-5" />
                 )}
               />
             </div>
-          </div>
 
-          <div>
-            <Controller
-              name="departureDate"
-              control={control}
-              render={({ field }) => (
-                <input type="date" placeholder='Select Date' {...field} className="w-11/12 p-2 field-style my-5" />
-              )}
-            />
-          </div>
-
-          <div className="mt-2">
-            <button type="submit" className="p-2 bg-blue-500 text-white w-60">Find Tickets</button>
-          </div>
-        </form>
+            <div className="mt-2">
+              <button type="submit" className="p-2 bg-blue-500 text-white w-60">Find Tickets</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-   </div>
   );
 };
 
