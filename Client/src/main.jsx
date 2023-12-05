@@ -14,6 +14,8 @@ import { StyledEngineProvider } from '@mui/material';
 import FixSeat from './Components/FixSeat/FixSeat.jsx';
 import Login from './Components/Login/Login.jsx';
 import AddCounter from './Dashboard/AddCounter/AddCounter.jsx';
+import DashboardLayout from './Dashboard/DashboardLayout.jsx';
+import AddBus from './Dashboard/AddBus/AddBus.jsx';
 import SupervisorAccount from './Components/Supervisor_Account/SupervisorAccount.jsx';
 
 const router = createBrowserRouter([
@@ -53,6 +55,17 @@ const router = createBrowserRouter([
       }
     ]
   },
+  {
+    path: '/dashboard',
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: "addbus",
+        // element: <Autocomplete />
+        element: <AddBus />
+      }
+    ]
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
