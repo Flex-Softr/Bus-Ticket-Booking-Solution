@@ -52,7 +52,7 @@ const AddBus = () => {
         height: '40px',
         width: '40px',
         margin: '0 auto',
-        backgroundColor: '#d6d8da', // Add your desired background color
+        backgroundColor: '#d6d8da',
       }}
     >
       <DirectionsBusIcon sx={{ fontSize: '44px' }} color="primary" />
