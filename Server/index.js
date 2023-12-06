@@ -35,6 +35,8 @@ async function run() {
     // const bdDistrictsCollection=client.db('').collection('')
 
     const bdDistrictsCollection = client.db('cityTicket').collection('bdDistricts');
+    const accountsDataCollection = client.db('cityTicket').collection('accountsData');
+
 
 
     app.get('/ticket', async (req, res) => {
@@ -42,6 +44,7 @@ async function run() {
       res.send(result);
   })
 
+   // post operation=============================
   // add cart
   app.post('/ticket', async (req, res) => {
     const item = req.body;
@@ -51,6 +54,14 @@ async function run() {
 
     res.send(result);
   })
+
+  // add accountsData
+   app.post('/add-account',async(req, res)=>{
+    const accountData=req.body;
+    console.log("new account added",accountData)
+    const result = await accountsDataCollection.insertOne(accountData);
+    res.send(result)
+   })
 
     
 

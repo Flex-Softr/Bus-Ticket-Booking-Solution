@@ -20,6 +20,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
+import AuthProvider from "./Components/Providers/AuthProvider/AuthProvider.jsx";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -47,20 +48,7 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "/",
-    element: <Main></Main>,
-    children: [
-      {
-        path: "/supervisor",
-        element: <SupervisorAccount></SupervisorAccount>,
-      },
-      {
-        path: "/add-counter",
-        element: <AddCounter></AddCounter>,
-      },
-    ],
-  },
+ 
   {
     path: "/dashboard",
     element: <DashboardLayout />,
@@ -68,10 +56,18 @@ const router = createBrowserRouter([
       {
         path: "addbus",
         // element: <Autocomplete />
-        element: <AddBus />,
+        element: <AddBus />
       },
-    ],
-  },
+      {
+        path: "addSupervisor",
+        element: <SupervisorAccount></SupervisorAccount>
+      },
+      {
+        path:'add-counter',
+        element:<AddCounter></AddCounter>
+      }
+    ]
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -80,7 +76,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <QueryClientProvider client={queryClient}>
         <CssBaseline />
         <StyledEngineProvider>
+          <AuthProvider>
           <RouterProvider router={router} />
+          </AuthProvider>
         </StyledEngineProvider>
       </QueryClientProvider>
     </ThemeProvider>
