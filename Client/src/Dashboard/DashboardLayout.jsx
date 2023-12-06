@@ -37,6 +37,7 @@ import { Link, useLocation  } from "react-router-dom";
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import CountertopsIcon from '@mui/icons-material/Countertops';
 import SettingsIcon from "@mui/icons-material/Settings";
 import HomeIcon from "@mui/icons-material/Home";
 import Tooltip from "@mui/material/Tooltip";
@@ -133,6 +134,8 @@ export default function DashboardLayout() {
           return "Add Bus";
         case "/dashboard/addsupervisor":
           return "Add Supervisor";
+          case "/dashboard/add-counter":
+          return "add-counter";
         // Add more cases for other routes as needed
         default:
           return "Mini variant drawer";
@@ -241,6 +244,33 @@ export default function DashboardLayout() {
                 <DirectionsBusIcon />
               </ListItemIcon>
               <ListItemText primary="add bus" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+
+
+          <ListItem
+            component={Link}
+            to="/dashboard/add-counter"
+            disablePadding
+            sx={{ display: "block" }}
+          >
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <CountertopsIcon />
+              </ListItemIcon>
+              <ListItemText primary="add-counter" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
           <ListItem
@@ -353,7 +383,14 @@ export default function DashboardLayout() {
       </Drawer>
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 6, backgroundColor: "#eceff1" }}
+        sx={{
+          flexGrow: 1,
+          p: {
+            xs: 1,  
+            md: 6, 
+          },
+          backgroundColor: "#eceff1",
+        }}
       >
         <DrawerHeader />
         <Outlet />
