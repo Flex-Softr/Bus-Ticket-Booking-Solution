@@ -1,28 +1,19 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import "./Home.css";
 import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
+import useAllDistricts from "../../hooks/useAllDistricts";
 
 const Home = () => {
+  const { allDistricts } = useAllDistricts();
+
   const { handleSubmit, control } = useForm();
   const navigate = useNavigate();
 
-  const [tickets, setTickets] = useState([]);
-
-  useEffect(() => {
-    fetch("http://localhost:5000/ticket") // Replace with your actual endpoint
-      .then((res) => res.json())
-      .then((data) => {
-        // Assuming the array of tickets is in the response
-        setTickets(data || []);
-      })
-      .catch((error) => console.error("Error fetching data:", error));
-  }, []);
-
   // Convert the tickets array to options format required by react-select
-  const ticketOptions = tickets.map((ticket) => ({
+  const ticketOptions = allDistricts.map((ticket) => ({
     value: ticket.name,
     label: ticket.name,
   }));
@@ -100,7 +91,9 @@ const Home = () => {
             </div>
 
             <div className="mt-2">
-              <Button type="submit" variant="contained">Find Tickets</Button>
+              <Button type="submit" variant="contained">
+                Find Tickets
+              </Button>
               {/* <button type="submit" className="p-2 text-white w-60">
                 Find Tickets
               </button> */}

@@ -1,54 +1,29 @@
+import { useForm, Controller } from "react-hook-form";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Autocomplete from "@mui/material/Autocomplete";
+import FormControl from "@mui/material/FormControl";
+import Radio from "@mui/material/Radio";
+import Alert from "@mui/material/Alert";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Box from "@mui/material/Box";
+import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
+import useAllDistricts from "../../hooks/useAllDistricts";
 
-import { useForm, Controller } from 'react-hook-form';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Autocomplete from '@mui/material/Autocomplete';
-import FormControl from '@mui/material/FormControl';
-import Radio from '@mui/material/Radio';
-import Alert from '@mui/material/Alert';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Box from '@mui/material/Box';
+const busTypes = ["AC", "Non-AC"];
 
-import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
-import useAllDistricts from '../../hooks/useAllDistricts';
-
-const busTypes = ['AC', 'Non-AC'];
-
-// Array of predefined locations
-const locations = [
-  'Barishal',
-  'Chattogram',
-  'Dhaka',
-  'Khulna',
-  'Rajshahi',
-  'Rangpur',
-  'Mymensingh',
-];
-const supervisorName = [
-  'Rohim mia',
-  'khalil mia',
-  'hashan',
-  'abdul kader'
-];
-const numbers = [
-  '676578',
-  '2645768',
-  '676473',
-  '7935436',
-];
+const supervisorName = ["Rohim mia", "khalil mia", "hashan", "abdul kader"];
+const numbers = ["676578", "2645768", "676473", "7935436"];
 
 const AddBus = () => {
-
-
   const { allDistricts } = useAllDistricts();
-  console.log(allDistricts)
+  console.log(allDistricts);
 
-  // const locations = allDistricts.map(ticket => ({
-  //   value: ticket.name,
-  //   label: ticket.name,
-  // }));
-
+  const locations = allDistricts.map((ticket) => ({
+    value: ticket.name,
+    label: ticket.name,
+  }));
 
   const {
     control,
@@ -64,27 +39,28 @@ const AddBus = () => {
   };
 
   return (
-    <Box sx={{ backgroundColor: '#fff', borderRadius: '3px' }}  className="px-20 py-10 md:w-11/12 mx-auto" style={{ "boxShadow": " rgba(0, 0, 0, 0.24) 0px 3px 8px" }}>
-      <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: '50%',
-        padding: '30px',
-        // color:"#143f40",
-        height: '40px',
-        width: '40px',
-        margin: '0 auto',
-        backgroundColor: '#d6d8da',
-      }}
+    <Box
+      sx={{ backgroundColor: "#fff", borderRadius: "3px" }}
+      className=" px-5 md:px-20 py-10 md:w-11/12 mx-auto"
+      style={{ boxShadow: " rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
     >
-      <DirectionsBusIcon sx={{ fontSize: '44px'  }} color="primary"/>
-    </Box>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="mt-5"
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          borderRadius: "50%",
+          padding: "30px",
+          // color:"#143f40",
+          height: "40px",
+          width: "40px",
+          margin: "0 auto",
+          backgroundColor: "#d6d8da",
+        }}
       >
+        <DirectionsBusIcon sx={{ fontSize: "44px" }} color="primary" />
+      </Box>
+      <form onSubmit={handleSubmit(onSubmit)} className="mt-5">
         <div className="flex gap-2">
           <div className="mb-4 flex-1">
             <TextField
@@ -179,7 +155,6 @@ const AddBus = () => {
               )}
             </FormControl>
           </div>
-        
 
           <div className="flex-1">
             <FormControl fullWidth>
@@ -201,13 +176,14 @@ const AddBus = () => {
                 )}
               />
               {errors.supervisorNumber && (
-                <p className="text-red-600">{errors.supervisorNumber.message}</p>
+                <p className="text-red-600">
+                  {errors.supervisorNumber.message}
+                </p>
               )}
             </FormControl>
           </div>
         </div>
 
-    
         <div className="mb-4">
           <TextField
             label="Time"
@@ -223,13 +199,13 @@ const AddBus = () => {
               name="busType"
               control={control}
               defaultValue=""
-              rules={{ required: 'this field is required' }}
+              rules={{ required: "this field is required" }}
               render={({ field }) => (
                 <RadioGroup
                   {...field}
                   row
                   aria-label="busType"
-                  onChange={(e) => setValue('busType', e.target.value)}
+                  onChange={(e) => setValue("busType", e.target.value)}
                 >
                   {busTypes.map((type) => (
                     <FormControlLabel
@@ -248,7 +224,6 @@ const AddBus = () => {
             )}
           </FormControl>
         </div>
-
 
         <Button type="submit" variant="contained" color="primary">
           Submit
