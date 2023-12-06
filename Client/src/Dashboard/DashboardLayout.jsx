@@ -383,7 +383,14 @@ export default function DashboardLayout() {
       </Drawer>
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 6, backgroundColor: "#eceff1" }}
+        sx={{
+          flexGrow: 1,
+          p: {
+            xs: 1,  
+            md: 6, 
+          },
+          backgroundColor: "#eceff1",
+        }}
       >
         <DrawerHeader />
         <Outlet />
