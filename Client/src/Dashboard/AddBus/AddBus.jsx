@@ -11,6 +11,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Box from '@mui/material/Box';
 
 import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
+import useAllDistricts from '../../hooks/useAllDistricts';
 
 const busTypes = ['AC', 'Non-AC'];
 
@@ -24,8 +25,31 @@ const locations = [
   'Rangpur',
   'Mymensingh',
 ];
+const supervisorName = [
+  'Rohim mia',
+  'khalil mia',
+  'hashan',
+  'abdul kader'
+];
+const numbers = [
+  '676578',
+  '2645768',
+  '676473',
+  '7935436',
+];
 
 const AddBus = () => {
+
+
+  const { allDistricts } = useAllDistricts();
+  console.log(allDistricts)
+
+  // const locations = allDistricts.map(ticket => ({
+  //   value: ticket.name,
+  //   label: ticket.name,
+  // }));
+
+
   const {
     control,
     register,
@@ -48,14 +72,14 @@ const AddBus = () => {
         alignItems: 'center',
         borderRadius: '50%',
         padding: '30px',
-        // color: 'white',
+        // color:"#143f40",
         height: '40px',
         width: '40px',
         margin: '0 auto',
         backgroundColor: '#d6d8da',
       }}
     >
-      <DirectionsBusIcon sx={{ fontSize: '44px' }} color="primary" />
+      <DirectionsBusIcon sx={{ fontSize: '44px'  }} color="primary"/>
     </Box>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -131,23 +155,55 @@ const AddBus = () => {
         </div>
 
         <div className="flex gap-2 mb-4 w-full">
-          <div className=" flex-1">
-            <TextField
-              label="Supervisor Name"
-              fullWidth
-              {...register("supervisorName", {
-                required: "This field is required",
-              })}
-            />
-          </div>
           <div className="flex-1">
-            <TextField
-              label="Supervisor Number"
-              fullWidth
-              {...register("supervisorNumber", {
-                required: "This field is required",
-              })}
-            />
+            <FormControl fullWidth>
+              <Controller
+                name="supervisorName"
+                control={control}
+                defaultValue=""
+                rules={{ required: "this field is required" }}
+                render={({ field }) => (
+                  <Autocomplete
+                    {...field}
+                    options={supervisorName}
+                    freeSolo
+                    renderInput={(params) => (
+                      <TextField {...params} label="Supervisor Name" />
+                    )}
+                    onChange={(_, value) => setValue("supervisorName", value)}
+                  />
+                )}
+              />
+              {errors.supervisorName && (
+                <p className="text-red-600">{errors.supervisorName.message}</p>
+              )}
+            </FormControl>
+          </div>
+        
+
+          <div className="flex-1">
+            <FormControl fullWidth>
+              <Controller
+                name="supervisorNumber"
+                control={control}
+                defaultValue=""
+                rules={{ required: "this field is required" }}
+                render={({ field }) => (
+                  <Autocomplete
+                    {...field}
+                    options={numbers}
+                    freeSolo
+                    renderInput={(params) => (
+                      <TextField {...params} label="Supervisor Number" />
+                    )}
+                    onChange={(_, value) => setValue("supervisorNumber", value)}
+                  />
+                )}
+              />
+              {errors.supervisorNumber && (
+                <p className="text-red-600">{errors.supervisorNumber.message}</p>
+              )}
+            </FormControl>
           </div>
         </div>
 
