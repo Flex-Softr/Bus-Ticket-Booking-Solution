@@ -1,19 +1,19 @@
-import * as React from 'react';
+
 import './Login.css'
 import { useForm } from 'react-hook-form';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
+
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useContext } from 'react';
+import { AuthContext } from '../Providers/AuthProvider/AuthProvider';
+import { useState } from 'react';
 
 // function Copyright(props) {
 //   return (
@@ -30,14 +30,35 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const defaultTheme = createTheme();
  const Login=()=>{
+  const { signIn } = useContext(AuthContext);
+
+  const [error, setError]=useState('');
   const {
     register,
     handleSubmit,
+   
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    console.log(data)
+    const email=data?.email
+    const password=data?.password
+   
+    signIn (email, password)
+    .then(result => {
+            const NewUser = result.user;
+            console.log(NewUser);
+            // navigate(from,{replace:true})
+
+
+        })
+        .catch(error => {
+            console.log(error);
+            setError(error.message)
+
+        })
+
   };
 
   return (
@@ -84,21 +105,16 @@ const defaultTheme = createTheme();
               {...register('password', { required: 'Password is required' })}
             />
             {errors.password && <p className='text-red-600'>{errors.password.message}</p>}
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+           
+            <div className='text-red-600'>
+          {error}
+        </div>
+           <div className='pb-8'>
+           <Button  type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Sign In
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-            
-            </Grid>
+           </div>
+           
           </Box>
         </Box>
       

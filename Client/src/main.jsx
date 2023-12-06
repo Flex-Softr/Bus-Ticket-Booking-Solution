@@ -17,6 +17,7 @@ import AddCounter from './Dashboard/AddCounter/AddCounter.jsx';
 import DashboardLayout from './Dashboard/DashboardLayout.jsx';
 import AddBus from './Dashboard/AddBus/AddBus.jsx';
 import SupervisorAccount from './Components/Supervisor_Account/SupervisorAccount.jsx';
+import AuthProvider from './Components/Providers/AuthProvider/AuthProvider.jsx';
 
 const router = createBrowserRouter([
   {
@@ -41,20 +42,7 @@ const router = createBrowserRouter([
       }
     ]
   },
-  {
-    path : "/",
-    element: <Main></Main>,
-    children:[
-      {
-        path: "/supervisor",
-        element: <SupervisorAccount></SupervisorAccount>
-      },
-      {
-        path:'/add-counter',
-        element:<AddCounter></AddCounter>
-      }
-    ]
-  },
+ 
   {
     path: '/dashboard',
     element: <DashboardLayout />,
@@ -63,6 +51,14 @@ const router = createBrowserRouter([
         path: "addbus",
         // element: <Autocomplete />
         element: <AddBus />
+      },
+      {
+        path: "addSupervisor",
+        element: <SupervisorAccount></SupervisorAccount>
+      },
+      {
+        path:'add-counter',
+        element:<AddCounter></AddCounter>
       }
     ]
   }
@@ -70,8 +66,12 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+
 <StyledEngineProvider>
+<AuthProvider>
 <RouterProvider router={router} />
+</AuthProvider>
 </StyledEngineProvider>
+
   </React.StrictMode>,
 )
