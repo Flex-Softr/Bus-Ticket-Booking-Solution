@@ -1,19 +1,4 @@
 import { Outlet } from "react-router-dom";
-// import SideBar from "./SideBar/SideBar";
-
-// const DashboardLayout = () => {
-//   return (
-//     <>
-//       <div className="flex">
-//         <SideBar />
-//         <Outlet />
-//       </div>
-//     </>
-//   );
-// };
-
-// export default DashboardLayout;
-
 import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";

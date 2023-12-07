@@ -30,7 +30,6 @@ const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: "/",
-    // element: <Main></Main>,
     element: <PrivateRoute><Main></Main></PrivateRoute>,
     children: [
       {
@@ -55,7 +54,6 @@ const router = createBrowserRouter([
     children: [
       {
         path: "addbus",
-        // element: <Autocomplete />
         element: <AddBus />
       },
       {

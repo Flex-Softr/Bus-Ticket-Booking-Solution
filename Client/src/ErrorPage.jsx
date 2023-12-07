@@ -10,7 +10,7 @@ const ErrorPage = () => {
   const navigate = useNavigate();
 
   const goBack = () => {
-    navigate(-1); // Go back one step in the history
+    navigate(-1);
   };
 
   return (

@@ -2,10 +2,9 @@ import "./Login.css";
 import { useForm } from "react-hook-form";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import LoadingButton from "@mui/lab/LoadingButton";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import SaveIcon from "@mui/icons-material/Save";
+import AutorenewIcon from '@mui/icons-material/Autorenew';
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
@@ -16,7 +15,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { signIn, loader } = useContext(AuthContext);
+  const { signIn, loader, setloader } = useContext(AuthContext);
   let navigate = useNavigate();
 
   const [error, setError] = useState("");
@@ -41,6 +40,7 @@ const Login = () => {
       .catch((error) => {
         console.log(error);
         setError(error.message);
+        setloader(false)
       });
   };
 
@@ -106,29 +106,17 @@ const Login = () => {
 
               <div className="text-red-600">{error}</div>
               <div className="pb-8">
-                {loader ? (
-                  <LoadingButton
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                    // disabled={loader}
-                    loading
-                    loadingPosition="start"
-                    startIcon={<SaveIcon />}
-                  >
-                    Sign In...
-                  </LoadingButton>
-                ) : (
                   <Button
                     type="submit"
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
+                    disabled={loader}
                   >
-                    Sign In
+                    {loader ? <span>
+                      <AutorenewIcon className="animate-spin" /> sign In ... </span>: ' Sign In'}
+                   
                   </Button>
-                )}
               </div>
             </Box>
           </Box>
