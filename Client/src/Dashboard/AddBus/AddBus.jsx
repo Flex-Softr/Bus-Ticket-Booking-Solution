@@ -10,15 +10,17 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Box from "@mui/material/Box";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 import useAllDistricts from "../../hooks/useAllDistricts";
+import useSuoervisor from "../../hooks/useSuoervisor";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { useState } from "react";
 
 const busTypes = ["AC", "Non-AC"];
 
-const supervisorName = ["Rohim mia", "khalil mia", "hashan", "abdul kader"];
-const numbers = ["676578", "2645768", "676473", "7935436"];
-
 const AddBus = () => {
   const { allDistricts } = useAllDistricts();
-  console.log(allDistricts);
+  const { supervisors } = useSuoervisor();
+  const [loading, setLoading] = useState(false);
 
   const locations = allDistricts.map((ticket) => ({
     value: ticket.name,
@@ -30,12 +32,37 @@ const AddBus = () => {
     register,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
-    // Handle form submission logic here
+    setLoading(true);
     console.log(data);
+    axios
+      .post("http://localhost:5000/addbus", data)
+      .then((res) => {
+        console.log("post", res.data);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Successfully submitted",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        reset();
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `${error?.message}, please try again later`,
+        });
+        console.error("Post request failed:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -141,7 +168,10 @@ const AddBus = () => {
                 render={({ field }) => (
                   <Autocomplete
                     {...field}
-                    options={supervisorName}
+                    options={supervisors.map((supervisor) => ({
+                      label: supervisor.name,
+                      value: supervisor._id,
+                    }))}
                     freeSolo
                     renderInput={(params) => (
                       <TextField {...params} label="Supervisor Name" />
@@ -150,6 +180,7 @@ const AddBus = () => {
                   />
                 )}
               />
+
               {errors.supervisorName && (
                 <p className="text-red-600">{errors.supervisorName.message}</p>
               )}
@@ -166,7 +197,10 @@ const AddBus = () => {
                 render={({ field }) => (
                   <Autocomplete
                     {...field}
-                    options={numbers}
+                    options={supervisors.map((supervisor) => ({
+                      label: supervisor.phone,
+                      value: supervisor._id,
+                    }))}
                     freeSolo
                     renderInput={(params) => (
                       <TextField {...params} label="Supervisor Number" />
@@ -225,8 +259,13 @@ const AddBus = () => {
           </FormControl>
         </div>
 
-        <Button type="submit" variant="contained" color="primary">
-          Submit
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          disabled={loading}
+        >
+          {loading ? "Submitting..." : "Submit"}
         </Button>
       </form>
     </Box>
