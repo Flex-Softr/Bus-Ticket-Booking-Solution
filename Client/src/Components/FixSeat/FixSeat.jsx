@@ -2,7 +2,7 @@ import React from 'react';
 import TextField from '@mui/material/TextField';
 import { useForm } from 'react-hook-form';
 import { Button, Checkbox, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-
+import  './FixSeat.css'
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 const FixSeat = () => {
@@ -120,7 +120,9 @@ const FixSeat = () => {
                 </Button>
 
             </div>
-            <div></div>
+            <div>
+            <img className='seat-icon' width="24" height="24" src="https://img.icons8.com/material-outlined/24/000000/living-room.png" alt="living-room"/>
+            </div>
         </div>
     );
 };

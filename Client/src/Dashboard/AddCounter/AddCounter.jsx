@@ -80,7 +80,7 @@ const AddCounter = () => {
             className="bg-blue-600"
             sx={{ m: 1, bgcolor: "secondary.main" }}
           >
-            <CountertopsIcon/>
+            <CountertopsIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Create a New Counter
