@@ -21,6 +21,8 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import AuthProvider from "./Components/Providers/AuthProvider/AuthProvider.jsx";
+import PrivateRoute from "./route/PrivateRoute.jsx";
+import ErrorPage from "./ErrorPage.jsx";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -28,7 +30,7 @@ const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Main></Main>,
+    element: <PrivateRoute><Main></Main></PrivateRoute>,
     children: [
       {
         path: "/",
@@ -42,10 +44,7 @@ const router = createBrowserRouter([
         path: "/find-ticket",
         element: <FindTicket></FindTicket>,
       },
-      {
-        path: "/login",
-        element: <Login></Login>,
-      },
+      
     ],
   },
  
@@ -55,7 +54,6 @@ const router = createBrowserRouter([
     children: [
       {
         path: "addbus",
-        // element: <Autocomplete />
         element: <AddBus />
       },
       {
@@ -67,7 +65,12 @@ const router = createBrowserRouter([
         element:<AddCounter></AddCounter>
       }
     ]
-  }
+  },
+  {
+    path: "/login",
+    element: <Login></Login>,
+  },
+  { path: "*", element: <ErrorPage></ErrorPage> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
