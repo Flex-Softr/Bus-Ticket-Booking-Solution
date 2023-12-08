@@ -138,7 +138,7 @@ export default function DashboardLayout() {
           return "add-counter";
         // Add more cases for other routes as needed
         default:
-          return "Mini variant drawer";
+          return "Add-Supervisor";
       }
     };
   

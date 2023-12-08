@@ -38,7 +38,6 @@ async function run() {
         res.send(result);
     })
 
-<<<<<<< HEAD
     // add supervisor
 
   app.get('/supervisor', async (req, res) => {
@@ -48,19 +47,12 @@ async function run() {
 
 // post
 app.post('/supervisor', async (req, res) => {
-=======
-   // post operation=============================
-  // add cart
-  app.post('/ticket', async (req, res) => {
->>>>>>> 913773a0722326137f56b6406636393d6dcab9d7
     const item = req.body;
     console.log(item)
     const result = await supervisorDataCollection.insertOne(item);
     res.send(result);
   })
 
-<<<<<<< HEAD
-=======
   // add accountsData
    app.post('/add-account',async(req, res)=>{
     const accountData=req.body;
@@ -70,7 +62,6 @@ app.post('/supervisor', async (req, res) => {
    })
 
     
->>>>>>> 913773a0722326137f56b6406636393d6dcab9d7
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
