@@ -1,13 +1,53 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { TextField, Button, Container, Paper } from '@mui/material';
+import Swal from 'sweetalert2';
+// import Axios from 'axios';
+import axios from 'axios';
+
 
 const SupervisorForm = () => {
-  const { control, handleSubmit, formState: { errors } } = useForm();
+  const { control, handleSubmit,  reset, formState: { errors } } = useForm();
+
+  // const onSubmit = (data) => {
+  //   console.log(data);
+  // };
 
   const onSubmit = (data) => {
-    console.log(data);
+    // Extract other form fields excluding the image
+    const { name, phone, nid, presentAddress, permanentAddress } = data;
+  
+    // Create the new item object without the image field
+    const newItem = {
+      name, phone, nid, presentAddress, permanentAddress
+    };
+  
+    // Make the API call to save the form data (excluding the image) to the server
+    axios.post('http://localhost:5000/supervisor', newItem)
+      .then((responseData) => {
+        console.log(responseData.data);
+        if (responseData.data.insertedId) {
+          reset();
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Your work has been saved',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error('Error submitting form:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'An error occurred while submitting the form. Please try again later.',
+        });
+      });
   };
+  
+
 
   return (
     <Container
@@ -22,6 +62,7 @@ const SupervisorForm = () => {
       }}
     >
       <Paper elevation={6} className="p-4 space-y-2" style={{ width: '90%' }}>
+
         <form onSubmit={handleSubmit(onSubmit)}>
           <h2 className="text-lg font-bold mb-2 text-center">Supervisor Account</h2>
 
@@ -118,7 +159,7 @@ const SupervisorForm = () => {
             )}
           />
 
-          <Controller
+          {/* <Controller
             name="image"
             control={control}
             rules={{ required: 'Image is required' }}
@@ -131,7 +172,7 @@ const SupervisorForm = () => {
                 )}
               </div>
             )}
-          />
+          /> */}
 
           <Button type="submit" variant="contained" fullWidth size="medium" className='mt-3'>
             Submit

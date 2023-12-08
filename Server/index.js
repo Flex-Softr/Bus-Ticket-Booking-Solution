@@ -1,20 +1,15 @@
 const express = require("express");
-const cors = require("cors"); // Make sure this line is present
-require("dotenv").config();
-const { MongoClient, ServerApiVersion } = require("mongodb");
 const app = express();
+const cors = require("cors");
+require("dotenv").config();
 const port = process.env.PORT || 5000;
 
-// Use cors middleware
+//middle ware
 app.use(cors());
-app.use(express());
+app.use(express.json());
 
+const { MongoClient, ServerApiVersion } = require("mongodb");
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.2uczcxe.mongodb.net/?retryWrites=true&w=majority`;
-
-// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.4zx1pf4.mongodb.net/?retryWrites=true&w=majority`;
-
-console.log(process.env.DB_USER);
-console.log(process.env.DB_PASS);
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -30,8 +25,6 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
-    // const bdDistrictsCollection=client.db('').collection('')
-
     const bdDistrictsCollection = client
       .db("cityTicket")
       .collection("bdDistricts");
@@ -43,9 +36,14 @@ async function run() {
       .db("cityTicket")
       .collection("supervisorData");
 
-    // get all districts
     app.get("/ticket", async (req, res) => {
       const result = await bdDistrictsCollection.find().toArray();
+      res.send(result);
+    });
+
+    // get all supervisors data
+    app.get("/supervisors", async (req, res) => {
+      const result = await supervisorDataCollection.find().toArray();
       res.send(result);
     });
 
@@ -62,9 +60,7 @@ async function run() {
     app.post("/ticket", async (req, res) => {
       const item = req.body;
       console.log(item);
-
-      const result = await bdDistrictsCollection.insertOne(item);
-
+      const result = await supervisorDataCollection.insertOne(item);
       res.send(result);
     });
 
@@ -73,12 +69,6 @@ async function run() {
       const accountData = req.body;
       console.log("new account added", accountData);
       const result = await accountsDataCollection.insertOne(accountData);
-      res.send(result);
-    });
-
-    // get all supervisors data
-    app.get("/supervisors", async (req, res) => {
-      const result = await supervisorDataCollection.find().toArray();
       res.send(result);
     });
 
@@ -103,9 +93,9 @@ async function run() {
 run().catch(console.dir);
 
 app.get("/", (req, res) => {
-  res.send("Bus Ticket Booking Server is running");
+  res.send("Nabilar Chocolate House");
 });
 
 app.listen(port, () => {
-  console.log(`Server is running on port:${port}`);
+  console.log(`Nabila loves chocolate ${port}`);
 });
