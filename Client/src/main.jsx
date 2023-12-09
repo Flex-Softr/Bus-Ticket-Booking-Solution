@@ -21,6 +21,11 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import AuthProvider from "./Components/Providers/AuthProvider/AuthProvider.jsx";
+import PrivateRoute from "./route/PrivateRoute.jsx";
+import ErrorPage from "./ErrorPage.jsx";
+import AllBus from "./Dashboard/AllBus/AllBus.jsx";
+import AllCounters from "./Dashboard/AllCounters/AllCounters.jsx";
+import AllSupervisor from "./Dashboard/AllSupervisor/AllSupervisor.jsx";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -28,7 +33,7 @@ const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Main></Main>,
+    element: <PrivateRoute><Main></Main></PrivateRoute>,
     children: [
       {
         path: "/",
@@ -42,10 +47,7 @@ const router = createBrowserRouter([
         path: "/find-ticket",
         element: <FindTicket></FindTicket>,
       },
-      {
-        path: "/login",
-        element: <Login></Login>,
-      },
+      
     ],
   },
  
@@ -55,7 +57,6 @@ const router = createBrowserRouter([
     children: [
       {
         path: "addbus",
-        // element: <Autocomplete />
         element: <AddBus />
       },
       {
@@ -65,9 +66,26 @@ const router = createBrowserRouter([
       {
         path:'add-counter',
         element:<AddCounter></AddCounter>
+      },
+      {
+        path:'allbus',
+        element:<AllBus />
+      },
+      {
+        path:'allcounters',
+        element:<AllCounters />
+      },
+      {
+        path:'allsupervisor',
+        element:<AllSupervisor />
       }
     ]
-  }
+  },
+  {
+    path: "/login",
+    element: <Login></Login>,
+  },
+  { path: "*", element: <ErrorPage></ErrorPage> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

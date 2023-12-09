@@ -1,0 +1,13 @@
+.css-11xur9t-MuiPaper-root-MuiTableContainer-root {
+  box-shadow: none !important;
+}
+
+.css-1ygcj2i-MuiTableCell-root {
+  color: #fff !important;
+  font-weight: bolder !important;
+}
+
+.css-uhy5f4-MuiButtonBase-root-MuiCheckbox-root.Mui-checked,
+.css-uhy5f4-MuiButtonBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate {
+  color: #9e9e9e !important;
+}

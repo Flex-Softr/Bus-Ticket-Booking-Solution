@@ -10,15 +10,19 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Box from "@mui/material/Box";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 import useAllDistricts from "../../hooks/useAllDistricts";
+import useSuoervisor from "../../hooks/useSuoervisor";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const busTypes = ["AC", "Non-AC"];
 
-const supervisorName = ["Rohim mia", "khalil mia", "hashan", "abdul kader"];
-const numbers = ["676578", "2645768", "676473", "7935436"];
-
 const AddBus = () => {
   const { allDistricts } = useAllDistricts();
-  console.log(allDistricts);
+  const { supervisors } = useSuoervisor();
+  const [loading, setLoading] = useState(false);
+  let navigate = useNavigate();
 
   const locations = allDistricts.map((ticket) => ({
     value: ticket.name,
@@ -30,12 +34,38 @@ const AddBus = () => {
     register,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
-    // Handle form submission logic here
+    setLoading(true);
     console.log(data);
+    axios
+      .post("http://localhost:5000/addbus", data)
+      .then((res) => {
+        console.log("post", res.data);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Created a new bus",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/dashboard/allbus");
+        reset();
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `${error?.message}, please try again later`,
+        });
+        console.error("Post request failed:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -51,7 +81,6 @@ const AddBus = () => {
           alignItems: "center",
           borderRadius: "50%",
           padding: "30px",
-          // color:"#143f40",
           height: "40px",
           width: "40px",
           margin: "0 auto",
@@ -142,7 +171,10 @@ const AddBus = () => {
                 render={({ field }) => (
                   <Autocomplete
                     {...field}
-                    options={supervisorName}
+                    options={supervisors.map((supervisor) => ({
+                      label: supervisor.name,
+                      value: supervisor._id,
+                    }))}
                     freeSolo
                     renderInput={(params) => (
                       <TextField {...params} label="Supervisor Name" />
@@ -151,6 +183,7 @@ const AddBus = () => {
                   />
                 )}
               />
+
               {errors.supervisorName && (
                 <p className="text-red-600">{errors.supervisorName.message}</p>
               )}
@@ -167,7 +200,10 @@ const AddBus = () => {
                 render={({ field }) => (
                   <Autocomplete
                     {...field}
-                    options={numbers}
+                    options={supervisors.map((supervisor) => ({
+                      label: supervisor.phone,
+                      value: supervisor._id,
+                    }))}
                     freeSolo
                     renderInput={(params) => (
                       <TextField {...params} label="Supervisor Number" />
@@ -226,8 +262,13 @@ const AddBus = () => {
           </FormControl>
         </div>
 
-        <Button type="submit" variant="contained" color="primary">
-          Submit
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          disabled={loading}
+        >
+          {loading ? "Submitting..." : "Submit"}
         </Button>
       </form>
     </Box>
