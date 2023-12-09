@@ -20,6 +20,7 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import axios from "axios";
 import Swal from "sweetalert2";
+import FilterListIcon from '@mui/icons-material/FilterList';
 
 const DataTable = () => {
   const { allBusData, refetch } = useAllBusData();
@@ -113,7 +114,7 @@ const DataTable = () => {
         >
           remaining all bus
         </Typography>
-        <Box display="flex" alignItems="center" gap="10px">
+        <Box display="flex" alignItems="center" gap="5px">
           <Box position="relative" width="200px">
             <Input
               title="search by supervisor name or bus name"
@@ -132,12 +133,17 @@ const DataTable = () => {
               }}
             />
           </Box>
-          <Tooltip title="Delete">
+          <Tooltip title="Delete" arrow>
             <Link to="/dashboard/addbus">
               <IconButton>
                 <AddBoxIcon color="primary" />
               </IconButton>
             </Link>
+          </Tooltip>
+          <Tooltip title="Filter" arrow>
+              <IconButton>
+                <FilterListIcon color="primary" />
+              </IconButton>
           </Tooltip>
         </Box>
       </Box>
