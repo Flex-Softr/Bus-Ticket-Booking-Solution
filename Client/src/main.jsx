@@ -12,20 +12,17 @@ import Login from "./Components/Login/Login.jsx";
 import AddCounter from "./Dashboard/AddCounter/AddCounter.jsx";
 import DashboardLayout from "./Dashboard/DashboardLayout.jsx";
 import AddBus from "./Dashboard/AddBus/AddBus.jsx";
-import SupervisorAccount from "./Components/Supervisor_Account/SupervisorAccount.jsx";
 import theme from "./theme";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import {
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AuthProvider from "./Components/Providers/AuthProvider/AuthProvider.jsx";
 import PrivateRoute from "./route/PrivateRoute.jsx";
 import ErrorPage from "./ErrorPage.jsx";
 import AllBus from "./Dashboard/AllBus/AllBus.jsx";
 import AllCounters from "./Dashboard/AllCounters/AllCounters.jsx";
 import AllSupervisor from "./Dashboard/AllSupervisor/AllSupervisor.jsx";
+import SupervisorForm from "./Dashboard/SupervisorAccount/SupervisorAccount.jsx";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -33,7 +30,11 @@ const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <PrivateRoute><Main></Main></PrivateRoute>,
+    element: (
+      <PrivateRoute>
+        <Main></Main>
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "/",
@@ -47,39 +48,38 @@ const router = createBrowserRouter([
         path: "/find-ticket",
         element: <FindTicket></FindTicket>,
       },
-      
     ],
   },
- 
+
   {
     path: "/dashboard",
     element: <DashboardLayout />,
     children: [
       {
         path: "addbus",
-        element: <AddBus />
+        element: <AddBus />,
       },
       {
         path: "addSupervisor",
-        element: <SupervisorAccount></SupervisorAccount>
+        element: <SupervisorForm />,
       },
       {
-        path:'add-counter',
-        element:<AddCounter></AddCounter>
+        path: "add-counter",
+        element: <AddCounter></AddCounter>,
       },
       {
-        path:'allbus',
-        element:<AllBus />
+        path: "allbus",
+        element: <AllBus />,
       },
       {
-        path:'allcounters',
-        element:<AllCounters />
+        path: "allcounters",
+        element: <AllCounters />,
       },
       {
-        path:'allsupervisor',
-        element:<AllSupervisor />
-      }
-    ]
+        path: "allsupervisor",
+        element: <AllSupervisor />,
+      },
+    ],
   },
   {
     path: "/login",
@@ -95,7 +95,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <CssBaseline />
         <StyledEngineProvider>
           <AuthProvider>
-          <RouterProvider router={router} />
+            <RouterProvider router={router} />
           </AuthProvider>
         </StyledEngineProvider>
       </QueryClientProvider>
