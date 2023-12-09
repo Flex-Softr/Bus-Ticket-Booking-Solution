@@ -1,27 +1,23 @@
-import React, { useEffect, useState } from 'react';
+// import { useEffect, useState } from "react";
 import "./Home.css";
-import { useForm, Controller } from 'react-hook-form';
-import Select from 'react-select';
-import { useNavigate } from 'react-router-dom';
+import { useForm, Controller } from "react-hook-form";
+import Select from "react-select";
+import { useNavigate } from "react-router-dom";
+import Button from "@mui/material/Button";
+import useAllDistricts from "../../hooks/useAllDistricts";
 
 const Home = () => {
-  const { handleSubmit, control } = useForm();
+  const { allDistricts } = useAllDistricts();
+
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
   const navigate = useNavigate();
 
-  const [tickets, setTickets] = useState([]);
-
-  useEffect(() => {
-    fetch('http://localhost:5000/ticket') // Replace with your actual endpoint
-      .then(res => res.json())
-      .then(data => {
-        // Assuming the array of tickets is in the response
-        setTickets(data || []);
-      })
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
-
   // Convert the tickets array to options format required by react-select
-  const ticketOptions = tickets.map(ticket => ({
+  const ticketOptions = allDistricts.map((ticket) => ({
     value: ticket.name,
     label: ticket.name,
   }));
@@ -30,26 +26,31 @@ const Home = () => {
     // Handle form submission logic here
 
     // Save data to local storage
-    localStorage.setItem('formData', JSON.stringify(data));
+    localStorage.setItem("formData", JSON.stringify(data));
     console.log(data);
 
     // Corrected navigation
-    navigate('/find-ticket');
+    navigate("/find-ticket");
   };
 
   return (
-    <div className='find-ticket-Section'>
+    <div className="find-ticket-Section">
       <div className="grid md:grid-cols-2 sm:grid-cols-1">
         <div>
-          <img className='home-img mx-auto mt-24' src="https://i.ibb.co/8PtKyKn/bus-tickets-2.jpg" alt="" />
+          <img
+            className="home-img mx-auto mt-24"
+            src="https://i.ibb.co/8PtKyKn/bus-tickets-2.jpg"
+            alt=""
+          />
         </div>
-        <div className='form-section text-center mt-36'>
-          <form className='mt-7' onSubmit={handleSubmit(onSubmit)}>
-            <div className='md:flex mx-auto md:gap-6 md:ms-6'>
+        <div className="form-section text-center mt-36">
+          <form className="mt-7" onSubmit={handleSubmit(onSubmit)}>
+            <div className="md:flex mx-auto md:gap-6 md:ms-6">
               <div>
                 <Controller
                   name="pickupPoint"
                   control={control}
+                  rules={{ required: "PickUp Point is required" }}
                   render={({ field }) => (
                     <Select
                       {...field}
@@ -60,12 +61,17 @@ const Home = () => {
                     />
                   )}
                 />
+
+                {errors.pickupPoint && (
+                  <p style={{ color: "red" }}>{errors.pickupPoint.message}</p>
+                )}
               </div>
 
               <div>
                 <Controller
                   name="droppingPoint"
                   control={control}
+                  rules={{ required: "dropping Point is required" }}
                   render={({ field }) => (
                     <Select
                       {...field}
@@ -76,23 +82,36 @@ const Home = () => {
                     />
                   )}
                 />
+                {errors.droppingPoint && (
+                  <p style={{ color: "red" }}>{errors.droppingPoint.message}</p>
+                )}
               </div>
             </div>
-
             <div>
               <Controller
                 name="departureDate"
                 control={control}
+                rules={{ required: "Date is required" }}
                 render={({ field }) => (
-                  <input type="date" placeholder='Select Date' {...field} className="w-11/12 p-2 field-style my-5" />
+                  <input
+                    type="date"
+                    placeholder="Select Date"
+                    {...field}
+                    className="w-11/12 p-2 field-style my-5"
+                  />
                 )}
               />
+              {errors.departureDate && (
+                <p style={{ color: "red" }}>{errors.departureDate.message}</p>
+              )}
             </div>
-
-            <div className="mt-2">
-              <button type="submit" className="p-2 bg-blue-500 text-white w-60">Find Tickets</button>
+            <div>
+              <Button type="submit" variant="contained">
+                Find Tickets
+              </Button>
             </div>
           </form>
+          <br />
         </div>
       </div>
     </div>
