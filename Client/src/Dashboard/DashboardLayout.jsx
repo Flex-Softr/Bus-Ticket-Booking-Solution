@@ -18,14 +18,15 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import { Link, useLocation  } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import CountertopsIcon from '@mui/icons-material/Countertops';
+import CountertopsIcon from "@mui/icons-material/Countertops";
 import SettingsIcon from "@mui/icons-material/Settings";
 import HomeIcon from "@mui/icons-material/Home";
 import Tooltip from "@mui/material/Tooltip";
+import DirectionsBusFilledIcon from "@mui/icons-material/DirectionsBusFilled";
 
 const drawerWidth = 240;
 
@@ -107,31 +108,30 @@ export default function DashboardLayout() {
     setOpen(false);
   };
 
-
-
-    // Function to get the text for the AppBar based on the current route
-    const getAppBarText = () => {
-      const pathname = location.pathname;
-      switch (pathname) {
-        case "/dashboard":
-          return "Dashboard";
-        case "/dashboard/addbus":
-          return "Add Bus";
-        case "/dashboard/addsupervisor":
-          return "Add Supervisor";
-          case "/dashboard/add-counter":
-          return "add-counter";
-        // Add more cases for other routes as needed
-        default:
-          return "Mini variant drawer";
-      }
-    };
-  
-
-
-
-
-
+  // Function to get the text for the AppBar based on the current route
+  const getAppBarText = () => {
+    const pathname = location.pathname;
+    switch (pathname) {
+      case "/dashboard":
+        return "Dashboard";
+      case "/dashboard/addbus":
+        return "Add Bus";
+      case "/dashboard/add-counter":
+        return "Add Counter";
+      case "/dashboard/addSupervisor":
+        return "Add Supervisor";
+      // ------------------------------
+      case "/dashboard/allbus":
+        return "All Bus";
+      case "/dashboard/allcounters":
+        return "All Counter";
+      case "/dashboard/allsupervisor":
+        return "All Supervisor";
+      // Add more cases for other routes as needed
+      default:
+        return "Mini variant drawer";
+    }
+  };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -157,7 +157,7 @@ export default function DashboardLayout() {
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <Tooltip title="Admin name" placement="right">
+          <Tooltip title="Admin name" placement="right" arrow>
             <Typography
               className="uppercase"
               variant="h5"
@@ -178,118 +178,232 @@ export default function DashboardLayout() {
         </DrawerHeader>
         <Divider />
         <List>
-          <ListItem
-            component={Link}
-            to="/dashboard"
-            disablePadding
-            sx={{ display: "block" }}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
+          <Tooltip title="Dashboard" placement="right" arrow>
+            <ListItem
+              component={Link}
+              to="/dashboard"
+              disablePadding
+              sx={{ display: "block" }}
             >
-              <ListItemIcon
+              <ListItemButton
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
                 }}
               >
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Dashboard"
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-            </ListItemButton>
-          </ListItem>
-          <ListItem
-            component={Link}
-            to="/dashboard/addbus"
-            disablePadding
-            sx={{ display: "block" }}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <DirectionsBusIcon />
-              </ListItemIcon>
-              <ListItemText primary="add bus" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <DashboardIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Dashboard"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          </Tooltip>
 
+          <Tooltip title="add bus" placement="right" arrow>
+            <ListItem
+              component={Link}
+              to="/dashboard/addbus"
+              disablePadding
+              sx={{ display: "block" }}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <DirectionsBusIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Add Bus"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          </Tooltip>
 
-          <ListItem
-            component={Link}
-            to="/dashboard/add-counter"
-            disablePadding
-            sx={{ display: "block" }}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
+          <Tooltip title="add counter" placement="right" arrow>
+            <ListItem
+              component={Link}
+              to="/dashboard/add-counter"
+              disablePadding
+              sx={{ display: "block" }}
             >
-              <ListItemIcon
+              <ListItemButton
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
                 }}
               >
-                <CountertopsIcon />
-              </ListItemIcon>
-              <ListItemText primary="add-counter" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem
-            component={Link}
-            to="/dashboard/addSupervisor"
-            disablePadding
-            sx={{ display: "block" }}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <CountertopsIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Add Counter"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          </Tooltip>
+
+          <Tooltip title="add supervisor" placement="right" arrow>
+            <ListItem
+              component={Link}
+              to="/dashboard/addSupervisor"
+              disablePadding
+              sx={{ display: "block" }}
             >
-              <ListItemIcon
+              <ListItemButton
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
                 }}
               >
-                <SupervisedUserCircleIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="add supervisor"
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-            </ListItemButton>
-          </ListItem>
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <SupervisedUserCircleIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Add Supervisor"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          </Tooltip>
         </List>
         <Divider />
+
         <List>
-          <ListItem
+          <Tooltip title="All Bus" placement="right" arrow>
+            <ListItem
+              component={Link}
+              to="/dashboard/allbus"
+              disablePadding
+              sx={{ display: "block" }}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <DirectionsBusFilledIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="All Bus"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          </Tooltip>
+
+          <Tooltip title="All Counters" placement="right" arrow>
+            <ListItem
+              component={Link}
+              to="/dashboard/allcounters"
+              disablePadding
+              sx={{ display: "block" }}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <CountertopsIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="All Counter"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          </Tooltip>
+
+          <Tooltip title="All Supervisors" placement="right" arrow>
+            <ListItem
+              component={Link}
+              to="/dashboard/allsupervisor"
+              disablePadding
+              sx={{ display: "block" }}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <SupervisedUserCircleIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="All Supervisor"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          </Tooltip>
+        </List>
+        <Divider />
+
+        <List>
+        <Tooltip title="Home" placement="right" arrow>
+
+        <ListItem
             component={Link}
             to="/"
             disablePadding
@@ -314,6 +428,9 @@ export default function DashboardLayout() {
               <ListItemText primary="Home" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
+        </Tooltip>
+
+        <Tooltip title="setting" placement="right" arrow>
           <ListItem
             component={Link}
             to="/setting"
@@ -339,6 +456,9 @@ export default function DashboardLayout() {
               <ListItemText primary="Setting" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
+        </Tooltip>
+
+        <Tooltip title="profile" placement="right" arrow>
           <ListItem
             component={Link}
             to="/profile"
@@ -364,17 +484,21 @@ export default function DashboardLayout() {
               <ListItemText primary="Profile" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
+        </Tooltip>
         </List>
       </Drawer>
       <Box
         component="main"
+        // className="h-screen"
         sx={{
           flexGrow: 1,
           p: {
-            xs: 1,  
-            md: 6, 
+            xs: 1,
+            md: 6,
           },
           backgroundColor: "#eceff1",
+          // height: '100vh',
+          // backgroundAttachment: 'fixed'
         }}
       >
         <DrawerHeader />
