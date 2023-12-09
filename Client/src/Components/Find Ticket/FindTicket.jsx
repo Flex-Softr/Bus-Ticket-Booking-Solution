@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
   Radio,
   Box,
   Typography,
   TextField,
-  Checkbox,
   Select,
   MenuItem,
   FormControl,
@@ -15,10 +14,7 @@ import {
   RadioGroup,
 } from "@mui/material";
 import { ArrowForward, DirectionsBus } from "@mui/icons-material";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LocationOffIcon from "@mui/icons-material/LocationOff";
-import DatePicker from "@mui/lab/DatePicker";
-
 
 function FindTicket() {
   const { control, handleSubmit, register, setValue } = useForm();
@@ -32,42 +28,37 @@ function FindTicket() {
     Object.entries(storedData).forEach(([key, value]) => {
       setValue(key, value.value);
     });
-
   }, [storedData, setValue]);
 
-
-  const [selectedDate, setSelectedDate] = useState(storedData.departureDate || '');
+  const [selectedDate, setSelectedDate] = useState(
+    storedData.departureDate || ""
+  );
 
   const handleDateChange = (event) => {
     setSelectedDate(event.target.value);
   };
 
-
   const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/ticket') // Replace with your actual endpoint
-      .then(res => res.json())
-      .then(data => {
+    fetch("http://localhost:5000/ticket") // Replace with your actual endpoint
+      .then((res) => res.json())
+      .then((data) => {
         // Assuming the array of tickets is in the response
         setTickets(data || []);
       })
-      .catch(error => console.error('Error fetching data:', error));
+      .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   // Convert the tickets array to options format required by react-select
-  const ticketOptions = tickets.map(ticket => ({
+  const ticketOptions = tickets.map((ticket) => ({
     value: ticket.name,
     label: ticket.name,
   }));
 
-
-
   const onSubmit = (data) => {
     console.log(data);
     // find ticket form logic code
-
-
   };
 
   return (
@@ -83,7 +74,6 @@ function FindTicket() {
                     View Vehicle
                   </Typography>
 
-
                   <FormControl fullWidth className="p-2 m-1">
                     <InputLabel htmlFor="pickupPoint">
                       <LocationOffIcon fontSize="medium" /> pickupPoint
@@ -93,15 +83,12 @@ function FindTicket() {
                       control={control}
                       defaultValue=""
                       render={({ field }) => (
-
-                        <Select {...field}
-                          isSearchable>
+                        <Select {...field} isSearchable>
                           {storedData.pickupPoint && (
                             <MenuItem value={storedData.pickupPoint.value}>
                               {storedData.pickupPoint.label}
                             </MenuItem>
                           )}
-
 
                           {ticketOptions.map((option) => (
                             <MenuItem key={option.value} value={option.value}>
@@ -109,8 +96,6 @@ function FindTicket() {
                             </MenuItem>
                           ))}
                         </Select>
-
-
                       )}
                     />
                   </FormControl>
@@ -136,12 +121,10 @@ function FindTicket() {
                               {option.label}
                             </MenuItem>
                           ))}
-
                         </Select>
                       )}
                     />
                   </FormControl>
-
 
                   <TextField
                     type="date"
@@ -153,26 +136,20 @@ function FindTicket() {
                     }}
                   />
 
-
                   <Typography className="text-md font-semibold px-2 mt-2">
                     Vehicle Type
                   </Typography>
 
-
                   <FormControl component="fieldset">
-                    <RadioGroup
-                      aria-label="type"
-                      name="type"
-
-                    >
+                    <RadioGroup aria-label="type" name="type">
                       <FormControlLabel
                         value="nonAC"
-                        control={<Radio {...register('type')} />}
+                        control={<Radio {...register("type")} />}
                         label="Non AC"
                       />
                       <FormControlLabel
                         value="ac"
-                        control={<Radio {...register('type')} />}
+                        control={<Radio {...register("type")} />}
                         label="AC"
                       />
                     </RadioGroup>
