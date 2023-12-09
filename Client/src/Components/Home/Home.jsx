@@ -46,22 +46,6 @@ const Home = () => {
         <div className="form-section text-center mt-36">
           <form className="mt-7" onSubmit={handleSubmit(onSubmit)}>
             <div className="md:flex mx-auto md:gap-6 md:ms-6">
-              {/* <div>
-                <Controller
-                  name="pickupPoint"
-                  control={control}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      className="md:w-60 field-style p-2"
-                      options={ticketOptions}
-                      isSearchable
-                      placeholder="Select PickUp Point"
-                    />
-                  )}
-                />
-              </div> */}
-
               <div>
                 <Controller
                   name="pickupPoint"
@@ -78,7 +62,9 @@ const Home = () => {
                   )}
                 />
 
-                {errors.pickupPoint && <p>{errors.pickupPoint.message}</p>}
+                {errors.pickupPoint && (
+                  <p style={{ color: "red" }}>{errors.pickupPoint.message}</p>
+                )}
               </div>
 
               <div>
@@ -96,7 +82,9 @@ const Home = () => {
                     />
                   )}
                 />
-                {errors.droppingPoint && <p>{errors.droppingPoint.message}</p>}
+                {errors.droppingPoint && (
+                  <p style={{ color: "red" }}>{errors.droppingPoint.message}</p>
+                )}
               </div>
             </div>
             <div>
@@ -113,15 +101,17 @@ const Home = () => {
                   />
                 )}
               />
-              {errors.departureDate && <p>{errors.departureDate.message}</p>}
-            </div>{" "}
-            <br />
-            <div className="mt-2">
+              {errors.departureDate && (
+                <p style={{ color: "red" }}>{errors.departureDate.message}</p>
+              )}
+            </div>
+            <div>
               <Button type="submit" variant="contained">
                 Find Tickets
               </Button>
             </div>
           </form>
+          <br />
         </div>
       </div>
     </div>
