@@ -23,6 +23,9 @@ import {
 import AuthProvider from "./Components/Providers/AuthProvider/AuthProvider.jsx";
 import PrivateRoute from "./route/PrivateRoute.jsx";
 import ErrorPage from "./ErrorPage.jsx";
+import AllBus from "./Dashboard/AllBus/AllBus.jsx";
+import AllCounters from "./Dashboard/AllCounters/AllCounters.jsx";
+import AllSupervisor from "./Dashboard/AllSupervisor/AllSupervisor.jsx";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -63,6 +66,18 @@ const router = createBrowserRouter([
       {
         path:'add-counter',
         element:<AddCounter></AddCounter>
+      },
+      {
+        path:'allbus',
+        element:<AllBus />
+      },
+      {
+        path:'allcounters',
+        element:<AllCounters />
+      },
+      {
+        path:'allsupervisor',
+        element:<AllSupervisor />
       }
     ]
   },

@@ -221,7 +221,7 @@ function FindTicket() {
                     variant="contained"
                     className="px-6 py-2 my-3 mx-auto block"
                   >
-                    Select Seat
+                    Select a Seat for journey
                   </Button>
                 </div>
               </div>

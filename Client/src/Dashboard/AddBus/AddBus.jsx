@@ -14,6 +14,7 @@ import useSuoervisor from "../../hooks/useSuoervisor";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const busTypes = ["AC", "Non-AC"];
 
@@ -21,6 +22,7 @@ const AddBus = () => {
   const { allDistricts } = useAllDistricts();
   const { supervisors } = useSuoervisor();
   const [loading, setLoading] = useState(false);
+  let navigate = useNavigate();
 
   const locations = allDistricts.map((ticket) => ({
     value: ticket.name,
@@ -46,10 +48,11 @@ const AddBus = () => {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Successfully submitted",
+          title: "Created a new bus",
           showConfirmButton: false,
           timer: 1500,
         });
+        navigate("/dashboard/allbus");
         reset();
       })
       .catch((error) => {
@@ -78,7 +81,6 @@ const AddBus = () => {
           alignItems: "center",
           borderRadius: "50%",
           padding: "30px",
-          // color:"#143f40",
           height: "40px",
           width: "40px",
           margin: "0 auto",
@@ -106,6 +108,7 @@ const AddBus = () => {
             />
           </div>
         </div>
+        
         <div className="flex gap-2 w-full">
           <div className="mb-4 flex-1">
             <FormControl fullWidth>

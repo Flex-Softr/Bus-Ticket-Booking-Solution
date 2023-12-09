@@ -9,7 +9,11 @@ import useAllDistricts from "../../hooks/useAllDistricts";
 const Home = () => {
   const { allDistricts } = useAllDistricts();
 
-  const { handleSubmit, control } = useForm();
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
   const navigate = useNavigate();
 
   // Convert the tickets array to options format required by react-select
@@ -46,6 +50,7 @@ const Home = () => {
                 <Controller
                   name="pickupPoint"
                   control={control}
+                  rules={{ required: "PickUp Point is required" }}
                   render={({ field }) => (
                     <Select
                       {...field}
@@ -56,12 +61,17 @@ const Home = () => {
                     />
                   )}
                 />
+
+                {errors.pickupPoint && (
+                  <p style={{ color: "red" }}>{errors.pickupPoint.message}</p>
+                )}
               </div>
 
               <div>
                 <Controller
                   name="droppingPoint"
                   control={control}
+                  rules={{ required: "dropping Point is required" }}
                   render={({ field }) => (
                     <Select
                       {...field}
@@ -72,13 +82,16 @@ const Home = () => {
                     />
                   )}
                 />
+                {errors.droppingPoint && (
+                  <p style={{ color: "red" }}>{errors.droppingPoint.message}</p>
+                )}
               </div>
             </div>
-
             <div>
               <Controller
                 name="departureDate"
                 control={control}
+                rules={{ required: "Date is required" }}
                 render={({ field }) => (
                   <input
                     type="date"
@@ -88,17 +101,17 @@ const Home = () => {
                   />
                 )}
               />
+              {errors.departureDate && (
+                <p style={{ color: "red" }}>{errors.departureDate.message}</p>
+              )}
             </div>
-
-            <div className="mt-2">
+            <div>
               <Button type="submit" variant="contained">
                 Find Tickets
               </Button>
-              {/* <button type="submit" className="p-2 text-white w-60">
-                Find Tickets
-              </button> */}
             </div>
           </form>
+          <br />
         </div>
       </div>
     </div>
