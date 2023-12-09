@@ -53,6 +53,9 @@ async function run() {
       res.send(result);
     });
 
+<<<<<<< HEAD
+    // add supervisor
+=======
     // get user by email
     app.get(`/users/:email`, async (req, res) => {
       const email = req.params.email;
@@ -61,6 +64,7 @@ async function run() {
       const result = await accountsDataCollection.findOne(query);
       res.send(result);
     });
+>>>>>>> 0acf6e00f42570e1e67f41205d501b32d6dc2855
 
     // post operation=============================
     // add cart
@@ -71,6 +75,25 @@ async function run() {
       res.send(result);
     });
 
+<<<<<<< HEAD
+// post
+app.post('/supervisor', async (req, res) => {
+    const item = req.body;
+    console.log(item)
+    const result = await supervisorDataCollection.insertOne(item);
+    res.send(result);
+  })
+
+  // add accountsData
+   app.post('/add-account',async(req, res)=>{
+    const accountData=req.body;
+    console.log("new account added",accountData)
+    const result = await accountsDataCollection.insertOne(accountData);
+    res.send(result)
+   })
+
+    
+=======
     // add accountsData
     app.post("/add-account", async (req, res) => {
       const accountData = req.body;
@@ -113,6 +136,7 @@ async function run() {
     //     res.status(500).json({ message: 'Internal server error' });
     //   }
     // });
+>>>>>>> 0acf6e00f42570e1e67f41205d501b32d6dc2855
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
