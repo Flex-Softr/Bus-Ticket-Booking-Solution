@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const {
   getTicket,
   getSupervisors,
@@ -8,37 +8,43 @@ const {
   addSupervisors,
   addAccount,
   addbus,
-  deletebus
-} = require('../controllers/users.controller');
+  deletebus,
+  deleteSupervisors,
+  getAccount,
+} = require("../controllers/users.controller");
 const router = express.Router();
 
 // get all supervisors data
-router.get('/supervisors', getSupervisors);
-
+router.get("/supervisors", getSupervisors);
+// delete supervisor
+router.delete("/supervisors/:id", deleteSupervisors);
 
 // get all bus data
-router.get('/allbus', getAllBus);
+router.get("/allbus", getAllBus);
 
 // get user by email
 router.get(`/users/:email`, getUserByEmail);
 
 // post operation=============================
 // add cart
-router.post('/ticket', postTickets);
+router.post("/ticket", postTickets);
 
-// post
-router.post('/supervisor', addSupervisors);
+// post supervisor
+router.post("/supervisor", addSupervisors);
 
 // add accountsData
-router.post('/add-account', addAccount);
+router.post("/add-account", addAccount);
+
+// get all accountsData
+router.get("/add-account", getAccount);
 
 // add bus
-router.post('/addbus', addbus);
+router.post("/addbus", addbus);
 
 // delete a single bus by id
-router.delete('/deletebus/:id', deletebus);
+router.delete("/deletebus/:id", deletebus);
 
 // get ticket (moved to the end)
-router.get('/ticket', getTicket);
+router.get("/ticket", getTicket);
 
 module.exports = router;
