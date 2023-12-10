@@ -1,5 +1,8 @@
 import Box from "@mui/material/Box";
 import useSuoervisor from "../../hooks/useSuoervisor";
+// import EditIcon from "@material-ui/icons/Edit";
+
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import {
   // Checkbox,
   IconButton,
@@ -19,9 +22,11 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const AllSupervisor = () => {
-  const { supervisors } = useSuoervisor();
+  const { supervisors, refetch } = useSuoervisor();
   console.log(supervisors);
 
   const [selected, setSelected] = useState([]);
@@ -61,6 +66,30 @@ const AllSupervisor = () => {
         supervisor.phone &&
         supervisor.phone.toLowerCase().includes(search.toLowerCase()))
   );
+
+  const handleDeleteClick = async (id) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      if (result.isConfirmed) {
+        await axios.delete(`http://localhost:5000/supervisors/${id}`);
+        // setRefetch(!refetch);
+        refetch();
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire("Error!", "An error occurred while deleting the bus.", "error");
+    }
+  };
 
   return (
     <Box
@@ -150,6 +179,13 @@ const AllSupervisor = () => {
                   <TableCell>{row.presentAddress}</TableCell>
                   <TableCell>{row.permanentAddress}</TableCell>
                   <TableCell></TableCell>
+                  <TableCell>
+                    <Tooltip title="Delete">
+                      <IconButton onClick={() => handleDeleteClick(row._id)}>
+                        <DeleteForeverIcon color="primary" />
+                      </IconButton>
+                    </Tooltip>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
