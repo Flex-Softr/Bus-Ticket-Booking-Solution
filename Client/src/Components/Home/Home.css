@@ -14,3 +14,16 @@
     width: 460px;
     height: 320px;
 }
+@keyframes busMove {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  .animate-bus-move {
+    animation: busMove 5s linear infinite; /* Adjust the duration as needed */
+  }
+  
