@@ -108,7 +108,7 @@ const AddBus = () => {
             />
           </div>
         </div>
-        
+
         <div className="flex gap-2 w-full">
           <div className="mb-4 flex-1">
             <FormControl fullWidth>
@@ -221,13 +221,23 @@ const AddBus = () => {
           </div>
         </div>
 
-        <div className="mb-4">
-          <TextField
-            label="Time"
-            type="time"
-            fullWidth
-            {...register("time", { required: "This field is required" })}
-          />
+        <div className="flex gap-2 mb-4 w-full">
+          <div className="flex-1">
+            <TextField
+              label="departureDate"
+              type="date"
+              fullWidth
+              {...register("departureDate", { required: "This field is required" })}
+            />
+          </div>
+          <div className="flex-1">
+            <TextField
+              label="Time"
+              type="time"
+              fullWidth
+              {...register("time", { required: "This field is required" })}
+            />
+          </div>
         </div>
 
         <div className="mb-4">

@@ -13,8 +13,9 @@ import {
   InputLabel,
   RadioGroup,
 } from "@mui/material";
-import { ArrowForward, DirectionsBus } from "@mui/icons-material";
+// import { ArrowForward, DirectionsBus } from "@mui/icons-material";
 import LocationOffIcon from "@mui/icons-material/LocationOff";
+import ShowTicket from "./ShowTicket";
 
 function FindTicket() {
   const { control, handleSubmit, register, setValue } = useForm();
@@ -169,7 +170,7 @@ function FindTicket() {
           </div>
           {/* all buses view section */}
           <div className="basis-8/12 grow">
-            <div className="h-full max-w-full mt-12 px-4">
+            {/* <div className="h-full max-w-full mt-12 px-4">
               <div className="flex flex-wrap justify-center items-center bg-gray-50 rounded">
                 <div className="basis-6/12 grow p-2 mb-2">
                   <Typography className="font-semibold text-xl">
@@ -225,7 +226,8 @@ function FindTicket() {
                   </Button>
                 </div>
               </div>
-            </div>
+            </div> */}
+            <ShowTicket />
           </div>
         </div>
       </div>
