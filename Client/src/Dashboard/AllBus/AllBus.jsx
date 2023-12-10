@@ -9,7 +9,6 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Checkbox from "@mui/material/Checkbox";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import SearchIcon from "@mui/icons-material/Search";
 import "./AllBus.css";
@@ -20,55 +19,38 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import axios from "axios";
 import Swal from "sweetalert2";
-import FilterListIcon from '@mui/icons-material/FilterList';
+import FilterListIcon from "@mui/icons-material/FilterList";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Divider from "@mui/material/Divider";
 
 const DataTable = () => {
   const { allBusData, refetch } = useAllBusData();
   console.log(allBusData);
-
-  const [selected, setSelected] = useState([]);
   const [search, setSearch] = useState("");
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = allBusData.map((row) => row._id);
-      setSelected(newSelecteds);
-    } else {
-      setSelected([]);
-    }
-  };
-
-  const handleClick = (event, id) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
-  };
-
-  const isSelected = (id) => selected.indexOf(id) !== -1;
 
   const filteredBus = allBusData.filter(
     (bus) =>
       bus.busName.toLowerCase().includes(search.toLowerCase()) ||
       bus.supervisorName.label.toLowerCase().includes(search.toLowerCase())
   );
+
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuItemClick = () => {
+    setAnchorEl(null);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
 
   const handleDeleteClick = async (id) => {
     try {
@@ -84,7 +66,6 @@ const DataTable = () => {
 
       if (result.isConfirmed) {
         await axios.delete(`http://localhost:5000/deletebus/${id}`);
-        // setRefetch(!refetch);
         refetch();
         Swal.fire("Deleted!", "Your file has been deleted.", "success");
       }
@@ -140,10 +121,25 @@ const DataTable = () => {
               </IconButton>
             </Link>
           </Tooltip>
-          <Tooltip title="Filter" arrow>
-              <IconButton>
+          <Tooltip title="Filter" placement="right" arrow>
+            <div>
+              <IconButton onClick={handleMenuClick}>
                 <FilterListIcon color="primary" />
               </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+              >
+                <MenuItem onClick={() => handleMenuItemClick("newestToOldest")}>
+                  Newest to Oldest
+                </MenuItem>
+                <Divider />
+                <MenuItem onClick={() => handleMenuItemClick("oldestToNewest")}>
+                  Oldest to Newest
+                </MenuItem>
+              </Menu>
+            </div>
           </Tooltip>
         </Box>
       </Box>
@@ -155,44 +151,26 @@ const DataTable = () => {
               style={{ color: "#fff" }}
               sx={{ backgroundColor: (theme) => theme.palette.primary.main }}
             >
-              <TableCell>
-                <Checkbox
-                  indeterminate={
-                    selected.length > 0 && selected.length < allBusData.length
-                  }
-                  checked={selected.length === allBusData.length}
-                  onChange={handleSelectAllClick}
-                  // onClick={handleDeleteManyClick}
-                />
-              </TableCell>
-              <TableCell>Serial</TableCell>
+              <TableCell>Serial No</TableCell>
               <TableCell>Bus Name</TableCell>
-              <TableCell>Time</TableCell>
-              {/* <TableCell>Pickup Point</TableCell> */}
-              <TableCell>Dropping Point</TableCell>
+              <TableCell>departure Time</TableCell>
+              <TableCell>Pickup / Dropping Point</TableCell>
               <TableCell>Supervisor Name</TableCell>
-              {/* <TableCell>Supervisor Number</TableCell> */}
               <TableCell>Bus Type</TableCell>
-              <TableCell>Delete</TableCell>
+              <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
 
           {filteredBus && filteredBus.length > 0 ? (
             <TableBody>
               {filteredBus.map((row) => (
-                <TableRow
-                  key={row._id}
-                  onClick={(event) => handleClick(event, row._id)}
-                  selected={isSelected(row._id)}
-                >
-                  <TableCell>
-                    <Checkbox checked={isSelected(row._id)} />
-                  </TableCell>
+                <TableRow key={row._id}>
                   <TableCell>{row.serialNumber}</TableCell>
                   <TableCell>{row.busName}</TableCell>
                   <TableCell>{row.time}</TableCell>
-                  {/* <TableCell>{row.pickupPoint.label}</TableCell> */}
-                  <TableCell>{row.droppingPoint.label}</TableCell>
+                  <TableCell>
+                    {row.pickupPoint.label} / {row.droppingPoint.label}
+                  </TableCell>
                   <TableCell>{row.supervisorName.label}</TableCell>
                   <TableCell>{row.busType}</TableCell>
                   <TableCell>
@@ -210,7 +188,6 @@ const DataTable = () => {
               height="20vh"
               width="100%"
               sx={{
-                // backgroundColor: "#eceff1",
                 color: "#999",
                 display: "flex",
                 flexDirection: "column",

@@ -2,7 +2,7 @@ import React from 'react';
 import TextField from '@mui/material/TextField';
 import { useForm } from 'react-hook-form';
 import { Button, Checkbox, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import  './FixSeat.css'
+// import  './FixSeat.css'
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 const FixSeat = () => {
