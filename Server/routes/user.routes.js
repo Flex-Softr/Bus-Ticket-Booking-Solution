@@ -1,14 +1,14 @@
 const express = require('express');
 const {
   getTicket,
-  getSupervisors,
   getAllBus,
   getUserByEmail,
   postTickets,
   addSupervisors,
   addAccount,
   addbus,
-  deletebus
+  deletebus,
+  getSupervisors
 } = require('../controllers/users.controller');
 const router = express.Router();
 
@@ -22,7 +22,6 @@ router.get('/allbus', getAllBus);
 // get user by email
 router.get(`/users/:email`, getUserByEmail);
 
-// post operation=============================
 // add cart
 router.post('/ticket', postTickets);
 

@@ -46,7 +46,7 @@ const client = new MongoClient(uri, {
       accountsDataCollection: client.db("cityTicket").collection("accountsData"),
       busDataCollection: client.db("cityTicket").collection("busData"),
       supervisorDataCollection: client.db("cityTicket").collection("supervisorData"),
-
+     
     };
     usersController.setupCollections(collections);
     // app.use 

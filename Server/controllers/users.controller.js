@@ -4,6 +4,7 @@ let accountsDataCollection;
 let busDataCollection;
 let supervisorDataCollection;
 
+
 // Function to set up collections
 exports.setupCollections = (collections) => {
   bdDistrictsCollection = collections.bdDistrictsCollection;
@@ -27,7 +28,7 @@ exports.getSupervisors=async (req, res) => {
     const result = await supervisorDataCollection.find().toArray();
     res.send(result);
   }
-  
+ 
 
 //  Get allbus
 exports.getAllBus= async (req, res) => {
