@@ -23,7 +23,7 @@ const SupervisorForm = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    const { name, phone, nid, presentAddress, permanentAddress } = data;
+    const { name, phone, nid, presentAddress, permanentAddress, image } = data;
 
     const newItem = {
       name,
@@ -31,6 +31,7 @@ const SupervisorForm = () => {
       nid,
       presentAddress,
       permanentAddress,
+      image,
     };
 
     axios
@@ -229,11 +230,6 @@ const SupervisorForm = () => {
                         margin="normal"
                         size="small"
                       />
-                      {errors.image && (
-                        <span className="text-red-500 block">
-                          {errors.image.message}
-                        </span>
-                      )}
                     </div>
                   )}
                 />
