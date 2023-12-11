@@ -1,0 +1,28 @@
+/* Button.css */
+
+/* Inactive button */
+.button {
+  background-color: transparent;
+  color: dark;
+  border: 2px solid #007bff; /* Add a border to inactive buttons */
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.button:hover {
+  background-color: #0056b3;
+  border-color: #0056b3; /* Change the border color on hover */
+}
+
+/* Active button */
+.active {
+  background-color: #0056b3;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}

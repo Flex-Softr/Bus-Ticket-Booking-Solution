@@ -18,6 +18,8 @@ import LocationOffIcon from "@mui/icons-material/LocationOff";
 import ShowTicket from "./ShowTicket";
 
 function FindTicket() {
+  const [normalizedBusTickets, setNormalizedBusTickets] = useState([]);
+
   const { control, handleSubmit, register, setValue } = useForm();
 
   // Retrieve data from local storage
@@ -59,7 +61,19 @@ function FindTicket() {
 
   const onSubmit = (data) => {
     console.log(data);
-    // find ticket form logic code
+    console.log(normalizedBusTickets[1]);
+    const filteredBusTickets = normalizedBusTickets.filter(
+      (ticket) =>
+        ticket.busType.toLowerCase() === data.type.toLowerCase() &&
+        ticket.pickupPoint.label.toLowerCase() ===
+          data.pickupPoint.toLowerCase() &&
+        ticket.droppingPoint.label.toLowerCase() ===
+          data.droppingPoint.toLowerCase()
+    );
+    setNormalizedBusTickets(filteredBusTickets);
+    console.log(filteredBusTickets);
+    // console.log(data.droppingPoint.toLowerCase());
+    // console.log(normalizedBusTickets[1].droppingPoint.label.toLowerCase());
   };
 
   return (
@@ -127,10 +141,22 @@ function FindTicket() {
                     />
                   </FormControl>
 
+                  {/* <TextField
+                    type="date"
+                    label="Departure Date"
+                    // value={selectedDate}
+                    defaultValue={selectedDate}
+                    // onChange={handleDateChange}
+                    onChange={handleDateChange}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  /> */}
+
                   <TextField
                     type="date"
                     label="Departure Date"
-                    value={selectedDate}
+                    value={selectedDate} // Change defaultValue to value
                     onChange={handleDateChange}
                     InputLabelProps={{
                       shrink: true,
@@ -144,7 +170,7 @@ function FindTicket() {
                   <FormControl component="fieldset">
                     <RadioGroup aria-label="type" name="type">
                       <FormControlLabel
-                        value="nonAC"
+                        value="Non-AC"
                         control={<Radio {...register("type")} />}
                         label="Non AC"
                       />
@@ -170,64 +196,10 @@ function FindTicket() {
           </div>
           {/* all buses view section */}
           <div className="basis-8/12 grow">
-            {/* <div className="h-full max-w-full mt-12 px-4">
-              <div className="flex flex-wrap justify-center items-center bg-gray-50 rounded">
-                <div className="basis-6/12 grow p-2 mb-2">
-                  <Typography className="font-semibold text-xl">
-                    UNIQUE - MOTIJHEEL-COXSBAZAR
-                  </Typography>
-                  <Typography
-                    varient="span"
-                    className="block my-1 text-gray-500"
-                  >
-                    Seat Layout 2x2
-                  </Typography>
-                  <Typography
-                    varient="span"
-                    className="inline-block text-yellow-400 my-1"
-                  >
-                    <DirectionsBus />
-                    UNIQUE
-                  </Typography>
-                </div>
-                <div className="basis-6/12 flex justify-evenly grow p-2">
-                  <div>
-                    <Typography varient="p" className="text-md font-semibold">
-                      6:30 pm
-                    </Typography>
-                    <Typography varient="p" className="text-gray-500">
-                      Motijheel
-                    </Typography>
-                  </div>
-                  <div>
-                    <ArrowForward className="mx-auto block text-blue-400" />
-                    <Typography
-                      varient="p"
-                      className="text-sm mx-1 text-gray-500"
-                    >
-                      10:30 min
-                    </Typography>
-                  </div>
-                  <div>
-                    <Typography varient="p" className="text-md font-semibold">
-                      7:30 pm
-                    </Typography>
-                    <Typography varient="p" className="text-gray-500">
-                      CoxsBazar
-                    </Typography>
-                  </div>
-                </div>
-                <div className="basis-full grow">
-                  <Button
-                    variant="contained"
-                    className="px-6 py-2 my-3 mx-auto block"
-                  >
-                    Select Seat
-                  </Button>
-                </div>
-              </div>
-            </div> */}
-            <ShowTicket />
+            <ShowTicket
+              normalizedBusTickets={normalizedBusTickets}
+              setNormalizedBusTickets={setNormalizedBusTickets}
+            />
           </div>
         </div>
       </div>

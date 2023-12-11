@@ -1,4 +1,3 @@
-
 import { useForm, Controller } from "react-hook-form";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -7,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import CountertopsIcon from '@mui/icons-material/Countertops';
+import CountertopsIcon from "@mui/icons-material/Countertops";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 // import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -30,6 +29,7 @@ const AddCounter = () => {
   } = useForm();
 
   const onSubmit = (data) => {
+    const name = data.name;
     const email = data.email;
     const password = data.password;
     console.log(data);
@@ -38,36 +38,44 @@ const AddCounter = () => {
       .then((result) => {
         const NewUser = result.user;
         console.log(NewUser);
-        const saveAccount={account_name:data?.name, email:data?.email, password:data?.password, role:data?.role}
-         fetch('http://localhost:5000/add-account',{
-          method:'POST',
-          headers:{
-            'content-type':'application/json'
+        const saveAccount = {
+          // account_name: data?.name,
+          account_name: name,
+          email: data?.email,
+          password: data?.password,
+          role: data?.role,
+        };
+        fetch("http://localhost:5000/add-account", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
           },
-          body:JSON.stringify(saveAccount)
-         })
-         .then(res=>res.json())
-         .then(data=>{
-          if(data.insertedId){
-            
-            Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: 'Account Added Successfully',
-              showConfirmButton: false,
-              timer: 1500
-            })
-            
-          }
-         })
+          body: JSON.stringify(saveAccount),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.insertedId) {
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Account Added Successfully",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          });
       })
       .catch((error) => {
         console.log(error);
       });
   };
   return (
-    <Box sx={{ backgroundColor: '#fff', borderRadius: '3px' }}  className="px-20 py-10 md:w-11/12 mx-auto" style={{ "boxShadow": " rgba(0, 0, 0, 0.24) 0px 3px 8px" }}>
-      <Container  component="main" maxWidth="xs">
+    <Box
+      sx={{ backgroundColor: "#fff", borderRadius: "3px" }}
+      className="px-20 py-10 md:w-11/12 mx-auto"
+      style={{ boxShadow: " rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
+    >
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
@@ -95,16 +103,16 @@ const AddCounter = () => {
               <Grid item xs={12}>
                 <TextField
                   autoComplete="given-name"
-                  name="Name"
+                  name="name"
                   required
                   fullWidth
-                  id="Name"
+                  id="name"
                   label="Counter Name"
                   autoFocus
-                  {...register("Name", { required: " Name is required" })}
+                  {...register("name", { required: " Name is required" })}
                 />
-                {errors.Name && (
-                  <p className="text-red-600">{errors.Name.message}</p>
+                {errors.name && (
+                  <p className="text-red-600">{errors.name.message}</p>
                 )}
               </Grid>
               <Grid item xs={12}>
