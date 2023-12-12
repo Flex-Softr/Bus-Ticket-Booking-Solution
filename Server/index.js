@@ -45,14 +45,9 @@ async function run() {
         .db("cityTicket")
         .collection("accountsData"),
       busDataCollection: client.db("cityTicket").collection("busData"),
-<<<<<<< HEAD
-      supervisorDataCollection: client.db("cityTicket").collection("supervisorData"),
-     
-=======
       supervisorDataCollection: client
         .db("cityTicket")
         .collection("supervisorData"),
->>>>>>> ca327508bc09d493c3d7ab737fae7ca152862e7c
     };
     usersController.setupCollections(collections);
     // app.use

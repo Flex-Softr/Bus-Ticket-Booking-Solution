@@ -10,6 +10,7 @@ const {
   deletebus,
   deleteSupervisors,
   getAccount,
+  getSupervisors,
 } = require("../controllers/users.controller");
 const router = express.Router();
 

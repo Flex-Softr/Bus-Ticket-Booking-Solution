@@ -93,7 +93,7 @@ const DataTable = () => {
           textTransform="capitalize"
           gutterBottom
         >
-          remaining all bus
+          Remaining all bus
         </Typography>
         <Box display="flex" alignItems="center" gap="5px">
           <Box position="relative" width="200px">
@@ -153,7 +153,7 @@ const DataTable = () => {
             >
               <TableCell>Serial No</TableCell>
               <TableCell>Bus Name</TableCell>
-              <TableCell>departure Time</TableCell>
+              <TableCell>Departure Time</TableCell>
               <TableCell>Pickup / Dropping Point</TableCell>
               <TableCell>Supervisor Name</TableCell>
               <TableCell>Bus Type</TableCell>
