@@ -21,6 +21,7 @@ import Swal from "sweetalert2";
 // const theme = createTheme();
 const AddCounter = () => {
   const { createUser } = useContext(AuthContext);
+
   const {
     handleSubmit,
     control,
@@ -115,6 +116,7 @@ const AddCounter = () => {
                   <p className="text-red-600">{errors.name.message}</p>
                 )}
               </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   required

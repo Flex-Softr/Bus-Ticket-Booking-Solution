@@ -28,13 +28,50 @@ exports.getAccount = async (req, res) => {
 
 // Get supervisors
 exports.getSupervisors = async (req, res) => {
-  const result = await supervisorDataCollection.find().toArray();
+  const result = await supervisorDataCollection
+    .find()
+    .sort({ createdAt: 1 })
+    .toArray();
+  res.send(result);
+};
+
+// update supervisor
+exports.updateSupervisors = async (req, res) => {
+  const id = req.params.id;
+  const filter = { _id: new ObjectId(id) };
+  const options = { upsert: true };
+  const updatedChocolate = req.body;
+
+  const chocolate = {
+    $set: {
+      name,
+      phone,
+      nid,
+      presentAddress,
+      permanentAddress,
+
+      name: updatedChocolate.name,
+      phone: updatedChocolate.phone,
+      nid: updatedChocolate.nid,
+      presentAddress: updatedChocolate.presentAddress,
+      permanentAddress: updatedChocolate.permanentAddress,
+    },
+  };
+
+  const result = await supervisorDataCollection.updateOne(
+    filter,
+    chocolate,
+    options
+  );
   res.send(result);
 };
 
 //  Get allbus
 exports.getAllBus = async (req, res) => {
-  const result = await busDataCollection.find().toArray();
+  const result = await busDataCollection
+    .find()
+    .sort({ createdAt: 1 })
+    .toArray();
   res.send(result);
 };
 

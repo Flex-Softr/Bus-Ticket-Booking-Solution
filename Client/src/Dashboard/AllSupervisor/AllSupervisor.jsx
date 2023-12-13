@@ -109,7 +109,7 @@ const AllSupervisor = () => {
           textTransform="capitalize"
           gutterBottom
         >
-          remaining all bus
+          All Supervisor Data
         </Typography>
         <Box display="flex" alignItems="center" gap="5px">
           <Box position="relative" width="200px">
@@ -153,7 +153,7 @@ const AllSupervisor = () => {
               sx={{ backgroundColor: (theme) => theme.palette.primary.main }}
             >
               <TableCell>Serial</TableCell>
-              <TableCell>Name</TableCell>
+              <TableCell>SupervisorName</TableCell>
               <TableCell>Phone Number</TableCell>
               <TableCell>NID</TableCell>
               <TableCell>Present Address</TableCell>
@@ -178,7 +178,9 @@ const AllSupervisor = () => {
 
                   <TableCell>{row.presentAddress}</TableCell>
                   <TableCell>{row.permanentAddress}</TableCell>
-                  <TableCell></TableCell>
+                  <TableCell>
+                    <Link to={`updateSupervisor/${row._id}`}>Edit</Link>
+                  </TableCell>
                   <TableCell>
                     <Tooltip title="Delete">
                       <IconButton onClick={() => handleDeleteClick(row._id)}>

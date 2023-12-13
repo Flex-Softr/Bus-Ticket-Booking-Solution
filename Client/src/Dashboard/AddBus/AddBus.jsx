@@ -95,11 +95,13 @@ const AddBus = () => {
             <TextField
               label="Serial Number"
               fullWidth
+              type="number"
               {...register("serialNumber", {
                 required: "This field is required",
               })}
             />
           </div>
+
           <div className="mb-4 flex-1">
             <TextField
               label="Bus Name"
@@ -227,7 +229,9 @@ const AddBus = () => {
               label="departureDate"
               type="date"
               fullWidth
-              {...register("departureDate", { required: "This field is required" })}
+              {...register("departureDate", {
+                required: "This field is required",
+              })}
             />
           </div>
           <div className="flex-1">
