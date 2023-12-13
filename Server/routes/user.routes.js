@@ -1,7 +1,6 @@
 const express = require("express");
 const {
   getTicket,
-  getSupervisors,
   getAllBus,
   getUserByEmail,
   postTickets,
@@ -11,7 +10,7 @@ const {
   deletebus,
   deleteSupervisors,
   getAccount,
-  updateSupervisors,
+  getSupervisors,
 } = require("../controllers/users.controller");
 const router = express.Router();
 
@@ -29,7 +28,6 @@ router.get("/allbus", getAllBus);
 // get user by email
 router.get(`/users/:email`, getUserByEmail);
 
-// post operation=============================
 // add cart
 router.post("/ticket", postTickets);
 

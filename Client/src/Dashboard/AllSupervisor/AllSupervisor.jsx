@@ -109,7 +109,7 @@ const AllSupervisor = () => {
           textTransform="capitalize"
           gutterBottom
         >
-          All Supervisor Data
+          Remaining all Supervisors
         </Typography>
         <Box display="flex" alignItems="center" gap="5px">
           <Box position="relative" width="200px">
@@ -152,8 +152,8 @@ const AllSupervisor = () => {
               style={{ color: "#fff" }}
               sx={{ backgroundColor: (theme) => theme.palette.primary.main }}
             >
-              <TableCell>Serial</TableCell>
-              <TableCell>SupervisorName</TableCell>
+              <TableCell>#</TableCell>
+              <TableCell>Name</TableCell>
               <TableCell>Phone Number</TableCell>
               <TableCell>NID</TableCell>
               <TableCell>Present Address</TableCell>

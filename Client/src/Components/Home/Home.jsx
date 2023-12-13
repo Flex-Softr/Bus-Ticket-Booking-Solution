@@ -66,16 +66,15 @@ const Home = () => {
     navigate("/find-ticket");
   };
 
+  // box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
   return (
-    <div
-      className="find-ticket-Section bg-[#ff5f020a] relative py-24"
-      style={{ overflow: "hidden" }}
-    >
+    <div className="find-ticket-Section bg-[#ff5f0212] relative py-24 md:overflow-hidden overflow-x-hidden">
       <div className="text-img md:w-[100%] md:mt-0 absolute top-10 md:top-0">
         <img src={text} alt="" />
       </div>
-      <div className="grid md:grid-cols-2 grid-cols-1">
-        <div className="md:absolute gap-0 -z-20 top-5 md:h-full h-[350px]  flex w-full overflow-hidden">
+      <div className="md:flex items-center justify-center">
+        <div className="md:absolute -z-20 top-5 md:h-full h-[350px]  flex w-full overflow-hidden">
           <img
             className="home-img w-full h-[500px] mx-auto"
             src={bgskyline}
@@ -93,19 +92,18 @@ const Home = () => {
         <span
           className="hidden md:block"
           style={{
-            height: "3px",
+            height: "2px",
             width: "100%",
             position: "absolute",
-            bottom: "90px",
+            bottom: "78px",
             background: "#143f40",
           }}
         ></span>
-        <div></div>
-
+        <div className="w-[350px]"></div>
         <Box
-          sx={{ backgroundColor: "#fff", borderRadius: "3px" }}
-          className=" py-3 text-center md:w-[550px] w-full md:mt-10 md:mb-10"
-          style={{ boxShadow: " rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
+          sx={{ backgroundColor: "#ffffff", borderRadius: "3px" }}
+          className="py-3 text-center md:w-[550px] w-full md:mt-7 md:mb-10"
+          style={{ boxShadow: " rgba(0, 0, 0, 0.35) 0px 3px 8px" }}
         >
           <Typography component="h4" variant="h5">
             Make a seat

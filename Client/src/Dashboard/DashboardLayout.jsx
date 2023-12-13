@@ -499,7 +499,7 @@ export default function DashboardLayout() {
           flexGrow: 1,
           p: {
             xs: 1,
-            md: 6,
+            md: 4,
           },
           backgroundColor: "#eceff1",
           // height: '100vh',
