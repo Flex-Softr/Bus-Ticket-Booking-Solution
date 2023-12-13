@@ -71,7 +71,7 @@ const AddBus = () => {
   return (
     <Box
       sx={{ backgroundColor: "#fff", borderRadius: "3px" }}
-      className=" px-5 md:px-20 py-10 md:w-11/12 mx-auto"
+      className="px-5 md:px-20 py-10 md:w-11/12 mx-auto"
       style={{ boxShadow: " rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
     >
       <Box
@@ -93,6 +93,7 @@ const AddBus = () => {
         <div className="flex gap-2">
           <div className="mb-4 flex-1">
             <TextField
+            type="number"
               label="Serial Number"
               fullWidth
               {...register("serialNumber", {
@@ -134,6 +135,20 @@ const AddBus = () => {
               )}
             </FormControl>
           </div>
+          {/* pickup time */}
+          <div className="mb-4 flex-1">
+            <TextField
+              label="Pickup Time"
+              type="time"
+              fullWidth
+              {...register("pickuptime", {
+                required: "This field is required",
+              })}
+            />
+          </div>
+        </div>
+
+        <div className="flex gap-2 w-full">
           <div className="mb-4 flex-1">
             <FormControl fullWidth>
               <Controller
@@ -157,6 +172,18 @@ const AddBus = () => {
                 <p className="text-red-600">{errors.droppingPoint.message}</p>
               )}
             </FormControl>
+          </div>
+
+          {/* dropping time */}
+          <div className="mb-4 flex-1">
+            <TextField
+              label="Dropping Time"
+              type="time"
+              fullWidth
+              {...register("droppingtime", {
+                required: "This field is required",
+              })}
+            />
           </div>
         </div>
 
@@ -227,7 +254,9 @@ const AddBus = () => {
               label="departureDate"
               type="date"
               fullWidth
-              {...register("departureDate", { required: "This field is required" })}
+              {...register("departureDate", {
+                required: "This field is required",
+              })}
             />
           </div>
           <div className="flex-1">
@@ -277,6 +306,7 @@ const AddBus = () => {
           variant="contained"
           color="primary"
           disabled={loading}
+          // fullWidth
         >
           {loading ? "Submitting..." : "Submit"}
         </Button>
