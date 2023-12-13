@@ -93,6 +93,7 @@ const AddBus = () => {
         <div className="flex gap-2">
           <div className="mb-4 flex-1">
             <TextField
+            type="number"
               label="Serial Number"
               fullWidth
               {...register("serialNumber", {
