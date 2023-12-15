@@ -10,6 +10,7 @@ const AllBusTicket = ({ allBus }) => {
     busType,
     supervisorName,
     supervisorNumber,
+    departureDate,
   } = allBus;
 
   return (
@@ -40,6 +41,15 @@ const AllBusTicket = ({ allBus }) => {
               <DirectionsBus />
               <span className=" font-semibold">Supervisor: </span>
               {supervisorName.label}
+            </Typography>
+
+            <Typography
+              varient="span"
+              className="inline-block text-yellow-400 my-1"
+            >
+              <DirectionsBus />
+              <span className=" font-semibold">Date: </span>
+              {departureDate}
             </Typography>
 
             <Typography

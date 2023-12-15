@@ -59,9 +59,33 @@ function FindTicket() {
     label: ticket.name,
   }));
 
+  // const onSubmit = (data) => {
+  //   console.log(data);
+  //   console.log(normalizedBusTickets[1]);
+  //   const filteredBusTickets = normalizedBusTickets.filter(
+  //     (ticket) =>
+  //       ticket.busType.toLowerCase() === data.type.toLowerCase() &&
+  //       ticket.pickupPoint.label.toLowerCase() ===
+  //         data.pickupPoint.toLowerCase() &&
+  //       ticket.droppingPoint.label.toLowerCase() ===
+  //         data.droppingPoint.toLowerCase()
+  //   );
+
+  //   if (filteredBusTickets.length === 0) {
+  //     setNoDataAvailable(true); // Set flag to indicate no data found
+  //   } else {
+  //     setNoDataAvailable(false); // Reset the flag if data is found
+  //   }
+
+  //   setNormalizedBusTickets(filteredBusTickets);
+  //   console.log(filteredBusTickets);
+  //   // console.log(data.droppingPoint.toLowerCase());
+  //   // console.log(normalizedBusTickets[1].droppingPoint.label.toLowerCase());
+  // };
+
   const onSubmit = (data) => {
-    console.log(data);
-    console.log(normalizedBusTickets[1]);
+    console.log("Form Data:", data);
+
     const filteredBusTickets = normalizedBusTickets.filter(
       (ticket) =>
         ticket.busType.toLowerCase() === data.type.toLowerCase() &&
@@ -70,10 +94,8 @@ function FindTicket() {
         ticket.droppingPoint.label.toLowerCase() ===
           data.droppingPoint.toLowerCase()
     );
+
     setNormalizedBusTickets(filteredBusTickets);
-    console.log(filteredBusTickets);
-    // console.log(data.droppingPoint.toLowerCase());
-    // console.log(normalizedBusTickets[1].droppingPoint.label.toLowerCase());
   };
 
   return (
@@ -156,7 +178,8 @@ function FindTicket() {
                   <TextField
                     type="date"
                     label="Departure Date"
-                    value={selectedDate} // Change defaultValue to value
+                    {...register("departureDate")}
+                    value={selectedDate}
                     onChange={handleDateChange}
                     InputLabelProps={{
                       shrink: true,

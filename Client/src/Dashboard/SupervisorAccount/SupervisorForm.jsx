@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SupervisorForm = () => {
   const {
@@ -21,6 +22,8 @@ const SupervisorForm = () => {
     reset,
     formState: { errors },
   } = useForm();
+
+  let navigate = useNavigate();
 
   const onSubmit = (data) => {
     const { name, phone, nid, presentAddress, permanentAddress, image } = data;
@@ -47,6 +50,7 @@ const SupervisorForm = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+          navigate("/dashboard/allsupervisor");
         }
       })
       .catch((error) => {
@@ -103,7 +107,7 @@ const SupervisorForm = () => {
                         label="Name"
                         fullWidth
                         margin="normal"
-                        size="small"
+                        size="big"
                       />
                       {errors.name && (
                         <span className="text-red-500 block">
@@ -128,7 +132,7 @@ const SupervisorForm = () => {
                         label="Phone number"
                         fullWidth
                         margin="normal"
-                        size="small"
+                        size="big"
                       />
                       {errors.phone && (
                         <span className="text-red-500 block">
@@ -153,7 +157,7 @@ const SupervisorForm = () => {
                         label="NID number"
                         fullWidth
                         margin="normal"
-                        size="small"
+                        size="big"
                       />
                       {errors.nid && (
                         <span className="text-red-500 block">
@@ -178,7 +182,7 @@ const SupervisorForm = () => {
                         label="Present Address"
                         fullWidth
                         margin="normal"
-                        size="small"
+                        size="big"
                       />
                       {errors.presentAddress && (
                         <span className="text-red-500 block">
@@ -203,7 +207,7 @@ const SupervisorForm = () => {
                         label="Permanent Address"
                         fullWidth
                         margin="normal"
-                        size="small"
+                        size="big"
                       />
                       {errors.permanentAddress && (
                         <span className="text-red-500 block">
@@ -228,7 +232,7 @@ const SupervisorForm = () => {
                         type="file"
                         fullWidth
                         margin="normal"
-                        size="small"
+                        size="big"
                       />
                     </div>
                   )}
@@ -240,7 +244,7 @@ const SupervisorForm = () => {
               type="submit"
               variant="contained"
               fullWidth
-              size="medium"
+              // size="medium"
               className="mt-3"
             >
               Submit

@@ -22,7 +22,9 @@ import ErrorPage from "./ErrorPage.jsx";
 import AllBus from "./Dashboard/AllBus/AllBus.jsx";
 import AllCounters from "./Dashboard/AllCounters/AllCounters.jsx";
 import AllSupervisor from "./Dashboard/AllSupervisor/AllSupervisor.jsx";
-import SupervisorForm from "./Dashboard/SupervisorAccount/SupervisorAccount.jsx";
+import SupervisorForm from "./Dashboard/SupervisorAccount/SupervisorForm.jsx";
+import { Update } from "@mui/icons-material";
+// import SupervisorForm from "./Dashboard/SupervisorAccount/SupervisorAccount.jsx";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -78,6 +80,13 @@ const router = createBrowserRouter([
       {
         path: "allsupervisor",
         element: <AllSupervisor />,
+      },
+
+      {
+        path: "allsupervisor/updateSupervisor/:_id",
+        element: <Update></Update>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/supervisors/${params._id}`),
       },
     ],
   },

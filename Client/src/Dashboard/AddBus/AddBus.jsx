@@ -96,11 +96,13 @@ const AddBus = () => {
             type="number"
               label="Serial Number"
               fullWidth
+              type="number"
               {...register("serialNumber", {
                 required: "This field is required",
               })}
             />
           </div>
+
           <div className="mb-4 flex-1">
             <TextField
               label="Bus Name"

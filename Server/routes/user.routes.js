@@ -19,6 +19,9 @@ router.get("/supervisors", getSupervisors);
 // delete supervisor
 router.delete("/supervisors/:id", deleteSupervisors);
 
+// update supervisor
+router.put("/supervisors/:id", updateSupervisors);
+
 // get all bus data
 router.get("/allbus", getAllBus);
 

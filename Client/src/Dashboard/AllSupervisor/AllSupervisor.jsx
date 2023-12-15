@@ -178,7 +178,9 @@ const AllSupervisor = () => {
 
                   <TableCell>{row.presentAddress}</TableCell>
                   <TableCell>{row.permanentAddress}</TableCell>
-                  <TableCell></TableCell>
+                  <TableCell>
+                    <Link to={`updateSupervisor/${row._id}`}>Edit</Link>
+                  </TableCell>
                   <TableCell>
                     <Tooltip title="Delete">
                       <IconButton onClick={() => handleDeleteClick(row._id)}>
