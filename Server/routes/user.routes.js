@@ -11,6 +11,7 @@ const {
   deleteSupervisors,
   getAccount,
   getSupervisors,
+  updateSupervisors,
 } = require("../controllers/users.controller");
 const router = express.Router();
 
