@@ -4,6 +4,7 @@ const Update = () => {
   const chocolate = useLoaderData();
 
   const { name, phone, nid, presentAddress, permanentAddress, _id } = chocolate;
+
   return (
     <div>
       <p>{name}</p>

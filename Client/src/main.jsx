@@ -59,6 +59,13 @@ const router = createBrowserRouter([
         path: "/find-ticket",
         element: <FindTicket />,
       },
+
+      {
+        path: "/fixSeat/:_id",
+        element: <FixSeat></FixSeat>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/allBus/${params._id}`),
+      },
     ],
   },
 

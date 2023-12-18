@@ -8,11 +8,7 @@
   }
   
   .plane {
-    margin: 20px auto;
-    border: 1px solid rgb(221, 218, 218);
-    max-width: 370px;
-    background: white;
-    
+    border: 1px solid rgb(221, 218, 218);    
   }
   
   .select {
