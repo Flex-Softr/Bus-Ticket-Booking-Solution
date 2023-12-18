@@ -42,13 +42,20 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home></Home>,
       },
-      {
-        path: "/fixSeat",
-        element: <FixSeat></FixSeat>,
-      },
+      // {
+      //   path: "/fixSeat",
+      //   element: <FixSeat></FixSeat>,
+      // },
       {
         path: "/find-ticket",
         element: <FindTicket></FindTicket>,
+      },
+
+      {
+        path: "/fixSeat/:_id",
+        element: <FixSeat></FixSeat>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/allBus/${params._id}`),
       },
     ],
   },

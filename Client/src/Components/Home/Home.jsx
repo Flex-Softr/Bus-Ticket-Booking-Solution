@@ -14,11 +14,9 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import { useState } from "react";
 
 const Home = () => {
   const { allDistricts } = useAllDistricts();
-  // const [submitBlocked, setSubmitBlocked] = useState(false);
 
   const {
     handleSubmit,
@@ -152,6 +150,7 @@ const Home = () => {
                 )}
               </div>
             </div>
+
             <div>
               <Controller
                 name="departureDate"
@@ -166,10 +165,12 @@ const Home = () => {
                   />
                 )}
               />
+
               {errors.departureDate && (
                 <p style={{ color: "red" }}>{errors.departureDate.message}</p>
               )}
             </div>
+
             <div>
               <Button type="submit" variant="contained">
                 Find Tickets

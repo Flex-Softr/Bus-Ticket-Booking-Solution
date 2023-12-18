@@ -27,9 +27,17 @@ function FindTicket() {
   console.log("Stored Data:", storedData);
 
   // Set default values for form fields
+  // useEffect(() => {
+  //   Object.entries(storedData).forEach(([key, value]) => {
+  //     setValue(key, value.value);
+  //   });
+  // }, [storedData, setValue]);
+
   useEffect(() => {
     Object.entries(storedData).forEach(([key, value]) => {
-      setValue(key, value.value);
+      if (key !== "date") {
+        setValue(key, value.value);
+      }
     });
   }, [storedData, setValue]);
 
@@ -83,6 +91,21 @@ function FindTicket() {
   //   // console.log(normalizedBusTickets[1].droppingPoint.label.toLowerCase());
   // };
 
+  // const onSubmit = (data) => {
+  //   console.log("Form Data:", data);
+
+  //   const filteredBusTickets = normalizedBusTickets.filter(
+  //     (ticket) =>
+  //       ticket.busType.toLowerCase() === data.type.toLowerCase() &&
+  //       ticket.pickupPoint.label.toLowerCase() ===
+  //         data.pickupPoint.toLowerCase() &&
+  //       ticket.droppingPoint.label.toLowerCase() ===
+  //         data.droppingPoint.toLowerCase()
+  //   );
+
+  //   setNormalizedBusTickets(filteredBusTickets);
+  // };
+
   const onSubmit = (data) => {
     console.log("Form Data:", data);
 
@@ -96,6 +119,16 @@ function FindTicket() {
     );
 
     setNormalizedBusTickets(filteredBusTickets);
+
+    // Save form data to local storage
+    const formDataToSave = {
+      pickupPoint: { value: data.pickupPoint, label: data.pickupPoint },
+      droppingPoint: { value: data.droppingPoint, label: data.droppingPoint },
+      departureDate: data.departureDate,
+      type: data.type,
+    };
+
+    localStorage.setItem("formData", JSON.stringify(formDataToSave));
   };
 
   return (
@@ -141,6 +174,7 @@ function FindTicket() {
                     <InputLabel htmlFor="droppingPoint">
                       <LocationOffIcon fontSize="medium" /> Dropping Point
                     </InputLabel>
+
                     <Controller
                       name="droppingPoint"
                       control={control}
@@ -163,28 +197,37 @@ function FindTicket() {
                     />
                   </FormControl>
 
-                  {/* <TextField
-                    type="date"
-                    label="Departure Date"
-                    // value={selectedDate}
-                    defaultValue={selectedDate}
-                    // onChange={handleDateChange}
-                    onChange={handleDateChange}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  /> */}
-
-                  <TextField
-                    type="date"
-                    label="Departure Date"
-                    {...register("departureDate")}
-                    value={selectedDate}
-                    onChange={handleDateChange}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
+                  {/* Updated code for departure date */}
+                  <FormControl fullWidth className="p-2 m-1">
+                    {/* <InputLabel htmlFor="departureDate">
+                      <LocationOffIcon fontSize="medium" /> Departure Date
+                    </InputLabel> */}
+                    {/* <Controller
+                      name="departureDate"
+                      control={control}
+                      defaultValue=""
+                      render={({ field }) => (
+                        <TextField
+                          {...field}
+                          className="w-full"
+                          type="date"
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                        />
+                      )}
+                    /> */}
+                    <TextField
+                      type="date"
+                      label="Departure Date"
+                      {...register("departureDate")}
+                      value={selectedDate}
+                      onChange={handleDateChange}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </FormControl>
 
                   <Typography className="text-md font-semibold px-2 mt-2">
                     Vehicle Type
