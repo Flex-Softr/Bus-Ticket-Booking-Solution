@@ -1,12 +1,28 @@
-import { Button, Checkbox, FormControlLabel, Grid, MenuItem, Radio, RadioGroup, TextField } from '@mui/material';
+import { Button, FormControlLabel, Grid, Radio, RadioGroup, TextField } from '@mui/material';
 import './FixSeat.css'
 
 import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
 
 
 
 const FixSeat = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const [seatingData, setSeatingData] = useState(null);
+
+  useEffect(() => {
+    // Fetch seating data or use the provided JSON directly
+    // For example, you can fetch data from an API or use local data
+    const fetchData = async () => {
+      // Assuming the JSON is stored locally
+      const response = await fetch('../../../public/seats.json');
+      const data = await response.json();
+      setSeatingData(data);
+    };
+
+    fetchData();
+  }, []); // Empty dependency array means useEffect runs only once on mount
+
 
   const onSubmit = (data) => {
     console.log(data); // You can handle form submission logic here
@@ -127,7 +143,7 @@ const FixSeat = () => {
         
       </ol>
     </li>
-    <li>
+    {/* <li>
       <ol className="seats gap-2">
         <li className="seat" id="A1">
           <img src="https://i.ibb.co/gdJgK50/A1.png" alt="" />
@@ -360,7 +376,31 @@ const FixSeat = () => {
         </li>
        
       </ol>
-    </li>
+    </li> */}
+
+
+<div>
+      {seatingData ? (
+        <ul>
+          {seatingData.seatingArrangement.map((row) => (
+            <li key={row.row}>
+              {/* <p>{`Row ${row.row}`}</p> */}
+              <ol className="seats gap-2">
+                {row.seats.map((seat) => (
+                  <li key={seat.id} className="seat">
+                    <img src={seat.imageSrc} alt="" />
+                  </li>
+                ))}
+              </ol>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>Loading seating data...</p>
+      )}
+    </div>
+
+    
   </ol>
   
 </div>
