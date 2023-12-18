@@ -322,6 +322,8 @@ const FixSeat = () => {
                   <img src="https://i.ibb.co/t3KNBrx/I3.png" alt="" />
                 </li>
                 <li className="seat" id="I4">
+                  {" "}
+                  <p>seat</p>
                   <img src="https://i.ibb.co/2vnV9bb/I4.png" alt="" />
                 </li>
               </ol>
