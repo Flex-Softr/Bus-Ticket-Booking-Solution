@@ -1,8 +1,10 @@
 import { ArrowForward, DirectionsBus } from "@mui/icons-material";
-import { Button, Typography } from "@mui/material";
+import { Button,  Typography } from "@mui/material";
 // import busImg from "../../assets/DB35.gif";
+import { Link } from "react-router-dom";
 
 const AllBusTicket = ({ allBus }) => {
+  
   const {
     busName,
     pickupPoint,
@@ -77,9 +79,11 @@ const AllBusTicket = ({ allBus }) => {
           </div>
         </div>
         <div className="basis-full grow">
-          <Button variant="contained" className="px-6 py-2 my-3 mx-auto block">
+         <Link to='/fixSeat'>
+         <Button  variant="contained" className="px-6 py-2 my-3 mx-auto block">
             Select Seat
           </Button>
+         </Link>
         </div>
       </div>{" "}
       <br />

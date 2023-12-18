@@ -254,21 +254,21 @@ const FixSeat = () => {
     </li>
     <li>
       <ol className="seats gap-2" >
-        <li className="seat" id="G1">
+        <li className="seat" id="G1" >
           <img src="https://i.ibb.co/bWtrmXb/G1.png" alt="" />
-          
+          {/* style={{ filter: 'invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%)' }}  */}
         </li>
-        <li className="seat" id="G2">
-          <img src="https://i.ibb.co/R3tS16D/G2.png" alt="" />
-          
+        <li className="seat" id="G2" >
+          <img src="https://i.ibb.co/R3tS16D/G2.png" alt=""  />
+          {/* style={{ filter: 'invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%)', backgroundColor: '#EAEAEA' }} */}
         </li>
         <li className="seat" id="G3">
           <img src="https://i.ibb.co/17qTtS5/G3.png" alt="" />
-         
+         {/* style={{filter: `invert(52%) sepia(79%) saturate(875%) hue-rotate(288deg) brightness(99%) contrast(95%)`}}  */}
         </li>
         <li className="seat" id="G4">
-          <img src="https://i.ibb.co/q0GHmBG/G4.png" alt="" />
-          
+          <img src="https://i.ibb.co/q0GHmBG/G4.png" alt=""  />
+          {/* style={{filter: `invert(33%) sepia(91%) saturate(3076%) hue-rotate(180deg) brightness(100%) contrast(101%)`}} */}
         </li>
       
       </ol>
@@ -276,12 +276,12 @@ const FixSeat = () => {
     <li>
       <ol className="seats gap-2">
         <li className="seat" id="H1">
-          <img src="https://i.ibb.co/XsK7Fj5/H1.png" alt="" />
-         
+          <img src="https://i.ibb.co/XsK7Fj5/H1.png" alt=""  />
+         {/* style={{filter: `invert(76%) sepia(59%) saturate(4729%) hue-rotate(287deg) brightness(99%) contrast(87%)`}} */}
         </li>
         <li className="seat" id="H2">
-          <img src="https://i.ibb.co/Q8Jgzx3/H2.png" alt="" />
-        
+          <img src="https://i.ibb.co/Q8Jgzx3/H2.png" alt=""/>
+        {/* style={{filter: `invert(59%) sepia(25%) saturate(0%) hue-rotate(12deg) brightness(108%) contrast(90%)`}}  */}
         </li>
         <li className="seat" id="H3">
           <img src="https://i.ibb.co/864S97K/H3.png" alt="" />

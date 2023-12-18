@@ -38,7 +38,20 @@ exports.getAllBus = async (req, res) => {
   const result = await busDataCollection.find().toArray();
   res.send(result);
 };
+// get account
+exports.getAccount = async (req, res) => {
+  const result = await accountsDataCollection.find().toArray();
+  res.send(result);
+};
+//   delete account
 
+exports.deleteAccount = async (req, res) => {
+  const id = req.params.id;
+  const result = await accountsDataCollection.deleteOne({
+    _id: new ObjectId(id),
+  });
+  res.send(result);
+};
 //   get user by email
 
 exports.getUserByEmail = async (req, res) => {
