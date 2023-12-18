@@ -65,6 +65,11 @@ const FixSeat = () => {
 
   const { serialNumber } = thesis;
 
+  const handleSeatClick = (seatId) => {
+    console.log(`Seat clicked: ${seatId}`);
+   
+  };
+
   return (
     <Box className="grid md:grid-cols-2 grid-cols-1 gap-[50px] md:w-10/12 mx-auto my-20">
       <form
@@ -205,10 +210,13 @@ const FixSeat = () => {
                 <ul>
                   {seatingData.seatingArrangement.map((row) => (
                     <li key={row.row}>
-                      {/* <p>{`Row ${row.row}`}</p> */}
                       <ol className="seats gap-2">
                         {row.seats.map((seat) => (
-                          <li key={seat.id} className="seat">
+                          <li
+                            key={seat.id}
+                            className="seat cursor-pointer"
+                            onClick={() => handleSeatClick(seat.id)}
+                          >
                             <img src={seat.imageSrc} alt="" />
                           </li>
                         ))}
