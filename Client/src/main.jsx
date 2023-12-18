@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Main from "./Components/Layout/Main.jsx";
 import Home from "./Components/Home/Home.jsx";
@@ -22,7 +21,11 @@ import ErrorPage from "./ErrorPage.jsx";
 import AllBus from "./Dashboard/AllBus/AllBus.jsx";
 import AllCounters from "./Dashboard/AllCounters/AllCounters.jsx";
 import AllSupervisor from "./Dashboard/AllSupervisor/AllSupervisor.jsx";
-import SupervisorForm from "./Dashboard/SupervisorAccount/SupervisorAccount.jsx";
+import SupervisorForm from "./Dashboard/SupervisorAccount/SupervisorForm.jsx";
+import { Update } from "@mui/icons-material";
+import AboutPage from "./Components/AboutPage/AboutPage.jsx";
+import ContactPage from "./Components/ContactPage/ContactPage.jsx";
+// import SupervisorForm from "./Dashboard/SupervisorAccount/SupervisorAccount.jsx";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -38,15 +41,30 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home></Home>,
+        element: <Home />,
+      },
+      {
+        path: "/about",
+        element: <AboutPage />,
+      },
+      {
+        path: "/contact",
+        element: <ContactPage />,
       },
       {
         path: "/fixSeat",
-        element: <FixSeat></FixSeat>,
+        element: <FixSeat />,
       },
       {
         path: "/find-ticket",
-        element: <FindTicket></FindTicket>,
+        element: <FindTicket />,
+      },
+
+      {
+        path: "/fixSeat/:_id",
+        element: <FixSeat></FixSeat>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/allBus/${params._id}`),
       },
     ],
   },
@@ -65,7 +83,7 @@ const router = createBrowserRouter([
       },
       {
         path: "add-counter",
-        element: <AddCounter></AddCounter>,
+        element: <AddCounter />,
       },
       {
         path: "allbus",
@@ -78,6 +96,13 @@ const router = createBrowserRouter([
       {
         path: "allsupervisor",
         element: <AllSupervisor />,
+      },
+
+      {
+        path: "allsupervisor/updateSupervisor/:_id",
+        element: <Update></Update>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/supervisors/${params._id}`),
       },
     ],
   },

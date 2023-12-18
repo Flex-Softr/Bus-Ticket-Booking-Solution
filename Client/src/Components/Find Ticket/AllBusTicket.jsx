@@ -2,6 +2,8 @@ import { ArrowForward, DirectionsBus } from "@mui/icons-material";
 import { Button,  Typography } from "@mui/material";
 // import busImg from "../../assets/DB35.gif";
 import { Link } from "react-router-dom";
+import { Button, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const AllBusTicket = ({ allBus }) => {
   
@@ -12,6 +14,10 @@ const AllBusTicket = ({ allBus }) => {
     busType,
     supervisorName,
     supervisorNumber,
+    departureDate,
+    serialNumber,
+    time,
+    _id,
   } = allBus;
 
   return (
@@ -19,8 +25,14 @@ const AllBusTicket = ({ allBus }) => {
       {/* <img className=" h-20 w-20" src={busImg} alt="" /> */}
       <div className="flex flex-wrap justify-center items-center bg-gray-50 rounded">
         <div className="basis-6/12 grow mb-2 p-4">
+          <div>
+            <Typography className="font-semibold text-xl mb-5">
+              {busName} - {serialNumber}
+            </Typography>
+          </div>
+
           <Typography className="font-semibold text-xl">
-            {busName} - {pickupPoint.value} - {droppingPoint.value}
+            {pickupPoint.value} - {droppingPoint.value}
           </Typography>
           <Typography varient="span" className="block my-1 text-gray-500">
             Seat Layout 2x2
@@ -49,6 +61,15 @@ const AllBusTicket = ({ allBus }) => {
               className="inline-block text-yellow-400 my-1"
             >
               <DirectionsBus />
+              <span className=" font-semibold">Date: </span>
+              {departureDate}
+            </Typography>
+
+            <Typography
+              varient="span"
+              className="inline-block text-yellow-400 my-1"
+            >
+              <DirectionsBus />
               <span className=" font-semibold">Number: </span>
               {supervisorNumber.label}
             </Typography>
@@ -66,7 +87,7 @@ const AllBusTicket = ({ allBus }) => {
           <div>
             <ArrowForward className="mx-auto block text-blue-400" />
             <Typography varient="p" className="text-sm mx-1 text-gray-500">
-              10:30 min
+              {time}
             </Typography>
           </div>
           <div>
@@ -79,13 +100,16 @@ const AllBusTicket = ({ allBus }) => {
           </div>
         </div>
         <div className="basis-full grow">
-         <Link to='/fixSeat'>
-         <Button  variant="contained" className="px-6 py-2 my-3 mx-auto block">
-            Select Seat
-          </Button>
-         </Link>
+          <Link to={`/fixSeat/${_id}`}>
+            <Button
+              variant="contained"
+              className="px-6 py-2 my-3 mx-auto block"
+            >
+              Select Seat
+            </Button>
+          </Link>
         </div>
-      </div>{" "}
+      </div>
       <br />
     </div>
   );

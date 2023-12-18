@@ -4,7 +4,6 @@ let accountsDataCollection;
 let busDataCollection;
 let supervisorDataCollection;
 
-
 // Function to set up collections
 exports.setupCollections = (collections) => {
   bdDistrictsCollection = collections.bdDistrictsCollection;
@@ -29,13 +28,60 @@ exports.getAccount = async (req, res) => {
 
 // Get supervisors
 exports.getSupervisors = async (req, res) => {
-  const result = await supervisorDataCollection.find().toArray();
+  const result = await supervisorDataCollection
+    .find()
+    .sort({ createdAt: 1 })
+    .toArray();
+  res.send(result);
+};
+
+// get single supervisor
+exports.getSingleSupervisor = async (req, res) => {
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id) };
+  const result = await supervisorDataCollection.findOne(query);
+  res.send(result);
+};
+
+// update supervisor
+exports.updateSupervisors = async (req, res) => {
+  const id = req.params.id;
+  const filter = { _id: new ObjectId(id) };
+  const options = { upsert: true };
+  const updatedChocolate = req.body;
+
+  console.log(updatedChocolate);
+
+  const chocolate = {
+    $set: {
+      name,
+      phone,
+      nid,
+      presentAddress,
+      permanentAddress,
+
+      name: updatedChocolate.name,
+      phone: updatedChocolate.phone,
+      nid: updatedChocolate.nid,
+      presentAddress: updatedChocolate.presentAddress,
+      permanentAddress: updatedChocolate.permanentAddress,
+    },
+  };
+
+  const result = await supervisorDataCollection.updateOne(
+    filter,
+    chocolate,
+    options
+  );
   res.send(result);
 };
 
 //  Get allbus
 exports.getAllBus = async (req, res) => {
-  const result = await busDataCollection.find().toArray();
+  const result = await busDataCollection
+    .find()
+    .sort({ createdAt: 1 })
+    .toArray();
   res.send(result);
 };
 // get account
@@ -93,6 +139,22 @@ exports.addAccount = async (req, res) => {
 exports.addbus = async (req, res) => {
   const body = req.body;
   const result = await busDataCollection.insertOne(body);
+  res.send(result);
+};
+
+// get all bus data for fixSeat
+
+exports.getFixSeat = async (req, res) => {
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id) };
+
+  const options = {
+    projection: {
+      serialNumber: 1,
+    },
+  };
+
+  const result = await busDataCollection.findOne(query, options);
   res.send(result);
 };
 

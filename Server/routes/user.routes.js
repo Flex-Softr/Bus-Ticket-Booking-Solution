@@ -12,6 +12,7 @@ const {
   getAccount,
   getSupervisors,
   deleteAccount,
+  updateSupervisors,
 } = require("../controllers/users.controller");
 const router = express.Router();
 
@@ -20,8 +21,16 @@ router.get("/supervisors", getSupervisors);
 // delete supervisor
 router.delete("/supervisors/:id", deleteSupervisors);
 
+// update supervisor
+
+router.get("/supervisors/:id", getSingleSupervisor);
+router.put("/supervisors/:id", updateSupervisors);
+
 // get all bus data
 router.get("/allbus", getAllBus);
+
+// get all bus data for fixSeat
+router.get("/allbus/:id", getFixSeat);
 
 // get user by email
 router.get(`/users/:email`, getUserByEmail);
