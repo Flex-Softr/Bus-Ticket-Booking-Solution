@@ -179,7 +179,11 @@ const AllSupervisor = () => {
                   <TableCell>{row.presentAddress}</TableCell>
                   <TableCell>{row.permanentAddress}</TableCell>
                   <TableCell>
-                    <Link to={`updateSupervisor/${row._id}`}>Edit</Link>
+                    <Link
+                      to={`/dashboard/allsupervisor/updateSupervisor/${row._id}`}
+                    >
+                      Edit
+                    </Link>
                   </TableCell>
                   <TableCell>
                     <Tooltip title="Delete">

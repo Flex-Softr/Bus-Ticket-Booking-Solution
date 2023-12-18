@@ -1,6 +1,6 @@
 import { ArrowForward, DirectionsBus } from "@mui/icons-material";
 import { Button, Typography } from "@mui/material";
-// import busImg from "../../assets/DB35.gif";
+import { Link } from "react-router-dom";
 
 const AllBusTicket = ({ allBus }) => {
   const {
@@ -11,6 +11,9 @@ const AllBusTicket = ({ allBus }) => {
     supervisorName,
     supervisorNumber,
     departureDate,
+    serialNumber,
+    time,
+    _id,
   } = allBus;
 
   return (
@@ -18,8 +21,14 @@ const AllBusTicket = ({ allBus }) => {
       {/* <img className=" h-20 w-20" src={busImg} alt="" /> */}
       <div className="flex flex-wrap justify-center items-center bg-gray-50 rounded">
         <div className="basis-6/12 grow mb-2 p-4">
+          <div>
+            <Typography className="font-semibold text-xl mb-5">
+              {busName} - {serialNumber}
+            </Typography>
+          </div>
+
           <Typography className="font-semibold text-xl">
-            {busName} - {pickupPoint.value} - {droppingPoint.value}
+            {pickupPoint.value} - {droppingPoint.value}
           </Typography>
           <Typography varient="span" className="block my-1 text-gray-500">
             Seat Layout 2x2
@@ -74,7 +83,7 @@ const AllBusTicket = ({ allBus }) => {
           <div>
             <ArrowForward className="mx-auto block text-blue-400" />
             <Typography varient="p" className="text-sm mx-1 text-gray-500">
-              10:30 min
+              {time}
             </Typography>
           </div>
           <div>
@@ -87,11 +96,16 @@ const AllBusTicket = ({ allBus }) => {
           </div>
         </div>
         <div className="basis-full grow">
-          <Button variant="contained" className="px-6 py-2 my-3 mx-auto block">
-            Select Seat
-          </Button>
+          <Link to={`/fixSeat/${_id}`}>
+            <Button
+              variant="contained"
+              className="px-6 py-2 my-3 mx-auto block"
+            >
+              Select Seat
+            </Button>
+          </Link>
         </div>
-      </div>{" "}
+      </div>
       <br />
     </div>
   );

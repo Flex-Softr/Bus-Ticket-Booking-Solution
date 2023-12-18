@@ -21,10 +21,15 @@ router.get("/supervisors", getSupervisors);
 router.delete("/supervisors/:id", deleteSupervisors);
 
 // update supervisor
+
+router.get("/supervisors/:id", getSingleSupervisor);
 router.put("/supervisors/:id", updateSupervisors);
 
 // get all bus data
 router.get("/allbus", getAllBus);
+
+// get all bus data for fixSeat
+router.get("/allbus/:id", getFixSeat);
 
 // get user by email
 router.get(`/users/:email`, getUserByEmail);
