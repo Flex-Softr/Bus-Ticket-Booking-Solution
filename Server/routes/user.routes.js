@@ -12,8 +12,6 @@ const {
   getAccount,
   getSupervisors,
   updateSupervisors,
-  getFixSeat,
-  getSingleSupervisor,
 } = require("../controllers/users.controller");
 const router = express.Router();
 
