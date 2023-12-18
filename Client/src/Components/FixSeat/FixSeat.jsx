@@ -1,4 +1,4 @@
-import { Button, FormControlLabel, Grid, Radio, RadioGroup, TextField } from '@mui/material';
+import { Button, FormControlLabel, Grid, Radio, RadioGroup, TextField, Box } from '@mui/material';
 import './FixSeat.css'
 
 import { useForm } from 'react-hook-form';
@@ -28,7 +28,7 @@ const FixSeat = () => {
     console.log(data); // You can handle form submission logic here
   };
   return (
-    <div className="grid md:grid-cols-2 sm:grid-cols-1">
+    <Box className="grid md:grid-cols-2 sm:grid-cols-1">
      <form className='mt-16' onSubmit={handleSubmit(onSubmit)} style={{ maxWidth: 400, height: 630, margin: 'auto' }}>
       <Grid container spacing={2}>
         <Grid item xs={12} >
@@ -405,7 +405,7 @@ const FixSeat = () => {
   
 </div>
       </div>
-    </div>
+    </Box>
   );
 };
 
