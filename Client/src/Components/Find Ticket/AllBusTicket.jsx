@@ -2,8 +2,6 @@ import { ArrowForward, DirectionsBus } from "@mui/icons-material";
 import { Button,  Typography } from "@mui/material";
 // import busImg from "../../assets/DB35.gif";
 import { Link } from "react-router-dom";
-import { Button, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
 
 const AllBusTicket = ({ allBus }) => {
   

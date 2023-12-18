@@ -4,6 +4,7 @@ const {
   getAllBus,
   getUserByEmail,
   postTickets,
+  getFixSeat,
   addSupervisors,
   addAccount,
   addbus,
@@ -13,6 +14,7 @@ const {
   getSupervisors,
   deleteAccount,
   updateSupervisors,
+  getSingleSupervisor,
 } = require("../controllers/users.controller");
 const router = express.Router();
 
