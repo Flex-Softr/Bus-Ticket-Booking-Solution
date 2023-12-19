@@ -388,6 +388,7 @@ const FixSeat = () => {
               <ol className="seats gap-2">
                 {row.seats.map((seat) => (
                   <li key={seat.id} className="seat">
+                   
                     <img src={seat.imageSrc} alt="" />
                   </li>
                 ))}
