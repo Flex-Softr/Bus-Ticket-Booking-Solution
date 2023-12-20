@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
   Radio,
   Box,
   Typography,
   TextField,
-  Checkbox,
   Select,
   MenuItem,
   FormControl,
@@ -14,13 +13,13 @@ import {
   InputLabel,
   RadioGroup,
 } from "@mui/material";
-import { ArrowForward, DirectionsBus } from "@mui/icons-material";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
+// import { ArrowForward, DirectionsBus } from "@mui/icons-material";
 import LocationOffIcon from "@mui/icons-material/LocationOff";
-import DatePicker from "@mui/lab/DatePicker";
-
+import ShowTicket from "./ShowTicket";
 
 function FindTicket() {
+  const [normalizedBusTickets, setNormalizedBusTickets] = useState([]);
+
   const { control, handleSubmit, register, setValue } = useForm();
 
   // Retrieve data from local storage
@@ -28,46 +27,108 @@ function FindTicket() {
   console.log("Stored Data:", storedData);
 
   // Set default values for form fields
+  // useEffect(() => {
+  //   Object.entries(storedData).forEach(([key, value]) => {
+  //     setValue(key, value.value);
+  //   });
+  // }, [storedData, setValue]);
+
   useEffect(() => {
     Object.entries(storedData).forEach(([key, value]) => {
-      setValue(key, value.value);
+      if (key !== "date") {
+        setValue(key, value.value);
+      }
     });
-
   }, [storedData, setValue]);
 
-
-  const [selectedDate, setSelectedDate] = useState(storedData.departureDate || '');
+  const [selectedDate, setSelectedDate] = useState(
+    storedData.departureDate || ""
+  );
 
   const handleDateChange = (event) => {
     setSelectedDate(event.target.value);
   };
 
-
   const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/ticket') // Replace with your actual endpoint
-      .then(res => res.json())
-      .then(data => {
+    fetch("http://localhost:5000/ticket") // Replace with your actual endpoint
+      .then((res) => res.json())
+      .then((data) => {
         // Assuming the array of tickets is in the response
         setTickets(data || []);
       })
-      .catch(error => console.error('Error fetching data:', error));
+      .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   // Convert the tickets array to options format required by react-select
-  const ticketOptions = tickets.map(ticket => ({
+  const ticketOptions = tickets.map((ticket) => ({
     value: ticket.name,
     label: ticket.name,
   }));
 
+  // const onSubmit = (data) => {
+  //   console.log(data);
+  //   console.log(normalizedBusTickets[1]);
+  //   const filteredBusTickets = normalizedBusTickets.filter(
+  //     (ticket) =>
+  //       ticket.busType.toLowerCase() === data.type.toLowerCase() &&
+  //       ticket.pickupPoint.label.toLowerCase() ===
+  //         data.pickupPoint.toLowerCase() &&
+  //       ticket.droppingPoint.label.toLowerCase() ===
+  //         data.droppingPoint.toLowerCase()
+  //   );
 
+  //   if (filteredBusTickets.length === 0) {
+  //     setNoDataAvailable(true); // Set flag to indicate no data found
+  //   } else {
+  //     setNoDataAvailable(false); // Reset the flag if data is found
+  //   }
+
+  //   setNormalizedBusTickets(filteredBusTickets);
+  //   console.log(filteredBusTickets);
+  //   // console.log(data.droppingPoint.toLowerCase());
+  //   // console.log(normalizedBusTickets[1].droppingPoint.label.toLowerCase());
+  // };
+
+  // const onSubmit = (data) => {
+  //   console.log("Form Data:", data);
+
+  //   const filteredBusTickets = normalizedBusTickets.filter(
+  //     (ticket) =>
+  //       ticket.busType.toLowerCase() === data.type.toLowerCase() &&
+  //       ticket.pickupPoint.label.toLowerCase() ===
+  //         data.pickupPoint.toLowerCase() &&
+  //       ticket.droppingPoint.label.toLowerCase() ===
+  //         data.droppingPoint.toLowerCase()
+  //   );
+
+  //   setNormalizedBusTickets(filteredBusTickets);
+  // };
 
   const onSubmit = (data) => {
-    console.log(data);
-    // find ticket form logic code
+    console.log("Form Data:", data);
 
+    const filteredBusTickets = normalizedBusTickets.filter(
+      (ticket) =>
+        ticket.busType.toLowerCase() === data.type.toLowerCase() &&
+        ticket.pickupPoint.label.toLowerCase() ===
+          data.pickupPoint.toLowerCase() &&
+        ticket.droppingPoint.label.toLowerCase() ===
+          data.droppingPoint.toLowerCase()
+    );
 
+    setNormalizedBusTickets(filteredBusTickets);
+
+    // Save form data to local storage
+    const formDataToSave = {
+      pickupPoint: { value: data.pickupPoint, label: data.pickupPoint },
+      droppingPoint: { value: data.droppingPoint, label: data.droppingPoint },
+      departureDate: data.departureDate,
+      type: data.type,
+    };
+
+    localStorage.setItem("formData", JSON.stringify(formDataToSave));
   };
 
   return (
@@ -83,7 +144,6 @@ function FindTicket() {
                     View Vehicle
                   </Typography>
 
-
                   <FormControl fullWidth className="p-2 m-1">
                     <InputLabel htmlFor="pickupPoint">
                       <LocationOffIcon fontSize="medium" /> pickupPoint
@@ -93,15 +153,12 @@ function FindTicket() {
                       control={control}
                       defaultValue=""
                       render={({ field }) => (
-
-                        <Select {...field}
-                          isSearchable>
+                        <Select {...field} isSearchable>
                           {storedData.pickupPoint && (
                             <MenuItem value={storedData.pickupPoint.value}>
                               {storedData.pickupPoint.label}
                             </MenuItem>
                           )}
-
 
                           {ticketOptions.map((option) => (
                             <MenuItem key={option.value} value={option.value}>
@@ -109,8 +166,6 @@ function FindTicket() {
                             </MenuItem>
                           ))}
                         </Select>
-
-
                       )}
                     />
                   </FormControl>
@@ -119,6 +174,7 @@ function FindTicket() {
                     <InputLabel htmlFor="droppingPoint">
                       <LocationOffIcon fontSize="medium" /> Dropping Point
                     </InputLabel>
+
                     <Controller
                       name="droppingPoint"
                       control={control}
@@ -136,43 +192,57 @@ function FindTicket() {
                               {option.label}
                             </MenuItem>
                           ))}
-
                         </Select>
                       )}
                     />
                   </FormControl>
 
-
-                  <TextField
-                    type="date"
-                    label="Departure Date"
-                    value={selectedDate}
-                    onChange={handleDateChange}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-
+                  {/* Updated code for departure date */}
+                  <FormControl fullWidth className="p-2 m-1">
+                    {/* <InputLabel htmlFor="departureDate">
+                      <LocationOffIcon fontSize="medium" /> Departure Date
+                    </InputLabel> */}
+                    {/* <Controller
+                      name="departureDate"
+                      control={control}
+                      defaultValue=""
+                      render={({ field }) => (
+                        <TextField
+                          {...field}
+                          className="w-full"
+                          type="date"
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                        />
+                      )}
+                    /> */}
+                    <TextField
+                      type="date"
+                      label="Departure Date"
+                      {...register("departureDate")}
+                      value={selectedDate}
+                      onChange={handleDateChange}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </FormControl>
 
                   <Typography className="text-md font-semibold px-2 mt-2">
                     Vehicle Type
                   </Typography>
 
-
                   <FormControl component="fieldset">
-                    <RadioGroup
-                      aria-label="type"
-                      name="type"
-
-                    >
+                    <RadioGroup aria-label="type" name="type">
                       <FormControlLabel
-                        value="nonAC"
-                        control={<Radio {...register('type')} />}
+                        value="Non-AC"
+                        control={<Radio {...register("type")} />}
                         label="Non AC"
                       />
                       <FormControlLabel
                         value="ac"
-                        control={<Radio {...register('type')} />}
+                        control={<Radio {...register("type")} />}
                         label="AC"
                       />
                     </RadioGroup>
@@ -192,63 +262,10 @@ function FindTicket() {
           </div>
           {/* all buses view section */}
           <div className="basis-8/12 grow">
-            <div className="h-full max-w-full mt-12 px-4">
-              <div className="flex flex-wrap justify-center items-center bg-gray-50 rounded">
-                <div className="basis-6/12 grow p-2 mb-2">
-                  <Typography className="font-semibold text-xl">
-                    UNIQUE - MOTIJHEEL-COXSBAZAR
-                  </Typography>
-                  <Typography
-                    varient="span"
-                    className="block my-1 text-gray-500"
-                  >
-                    Seat Layout 2x2
-                  </Typography>
-                  <Typography
-                    varient="span"
-                    className="inline-block text-yellow-400 my-1"
-                  >
-                    <DirectionsBus />
-                    UNIQUE
-                  </Typography>
-                </div>
-                <div className="basis-6/12 flex justify-evenly grow p-2">
-                  <div>
-                    <Typography varient="p" className="text-md font-semibold">
-                      6:30 pm
-                    </Typography>
-                    <Typography varient="p" className="text-gray-500">
-                      Motijheel
-                    </Typography>
-                  </div>
-                  <div>
-                    <ArrowForward className="mx-auto block text-blue-400" />
-                    <Typography
-                      varient="p"
-                      className="text-sm mx-1 text-gray-500"
-                    >
-                      10:30 min
-                    </Typography>
-                  </div>
-                  <div>
-                    <Typography varient="p" className="text-md font-semibold">
-                      7:30 pm
-                    </Typography>
-                    <Typography varient="p" className="text-gray-500">
-                      CoxsBazar
-                    </Typography>
-                  </div>
-                </div>
-                <div className="basis-full grow">
-                  <Button
-                    variant="contained"
-                    className="px-6 py-2 my-3 mx-auto block"
-                  >
-                    Select a Seat for journey
-                  </Button>
-                </div>
-              </div>
-            </div>
+            <ShowTicket
+              normalizedBusTickets={normalizedBusTickets}
+              setNormalizedBusTickets={setNormalizedBusTickets}
+            />
           </div>
         </div>
       </div>

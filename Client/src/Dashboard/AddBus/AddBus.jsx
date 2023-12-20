@@ -10,15 +10,19 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Box from "@mui/material/Box";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 import useAllDistricts from "../../hooks/useAllDistricts";
+import useSuoervisor from "../../hooks/useSuoervisor";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const busTypes = ["AC", "Non-AC"];
 
-const supervisorName = ["Rohim mia", "khalil mia", "hashan", "abdul kader"];
-const numbers = ["676578", "2645768", "676473", "7935436"];
-
 const AddBus = () => {
   const { allDistricts } = useAllDistricts();
-  console.log(allDistricts);
+  const { supervisors } = useSuoervisor();
+  const [loading, setLoading] = useState(false);
+  let navigate = useNavigate();
 
   const locations = allDistricts.map((ticket) => ({
     value: ticket.name,
@@ -30,18 +34,44 @@ const AddBus = () => {
     register,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
-    // Handle form submission logic here
+    setLoading(true);
     console.log(data);
+    axios
+      .post("http://localhost:5000/addbus", data)
+      .then((res) => {
+        console.log("post", res.data);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Created a new bus",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/dashboard/allbus");
+        reset();
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `${error?.message}, please try again later`,
+        });
+        console.error("Post request failed:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
     <Box
       sx={{ backgroundColor: "#fff", borderRadius: "3px" }}
-      className=" px-5 md:px-20 py-10 md:w-11/12 mx-auto"
+      className="px-5 md:px-20 py-10 md:w-11/12 mx-auto"
       style={{ boxShadow: " rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
     >
       <Box
@@ -51,7 +81,6 @@ const AddBus = () => {
           alignItems: "center",
           borderRadius: "50%",
           padding: "30px",
-          // color:"#143f40",
           height: "40px",
           width: "40px",
           margin: "0 auto",
@@ -64,13 +93,16 @@ const AddBus = () => {
         <div className="flex gap-2">
           <div className="mb-4 flex-1">
             <TextField
+              type="number"
               label="Serial Number"
               fullWidth
+              type="number"
               {...register("serialNumber", {
                 required: "This field is required",
               })}
             />
           </div>
+
           <div className="mb-4 flex-1">
             <TextField
               label="Bus Name"
@@ -79,6 +111,7 @@ const AddBus = () => {
             />
           </div>
         </div>
+
         <div className="flex gap-2 w-full">
           <div className="mb-4 flex-1">
             <FormControl fullWidth>
@@ -104,6 +137,20 @@ const AddBus = () => {
               )}
             </FormControl>
           </div>
+          {/* pickup time */}
+          <div className="mb-4 flex-1">
+            <TextField
+              label="Pickup Time"
+              type="time"
+              fullWidth
+              {...register("pickuptime", {
+                required: "This field is required",
+              })}
+            />
+          </div>
+        </div>
+
+        <div className="flex gap-2 w-full">
           <div className="mb-4 flex-1">
             <FormControl fullWidth>
               <Controller
@@ -128,6 +175,18 @@ const AddBus = () => {
               )}
             </FormControl>
           </div>
+
+          {/* dropping time */}
+          <div className="mb-4 flex-1">
+            <TextField
+              label="Dropping Time"
+              type="time"
+              fullWidth
+              {...register("droppingtime", {
+                required: "This field is required",
+              })}
+            />
+          </div>
         </div>
 
         <div className="flex gap-2 mb-4 w-full">
@@ -141,7 +200,10 @@ const AddBus = () => {
                 render={({ field }) => (
                   <Autocomplete
                     {...field}
-                    options={supervisorName}
+                    options={supervisors.map((supervisor) => ({
+                      label: supervisor.name,
+                      value: supervisor._id,
+                    }))}
                     freeSolo
                     renderInput={(params) => (
                       <TextField {...params} label="Supervisor Name" />
@@ -150,6 +212,7 @@ const AddBus = () => {
                   />
                 )}
               />
+
               {errors.supervisorName && (
                 <p className="text-red-600">{errors.supervisorName.message}</p>
               )}
@@ -166,7 +229,10 @@ const AddBus = () => {
                 render={({ field }) => (
                   <Autocomplete
                     {...field}
-                    options={numbers}
+                    options={supervisors.map((supervisor) => ({
+                      label: supervisor.phone,
+                      value: supervisor._id,
+                    }))}
                     freeSolo
                     renderInput={(params) => (
                       <TextField {...params} label="Supervisor Number" />
@@ -184,13 +250,25 @@ const AddBus = () => {
           </div>
         </div>
 
-        <div className="mb-4">
-          <TextField
-            label="Time"
-            type="time"
-            fullWidth
-            {...register("time", { required: "This field is required" })}
-          />
+        <div className="flex gap-2 mb-4 w-full">
+          <div className="flex-1">
+            <TextField
+              label="departureDate"
+              type="date"
+              fullWidth
+              {...register("departureDate", {
+                required: "This field is required",
+              })}
+            />
+          </div>
+          <div className="flex-1">
+            <TextField
+              label="Time"
+              type="time"
+              fullWidth
+              {...register("time", { required: "This field is required" })}
+            />
+          </div>
         </div>
 
         <div className="mb-4">
@@ -225,8 +303,14 @@ const AddBus = () => {
           </FormControl>
         </div>
 
-        <Button type="submit" variant="contained" color="primary">
-          Submit
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          disabled={loading}
+          // fullWidth
+        >
+          {loading ? "Submitting..." : "Submit"}
         </Button>
       </form>
     </Box>

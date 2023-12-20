@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Main from "./Components/Layout/Main.jsx";
 import Home from "./Components/Home/Home.jsx";
@@ -12,14 +11,21 @@ import Login from "./Components/Login/Login.jsx";
 import AddCounter from "./Dashboard/AddCounter/AddCounter.jsx";
 import DashboardLayout from "./Dashboard/DashboardLayout.jsx";
 import AddBus from "./Dashboard/AddBus/AddBus.jsx";
-import SupervisorAccount from "./Components/Supervisor_Account/SupervisorAccount.jsx";
 import theme from "./theme";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import {
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import AuthProvider from "./Components/Providers/AuthProvider/AuthProvider.jsx";
+import PrivateRoute from "./route/PrivateRoute.jsx";
+import ErrorPage from "./ErrorPage.jsx";
+import AllBus from "./Dashboard/AllBus/AllBus.jsx";
+import AllCounters from "./Dashboard/AllCounters/AllCounters.jsx";
+import AllSupervisor from "./Dashboard/AllSupervisor/AllSupervisor.jsx";
+import SupervisorForm from "./Dashboard/SupervisorAccount/SupervisorForm.jsx";
+import { Update } from "@mui/icons-material";
+import AboutPage from "./Components/AboutPage/AboutPage.jsx";
+import ContactPage from "./Components/ContactPage/ContactPage.jsx";
+// import SupervisorForm from "./Dashboard/SupervisorAccount/SupervisorAccount.jsx";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -27,51 +33,84 @@ const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Main></Main>,
+    element: (
+      <PrivateRoute>
+        <Main></Main>
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "/",
-        element: <Home></Home>,
+        element: <Home />,
+      },
+      {
+        path: "/about",
+        element: <AboutPage />,
+      },
+      {
+        path: "/contact",
+        element: <ContactPage />,
       },
       {
         path: "/fixSeat",
-        element: <FixSeat></FixSeat>,
+        element: <FixSeat />,
       },
       {
         path: "/find-ticket",
-        element: <FindTicket></FindTicket>,
+        element: <FindTicket />,
       },
+
       {
-        path: "/login",
-        element: <Login></Login>,
+        path: "/fixSeat/:_id",
+        element: <FixSeat></FixSeat>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/allBus/${params._id}`),
       },
     ],
   },
-  {
-    path: "/",
-    element: <Main></Main>,
-    children: [
-      {
-        path: "/supervisor",
-        element: <SupervisorAccount></SupervisorAccount>,
-      },
-      {
-        path: "/add-counter",
-        element: <AddCounter></AddCounter>,
-      },
-    ],
-  },
+
   {
     path: "/dashboard",
     element: <DashboardLayout />,
     children: [
       {
         path: "addbus",
-        // element: <Autocomplete />
         element: <AddBus />,
+      },
+      {
+        path: "addSupervisor",
+        element: <SupervisorForm />,
+      },
+      {
+        path: "add-counter",
+        element: <AddCounter />,
+      },
+      {
+        path: "allbus",
+        element: <AllBus />,
+      },
+      {
+        path: "allcounters",
+        element: <AllCounters />,
+      },
+      {
+        path: "allsupervisor",
+        element: <AllSupervisor />,
+      },
+
+      {
+        path: "allsupervisor/updateSupervisor/:_id",
+        element: <Update></Update>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/supervisors/${params._id}`),
       },
     ],
   },
+  {
+    path: "/login",
+    element: <Login></Login>,
+  },
+  { path: "*", element: <ErrorPage></ErrorPage> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -80,7 +119,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <QueryClientProvider client={queryClient}>
         <CssBaseline />
         <StyledEngineProvider>
-          <RouterProvider router={router} />
+          <AuthProvider>
+            <RouterProvider router={router} />
+          </AuthProvider>
         </StyledEngineProvider>
       </QueryClientProvider>
     </ThemeProvider>

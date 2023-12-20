@@ -2,28 +2,41 @@
     border: 1px solid gray;
     border-radius: 3px;
 }
-.form-section{
-    box-shadow: 0px 0px 4px -1px;
-    border-radius: 5px;
-    margin: 10px 20px;
-    width: 550px;
-    height: 230px;
-    
-}
+
 .home-img{
     width: 460px;
     height: 320px;
 }
-@keyframes busMove {
+
+.text-img{  
+    z-index: -50;
+}
+
+.css-13cymwt-control {
+    border-color: hsl(181.36deg 52.38% 16.47%) !important; 
+}
+.field-style.point{
+    border: none !important; 
+}
+
+/* Add this to your styles.css or any other styles file */
+@keyframes moveLeftToRight {
     0% {
-      transform: translateX(100%);
+      transform: translateX(-60%);
+    }
+    50%{
+        transform: translateX(50%);
     }
     100% {
-      transform: translateX(-100%);
+      transform: translateX(70%);
     }
   }
   
-  .animate-bus-move {
-    animation: busMove 5s linear infinite; /* Adjust the duration as needed */
+  .infiniteAnimation {
+    animation: moveLeftToRight 20s infinite ease-in; 
   }
   
+
+  .bg{
+    background-color: #ff5f020a;
+    }

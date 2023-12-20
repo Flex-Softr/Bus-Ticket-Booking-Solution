@@ -1,0 +1,116 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-size: 16px;
+    
+  }
+  
+  .plane {
+    border: 1px solid rgb(221, 218, 218);    
+  }
+  
+  .select {
+    
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  
+  .select h1 {
+    width: 60%;
+    margin: 100px auto 35px auto;
+  }
+  
+  .exit {
+    position: relative;
+    height: 50px;
+  }
+ 
+  
+  ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .seats {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+  }
+  
+  .seat {
+    display: flex;
+    flex: 0 0 14.28%;
+    padding: 5px;
+    position: relative;
+  }
+  
+  .seat label {
+    display: block;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bolder;
+    line-height: 1.5rem;
+    padding: 4px 0;
+    background: #5bfc60;
+    border-radius: 5px; 
+    color: black; 
+  }
+  
+  .seat label:hover {
+    cursor: pointer;
+    box-shadow: 0 0 0px 2px green;
+  }
+  
+  .seat:nth-child(2) {
+    margin-right: 25%;
+  }
+  .frontSiteofBus:nth-child(1){
+    margin-right: 60%;
+    margin-bottom: 13%;
+  }
+ 
+.seat img{
+  width: 45px;
+  height: 45px;
+ 
+}
+.lastseat img{
+  width: 35px;
+  height: 45px;
+ 
+}
+.steering-wheel{
+  width: 55px;
+  height: 55px;
+  
+ 
+}
+
+
+
+
+
+
+/* Add this CSS to your styles */
+@media (max-width: 600px) {
+  form {
+    width: 90%;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1200px) {
+  form {
+    width: 80%;
+  }
+}
+
+
+
+
