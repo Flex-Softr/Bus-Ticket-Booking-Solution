@@ -86,10 +86,13 @@ const AddCounter = () => {
           }}
         >
           <Avatar
-            className="bg-blue-600"
-            sx={{ m: 1, bgcolor: "secondary.main" }}
+            sx={{  padding: "30px",
+            borderRadius: "50%",
+            height: "40px",
+            width: "40px",
+            backgroundColor: "#d6d8da",}}
           >
-            <CountertopsIcon />
+            <CountertopsIcon sx={{ fontSize: "44px" }} color="primary"/>
           </Avatar>
           <Typography component="h1" variant="h5">
             Create a New Counter
@@ -157,13 +160,31 @@ const AddCounter = () => {
                     defaultValue=""
                     rules={{ required: "Role is required" }}
                     render={({ field }) => (
-                      <RadioGroup {...field}>
-                        <FormControlLabel
-                          value="user"
-                          control={<Radio />}
-                          label="User"
-                        />
-                      </RadioGroup>
+                      // <RadioGroup {...field}>
+                      //   <FormControlLabel
+                      //     value="user"
+                      //     control={<Radio />}
+                      //     label="Counter"
+                      //   />
+                      //   <FormControlLabel
+                      //     value="admin"
+                      //     control={<Radio />}
+                      //     label="Admin"
+                      //   />
+                      // </RadioGroup>
+                      <RadioGroup row>
+                      <FormControlLabel
+                        value="user"
+                        control={<Radio />}
+                        label="Counter"
+                        style={{ marginRight: '20px' }} // Adjust margin as needed
+                      />
+                      <FormControlLabel
+                        value="admin"
+                        control={<Radio />}
+                        label="Admin"
+                      />
+                    </RadioGroup>
                     )}
                   />
                   {errors.role && (

@@ -142,9 +142,7 @@ const AllCounters = () => {
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{row.account_name}</TableCell>
                     <TableCell>{row.email}</TableCell>
-                    <TableCell>{row.password.length > 3
-                      ? `${row.password.substring(0, 3)}`
-                      : row.password}</TableCell>
+                    <TableCell>{row.password}</TableCell>
                   <TableCell>
                     <Tooltip title="Delete">
                       <IconButton onClick={() => handleDeleteClick(row._id)}>
@@ -261,9 +259,7 @@ const AllCounters = () => {
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{row.account_name}</TableCell>
                     <TableCell>{row.email}</TableCell>
-                    <TableCell>{row.password.length > 3
-                      ? `${row.password.substring(0, 3)}`
-                      : row.password}</TableCell>
+                    <TableCell>{row.password}</TableCell>
                   <TableCell>
                     <Tooltip title="Delete">
                       <IconButton onClick={() => handleDeleteClick(row._id)}>
