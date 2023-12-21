@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Button,
   FormControlLabel,
@@ -15,6 +16,7 @@ import { useLoaderData } from "react-router-dom";
 import useSeats from "../../hooks/useSeats";
 
 const FixSeat = () => {
+  
   const {
     register,
     handleSubmit,
@@ -32,20 +34,20 @@ const FixSeat = () => {
     storedData.departureDate || ""
   );
 
-  const [seatingData, setSeatingData] = useState(null);
+  // const [seatingData, setSeatingData] = useState(null);
 
-  useEffect(() => {
-    // Fetch seating data or use the provided JSON directly
-    // For example, you can fetch data from an API or use local data
-    const fetchData = async () => {
-      // Assuming the JSON is stored locally
-      const response = await fetch("../../../public/seats.json");
-      const data = await response.json();
-      setSeatingData(data);
-    };
+  // useEffect(() => {
+  //   // Fetch seating data or use the provided JSON directly
+  //   // For example, you can fetch data from an API or use local data
+  //   const fetchData = async () => {
+  //     // Assuming the JSON is stored locally
+  //     const response = await fetch("../../../public/seats.json");
+  //     const data = await response.json();
+  //     setSeatingData(data);
+  //   };
 
-    fetchData();
-  }, []); // Empty dependency array means useEffect runs only once on mount
+  //   fetchData();
+  // }, []); // Empty dependency array means useEffect runs only once on mount
 
   const handleDateChange = (event) => {
     setSelectedDate(event.target.value);
@@ -212,8 +214,8 @@ const FixSeat = () => {
       </form>
       {/* bus seat======================================> */}
       <div>
-        <div className="plane ps-8 pe-3 py-3 w-full">
-          <div className="select"></div>
+        <div className="plane ps-7 pe-3 py-3 w-full">
+          
 
           <ol>
             <li>
@@ -237,7 +239,7 @@ const FixSeat = () => {
               <ul>
                 {allSeats.map((row) => (
                   <li key={row.row}>
-                    <ol className="seats gap-2">
+                    <ol className="seats gap-1">
                       {row.seats.map((seat) => (
                         <li
                           key={seat.id}

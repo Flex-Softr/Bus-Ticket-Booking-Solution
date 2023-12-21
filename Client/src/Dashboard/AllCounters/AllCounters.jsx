@@ -124,7 +124,7 @@ const AllCounters = () => {
               style={{ color: "#fff" }}
               sx={{ backgroundColor: (theme) => theme.palette.primary.main }}
             >
-              <TableCell>Serial</TableCell>
+              <TableCell>#</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Password</TableCell>
@@ -241,7 +241,7 @@ const AllCounters = () => {
               style={{ color: "#fff" }}
               sx={{ backgroundColor: (theme) => theme.palette.primary.main }}
             >
-              <TableCell>Serial</TableCell>
+              <TableCell>#</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Password</TableCell>
