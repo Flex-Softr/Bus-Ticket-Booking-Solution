@@ -181,7 +181,7 @@ const Home = () => {
           <br />
         </Box>
       </div>
-    </div>
+</div>
   );
 };
 
