@@ -48,13 +48,18 @@ const Home = () => {
     const { pickupPoint, droppingPoint, departureDate } = data;
 
     const selectedDate = new Date(departureDate);
+    selectedDate.setHours(0, 0, 0, 0); // Set time to midnight
+
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0); // Set time to midnight
 
     if (pickupPoint.value === droppingPoint.value) {
       toast.error("Pickup and Dropping points cannot be the same");
       return;
     }
 
-    if (selectedDate < new Date()) {
+    // Check if the selected date is earlier than the current date
+    if (selectedDate.getTime() < currentDate.getTime()) {
       toast.error("Selected date cannot be earlier than the current date");
       return;
     }
