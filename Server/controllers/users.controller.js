@@ -3,6 +3,7 @@ let bdDistrictsCollection;
 let accountsDataCollection;
 let busDataCollection;
 let supervisorDataCollection;
+let seatDataCollection;
 
 // Function to set up collections
 exports.setupCollections = (collections) => {
@@ -10,6 +11,7 @@ exports.setupCollections = (collections) => {
   accountsDataCollection = collections.accountsDataCollection;
   busDataCollection = collections.busDataCollection;
   supervisorDataCollection = collections.supervisorDataCollection;
+  seatDataCollection = collections.seatDataCollection;
 };
 
 const express = require("express");
@@ -84,9 +86,19 @@ exports.getAllBus = async (req, res) => {
     .toArray();
   res.send(result);
 };
+
 // get account
 exports.getAccount = async (req, res) => {
   const result = await accountsDataCollection.find().toArray();
+  res.send(result);
+};
+
+// get seat
+exports.getSeats = async (req, res) => {
+  const result = await seatDataCollection
+    .find()
+    .sort({ row: 1, "seats.id": 1 })
+    .toArray();
   res.send(result);
 };
 //   delete account

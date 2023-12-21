@@ -5,13 +5,14 @@ import {
   Radio,
   RadioGroup,
   TextField,
-  Box
+  Box,
 } from "@mui/material";
 import "./FixSeat.css";
 
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
+import useSeats from "../../hooks/useSeats";
 
 const FixSeat = () => {
   const {
@@ -20,6 +21,8 @@ const FixSeat = () => {
     setValue,
     formState: { errors },
   } = useForm();
+
+  const { allSeats } = useSeats();
 
   const storedData = JSON.parse(localStorage.getItem("formData")) || {};
   console.log("Stored Data:", storedData);
@@ -57,20 +60,44 @@ const FixSeat = () => {
     });
   }, [storedData, setValue]);
 
+  // const onSubmit = (data) => {
+  //   console.log(data); // You can handle form submission logic here
+  // };
+
+  const [selectedSeat, setSelectedSeat] = useState(null);
+
   const onSubmit = (data) => {
-    console.log(data); // You can handle form submission logic here
+    // const formDataWithSeat = {
+    //   ...data,
+    //   selectedSeat: selectedSeat,
+    // };
+    // console.log(formDataWithSeat, data);
+    // Add logic to handle form submission here
+    console.log(data);
+  };
+
+  useEffect(() => {
+    if (selectedSeat !== null) {
+      // Do not submit the form automatically when a seat is selected
+      // onSubmit({});
+      // Reset the selected seat to avoid duplicate submissions
+      setSelectedSeat(null);
+    }
+  }, [selectedSeat]);
+
+  const handleSeatClick = (seatId) => {
+    console.log(`Seat clicked: ${seatId}`);
+    setSelectedSeat(seatId);
   };
 
   const thesis = useLoaderData();
 
   const { serialNumber } = thesis;
 
-
   // seat id for changing the design after clicking
-  const handleSeatClick = (seatId) => {
-    console.log(`Seat clicked: ${seatId}`);
-   
-  };
+  // const handleSeatClick = (seatId) => {
+  //   console.log(`Seat clicked: ${seatId}`);
+  // };
 
   return (
     <Box className="grid md:grid-cols-2 grid-cols-1 gap-[50px] md:w-10/12 mx-auto my-20">
@@ -205,31 +232,26 @@ const FixSeat = () => {
             </li>
 
             {/* all seats */}
+            {/* all seats */}
             <div>
-              {seatingData ? (
-                <ul>
-                  {seatingData.seatingArrangement.map((row) => (
-                    <li key={row.row}>
-                      <ol className="seats gap-2">
-                        {row.seats.map((seat) => (
-                          <li
-                            key={seat.id}
-                            className="seat cursor-pointer"
-                            onClick={() => handleSeatClick(seat.id)}
-                          >
-                            <img src={seat.imageSrc} alt="" />
-                          </li>
-                        ))}
-                      </ol>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>Loading seating data...</p>
-              )}
+              <ul>
+                {allSeats.map((row) => (
+                  <li key={row.row}>
+                    <ol className="seats gap-2">
+                      {row.seats.map((seat) => (
+                        <li
+                          key={seat.id}
+                          className="seat cursor-pointer"
+                          onClick={() => handleSeatClick(seat.id)}
+                        >
+                          <img src={seat.imageSrc} alt="" />
+                        </li>
+                      ))}
+                    </ol>
+                  </li>
+                ))}
+              </ul>
             </div>
-
-         
           </ol>
         </div>
       </div>
