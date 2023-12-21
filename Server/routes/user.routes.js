@@ -4,6 +4,7 @@ const {
   getAllBus,
   getUserByEmail,
   postTickets,
+  getFixSeat,
   addSupervisors,
   addAccount,
   addbus,
@@ -11,14 +12,20 @@ const {
   deleteSupervisors,
   getAccount,
   getSupervisors,
+  deleteAccount,
   updateSupervisors,
   getSingleSupervisor,
-  getFixSeat,
+  getSeats,
+  // getFixSeat,
 } = require("../controllers/users.controller");
 const router = express.Router();
 
 // get all supervisors data
 router.get("/supervisors", getSupervisors);
+
+// get all supervisors data
+router.get("/seats", getSeats);
+
 // delete supervisor
 router.delete("/supervisors/:id", deleteSupervisors);
 
@@ -47,6 +54,9 @@ router.post("/add-account", addAccount);
 
 // get all accountsData
 router.get("/add-account", getAccount);
+
+// delete account
+router.delete("/delete-account/:id", deleteAccount);
 
 // add bus
 router.post("/addbus", addbus);

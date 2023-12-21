@@ -1,8 +1,11 @@
+/* eslint-disable react/prop-types */
 import { ArrowForward, DirectionsBus } from "@mui/icons-material";
-import { Button, Typography } from "@mui/material";
+import { Button,  Typography } from "@mui/material";
+// import busImg from "../../assets/DB35.gif";
 import { Link } from "react-router-dom";
 
 const AllBusTicket = ({ allBus }) => {
+  
   const {
     busName,
     pickupPoint,

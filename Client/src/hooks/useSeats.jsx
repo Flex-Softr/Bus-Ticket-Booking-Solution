@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 
-const useAllAddAccount = () => {
+const useSeats = () => {
   const {
     isPending,
-    data: allaccountData = [],
+    data: allSeats = [],
     refetch,
   } = useQuery({
-    queryKey: ["allaccountData"],
+    queryKey: ["allSeats"],
     queryFn: async () => {
-      const response = await fetch("http://localhost:5000/add-account");
+      const response = await fetch("http://localhost:5000/seats");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -16,7 +16,7 @@ const useAllAddAccount = () => {
     },
   });
 
-  return { isPending, allaccountData, refetch };
+  return { isPending, allSeats, refetch };
 };
 
-export default useAllAddAccount;
+export default useSeats;

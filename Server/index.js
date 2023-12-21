@@ -44,11 +44,16 @@ async function run() {
       accountsDataCollection: client
         .db("cityTicket")
         .collection("accountsData"),
+
       busDataCollection: client.db("cityTicket").collection("busData"),
+
       supervisorDataCollection: client
         .db("cityTicket")
         .collection("supervisorData"),
+
+      seatDataCollection: client.db("cityTicket").collection("seat"),
     };
+
     usersController.setupCollections(collections);
     // app.use
     app.use(userRouter);
