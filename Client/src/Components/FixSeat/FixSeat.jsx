@@ -16,7 +16,6 @@ import { useLoaderData } from "react-router-dom";
 import useSeats from "../../hooks/useSeats";
 
 const FixSeat = () => {
-  
   const {
     register,
     handleSubmit,
@@ -26,13 +25,13 @@ const FixSeat = () => {
 
   const { allSeats } = useSeats();
 
-  const storedData = JSON.parse(localStorage.getItem("formData")) || {};
-  console.log("Stored Data:", storedData);
+  // const storedData = JSON.parse(localStorage.getItem("formData")) || {};
+  // console.log("Stored Data:", storedData);
 
   // Get the stored date from local storage
-  const [selectedDate, setSelectedDate] = useState(
-    storedData.departureDate || ""
-  );
+  // const [selectedDate, setSelectedDate] = useState(
+  //   storedData.departureDate || ""
+  // );
 
   // const [seatingData, setSeatingData] = useState(null);
 
@@ -49,18 +48,18 @@ const FixSeat = () => {
   //   fetchData();
   // }, []); // Empty dependency array means useEffect runs only once on mount
 
-  const handleDateChange = (event) => {
-    setSelectedDate(event.target.value);
-  };
+  // const handleDateChange = (event) => {
+  //   setSelectedDate(event.target.value);
+  // };
 
   // Set default values for form fields
-  useEffect(() => {
-    Object.entries(storedData).forEach(([key, value]) => {
-      if (key !== "date") {
-        setValue(key, value.value);
-      }
-    });
-  }, [storedData, setValue]);
+  // useEffect(() => {
+  //   Object.entries(storedData).forEach(([key, value]) => {
+  //     if (key !== "date") {
+  //       setValue(key, value.value);
+  //     }
+  //   });
+  // }, [storedData, setValue]);
 
   // const onSubmit = (data) => {
   //   console.log(data); // You can handle form submission logic here
@@ -75,7 +74,6 @@ const FixSeat = () => {
     };
     console.log(formDataWithSeat, data);
     // Add logic to handle form submission here
-    
   };
 
   useEffect(() => {
@@ -93,8 +91,16 @@ const FixSeat = () => {
   };
 
   const thesis = useLoaderData();
-
-  const { serialNumber } = thesis;
+console.log(thesis)
+// console.log(thesis.slNumber)
+//   const {
+//     slNumber,
+//     departureDate,
+//     droppingPoint,
+//     pickupPoint,
+//   } = thesis;
+// console.log(slNumber)
+// console.log(thesis.slNumber)
 
   // seat id for changing the design after clicking
   // const handleSeatClick = (seatId) => {
@@ -112,11 +118,9 @@ const FixSeat = () => {
           <Grid item xs={12}>
             <TextField
               className="w-full"
-              type="date"
               label="Departure Date"
               {...register("departureDate")}
-              value={selectedDate}
-              onChange={handleDateChange}
+              defaultValue={thesis?.departureDate}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -131,6 +135,7 @@ const FixSeat = () => {
               fullWidth
               label="Pickup Point"
               {...register("pickupPoint", { required: true })}
+              defaultValue={thesis?.pickupPoint}
             />
             {errors.pickupPoint && (
               <span className="text-red-700">This field is required</span>
@@ -142,6 +147,7 @@ const FixSeat = () => {
               fullWidth
               label="Dropping Point"
               {...register("droppingPoint", { required: true })}
+              defaultValue={thesis?.droppingPoint}
             />
             {errors.droppingPoint && (
               <span className="text-red-700">This field is required</span>
@@ -151,9 +157,9 @@ const FixSeat = () => {
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
-              value={serialNumber}
               label="SL Number"
               {...register("slNumber", { required: true })}
+              defaultValue={thesis?.slNumber}
             />
             {errors.slNumber && (
               <span className="text-red-700">This field is required</span>
@@ -215,8 +221,6 @@ const FixSeat = () => {
       {/* bus seat======================================> */}
       <div>
         <div className="plane ps-7  py-3 w-full">
-          
-
           <ol>
             <li>
               <ol className="seats ">
