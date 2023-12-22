@@ -69,13 +69,13 @@ const FixSeat = () => {
   const [selectedSeat, setSelectedSeat] = useState(null);
 
   const onSubmit = (data) => {
-    // const formDataWithSeat = {
-    //   ...data,
-    //   selectedSeat: selectedSeat,
-    // };
-    // console.log(formDataWithSeat, data);
+    const formDataWithSeat = {
+      ...data,
+      selectedSeat: selectedSeat,
+    };
+    console.log(formDataWithSeat, data);
     // Add logic to handle form submission here
-    console.log(data);
+    
   };
 
   useEffect(() => {
@@ -106,7 +106,7 @@ const FixSeat = () => {
       <form
         className="w-full"
         onSubmit={handleSubmit(onSubmit)}
-        // style={{ maxWidth: 400, height: 630, margin: "auto" }}
+        style={{ maxWidth: 450, height: 660, margin: "auto" }}
       >
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -214,7 +214,7 @@ const FixSeat = () => {
       </form>
       {/* bus seat======================================> */}
       <div>
-        <div className="plane ps-7 pe-3 py-3 w-full">
+        <div className="plane ps-7  py-3 w-full">
           
 
           <ol>
