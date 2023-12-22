@@ -19,93 +19,67 @@ const FixSeat = () => {
   const {
     register,
     handleSubmit,
+    // eslint-disable-next-line no-unused-vars
     setValue,
     formState: { errors },
   } = useForm();
 
   const { allSeats } = useSeats();
 
-  // const storedData = JSON.parse(localStorage.getItem("formData")) || {};
-  // console.log("Stored Data:", storedData);
-
-  // Get the stored date from local storage
-  // const [selectedDate, setSelectedDate] = useState(
-  //   storedData.departureDate || ""
-  // );
 
   // const [seatingData, setSeatingData] = useState(null);
 
-  // useEffect(() => {
-  //   // Fetch seating data or use the provided JSON directly
-  //   // For example, you can fetch data from an API or use local data
-  //   const fetchData = async () => {
-  //     // Assuming the JSON is stored locally
-  //     const response = await fetch("../../../public/seats.json");
-  //     const data = await response.json();
-  //     setSeatingData(data);
-  //   };
 
-  //   fetchData();
-  // }, []); // Empty dependency array means useEffect runs only once on mount
+  const thesis = useLoaderData();
+// console.log(thesis)
+const [selectedSeats, setSelectedSeats] = useState([]);
+//  const [currentConfirmationSeats, setCurrentConfirmationSeats] = useState([]);
+ // eslint-disable-next-line no-unused-vars
+ const [confirmationSeats, setConfirmationSeats] = useState({});
 
-  // const handleDateChange = (event) => {
-  //   setSelectedDate(event.target.value);
-  // };
-
-  // Set default values for form fields
-  // useEffect(() => {
-  //   Object.entries(storedData).forEach(([key, value]) => {
-  //     if (key !== "date") {
-  //       setValue(key, value.value);
-  //     }
-  //   });
-  // }, [storedData, setValue]);
-
-  // const onSubmit = (data) => {
-  //   console.log(data); // You can handle form submission logic here
-  // };
-
-  const [selectedSeat, setSelectedSeat] = useState(null);
 
   const onSubmit = (data) => {
-    const formDataWithSeat = {
-      ...data,
-      selectedSeat: selectedSeat,
+    // console.log("onsubmit",data)
+    const storedata = {
+      departureDate: data?.departureDate,
+      pickupPoint: data?.pickupPoint,
+      droppingPoint:data?.droppingPoint,
+      busType:thesis?.busType,
+      busId:thesis?._id,
+      serialNumber:data?.serialNumber,
+      passengersName:data?.passengersName,
+      passengersNumber:data?.passengersNumber,
+      gender:data?.gender,
+      departureTime:thesis.time,
+      seatId: selectedSeats,
     };
-    console.log(formDataWithSeat, data);
-    // Add logic to handle form submission here
-  };
+    console.log(storedata);
 
-  useEffect(() => {
-    if (selectedSeat !== null) {
-      // Do not submit the form automatically when a seat is selected
-      // onSubmit({});
-      // Reset the selected seat to avoid duplicate submissions
-      setSelectedSeat(null);
-    }
-  }, [selectedSeat]);
+    // Add the selected seats to the confirmationSeats object
+    setConfirmationSeats((prevSeats) => ({
+      ...prevSeats,
+      [storedata.busId]: selectedSeats,
+    }));
+
+    // Reset the selected seats for the current confirmation
+    setSelectedSeats([]);
+  };
 
   const handleSeatClick = (seatId) => {
     console.log(`Seat clicked: ${seatId}`);
-    setSelectedSeat(seatId);
+
+    // Check if the seat is already selected
+    const isSeatSelected = selectedSeats.includes(seatId);
+
+    // If selected, remove it; otherwise, add it to the array
+    if (isSeatSelected) {
+      setSelectedSeats(selectedSeats.filter((id) => id !== seatId));
+    } else {
+      setSelectedSeats([...selectedSeats, seatId]);
+    }
   };
 
-  const thesis = useLoaderData();
-console.log(thesis)
-// console.log(thesis.slNumber)
-//   const {
-//     slNumber,
-//     departureDate,
-//     droppingPoint,
-//     pickupPoint,
-//   } = thesis;
-// console.log(slNumber)
-// console.log(thesis.slNumber)
 
-  // seat id for changing the design after clicking
-  // const handleSeatClick = (seatId) => {
-  //   console.log(`Seat clicked: ${seatId}`);
-  // };
 
   return (
     <Box className="grid md:grid-cols-2 grid-cols-1 gap-[50px] md:w-10/12 mx-auto my-20">
@@ -118,12 +92,14 @@ console.log(thesis)
           <Grid item xs={12}>
             <TextField
               className="w-full"
+              
               label="Departure Date"
               {...register("departureDate")}
               defaultValue={thesis?.departureDate}
               InputLabelProps={{
                 shrink: true,
               }}
+              readOnly={true}
             />
             {errors.date && (
               <span className="text-red-700">This field is required</span>
@@ -135,7 +111,7 @@ console.log(thesis)
               fullWidth
               label="Pickup Point"
               {...register("pickupPoint", { required: true })}
-              defaultValue={thesis?.pickupPoint}
+              defaultValue={thesis?.pickupPoint?.value}
             />
             {errors.pickupPoint && (
               <span className="text-red-700">This field is required</span>
@@ -147,7 +123,7 @@ console.log(thesis)
               fullWidth
               label="Dropping Point"
               {...register("droppingPoint", { required: true })}
-              defaultValue={thesis?.droppingPoint}
+              defaultValue={thesis?.droppingPoint?.value}
             />
             {errors.droppingPoint && (
               <span className="text-red-700">This field is required</span>
@@ -158,8 +134,9 @@ console.log(thesis)
             <TextField
               fullWidth
               label="SL Number"
-              {...register("slNumber", { required: true })}
-              defaultValue={thesis?.slNumber}
+              // eslint-disable-next-line no-undef
+              {...register("serialNumber", { required: true, })}
+              defaultValue={thesis?.serialNumber}
             />
             {errors.slNumber && (
               <span className="text-red-700">This field is required</span>
@@ -247,9 +224,14 @@ console.log(thesis)
                       {row.seats.map((seat) => (
                         <li
                           key={seat.id}
-                          className="seat cursor-pointer"
+                          className={`seat cursor-pointer ${
+                            selectedSeats === seat.id ? "selected" : ""
+                          }`}
                           onClick={() => handleSeatClick(seat.id)}
                         >
+                          {/* {if(gender=="male")=>{
+                            <img className="" src={seat.imageSrc} alt="" />
+                          }} */}
                           <img src={seat.imageSrc} alt="" />
                         </li>
                       ))}

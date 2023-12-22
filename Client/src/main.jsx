@@ -54,6 +54,7 @@ const router = createBrowserRouter([
       {
         path: "/fixSeat",
         element: <FixSeat />,
+        
       },
       {
         path: "/find-ticket",
