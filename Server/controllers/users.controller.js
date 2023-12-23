@@ -4,6 +4,7 @@ let accountsDataCollection;
 let busDataCollection;
 let supervisorDataCollection;
 let seatDataCollection;
+let reservationCollection;
 
 // Function to set up collections
 exports.setupCollections = (collections) => {
@@ -12,6 +13,7 @@ exports.setupCollections = (collections) => {
   busDataCollection = collections.busDataCollection;
   supervisorDataCollection = collections.supervisorDataCollection;
   seatDataCollection = collections.seatDataCollection;
+  reservationCollection = collections.reservationCollection;
 };
 
 const express = require("express");
@@ -120,6 +122,7 @@ exports.getUserByEmail = async (req, res) => {
   res.send(result);
 };
 
+
 //   post ticket
 
 exports.postTickets = async (req, res) => {
@@ -128,6 +131,47 @@ exports.postTickets = async (req, res) => {
   const result = await supervisorDataCollection.insertOne(item);
   res.send(result);
 };
+
+
+//   post seat
+exports.postSeatReservation = async (req, res) => {
+  const item = req.body;
+  // console.log(item);
+  const result = await reservationCollection.insertOne(item);
+  res.send(result);
+};
+
+
+// Update seat reservation status
+exports.updateSeatReservationStatus = async (req, res) => {
+  const seatId = req.params.id;
+  const updateData = req.body;
+  console.log(updateData)
+
+  try {
+    const filter = { "seats.id": seatId };
+    const update = {
+      $set: {
+        "seats.$.reserved": true,
+        "seats.$.gender": updateData.gender
+      }
+    };    
+
+    const result = await seatDataCollection.updateOne(filter, update);
+
+    if (result.modifiedCount > 0) {
+      res.status(200).json({ message: 'Seat status updated successfully' });
+    } else {
+      res.status(404).json({ message: 'Seat not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
+
 
 //   add supervisers
 

@@ -16,6 +16,8 @@ const {
   updateSupervisors,
   getSingleSupervisor,
   getSeats,
+  postSeatReservation,
+  updateSeatReservationStatus
   // getFixSeat,
 } = require("../controllers/users.controller");
 const router = express.Router();
@@ -45,6 +47,15 @@ router.get(`/users/:email`, getUserByEmail);
 
 // add cart
 router.post("/ticket", postTickets);
+
+// Add a new route for seat reservation
+router.post("/seat-reservation", postSeatReservation);
+
+
+// Update seat reservation status
+router.put('/seat-reservation/:id', updateSeatReservationStatus);
+
+
 
 // post supervisor
 router.post("/supervisor", addSupervisors);
