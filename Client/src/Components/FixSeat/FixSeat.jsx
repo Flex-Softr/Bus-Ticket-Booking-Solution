@@ -27,6 +27,7 @@ const FixSeat = () => {
   } = useForm();
 
   const { allSeats } = useSeats();
+  console.log(allSeats)
   
   const [selectedGender, setSelectedGender] = useState("");
   
@@ -63,7 +64,7 @@ const FixSeat = () => {
       passengersName: data?.passengersName,
       passengersNumber: data?.passengersNumber,
       gender: data?.gender,
-      departureTime: thesis.time,
+      departureTime: thesis?.time,
       seatId: selectedSeats,
     };
   
@@ -274,12 +275,20 @@ const FixSeat = () => {
                             //     : seat.reserved === true
                             //     ? "#2b75768b"
                             //     : "", // Default seat color
+                            // backgroundColor:
+                            //   seat.reserved && seat.gender == "Female"
+                            //     ? "#f76399a6" // Female reserved seat color
+                            //     : seat.reserved && seat.gender == "Male"
+                            //     ? "#9792d5" // Male reserved seat color
+                            //     : seat.reserved == true
+                            //     ? "#2b75768b"
+                            //     : "", // Default seat color
                             borderRadius: "50%",
                             cursor: seat.reserved ? "context-menu" : "pointer",
                           }}
                           required
                         >
-                          <button disabled={seat.reserved}>
+                          <button>
                             <img src={seat.imageSrc} alt="" />
                           </button>
                         </li>

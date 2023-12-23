@@ -160,7 +160,7 @@ const Header = () => {
                 <MenuIcon />
               </IconButton>
 
-              <Typography variant="h5">Your Logo</Typography>
+              <Typography variant=""><img className="img-logo" src="../../../public/logo.png" alt="" /></Typography>
 
               {/* Responsive Links (visible on small screens) */}
               <Modal

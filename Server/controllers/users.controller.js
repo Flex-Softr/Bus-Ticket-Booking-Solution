@@ -112,6 +112,28 @@ exports.getselectedseat = async (req, res) => {
 //     res.status(500).send("Internal Server Error");
 //   }
 // };
+  // try {
+  //   const filter = { "seats.id": seatId };
+  //   const update = {
+  //     $set: {
+  //       "seats.$.reserved": true,
+  //       "seats.$.gender": updateData.gender,
+  //     },
+  //   };
+
+  //   const result = await seatDataCollection.updateOne(filter, update);
+
+
+  //   if (result.modifiedCount > 0) {
+  //     res.status(200).json({ message: 'Seat status updated successfully' });
+  //   } else {
+  //     res.status(404).json({ message: 'Seat not found' });
+  //   }
+  // } catch (error) {
+  //   console.error(error);
+  //   res.status(500).json({ message: 'Internal server error' });
+  // }
+
 
 exports.addSupervisors = async (req, res) => {
   const item = req.body;
