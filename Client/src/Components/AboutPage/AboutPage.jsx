@@ -1,12 +1,51 @@
-import { Typography, Paper, Grid, makeStyles } from '@material-ui/core';
+import { Typography, Paper, Grid, makeStyles, Divider} from '@material-ui/core';
+import backgroundImage from "../../../public/bus_about.jpg";
+import Lottie from "lottie-react";
+import aboutLottie from "../../../public/about_lottie.json";
 
 // Define styles using makeStyles
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(3),
+    // padding: theme.spacing(3),
+  },
+  titleContainer: {
+    backgroundImage: `url(${backgroundImage})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center 89%',
+    padding: `${theme.spacing(6)}px 0`,
+    marginBottom: theme.spacing(2),
+    textAlign: 'center',
+    backgroundColor: 'rgba(20, 63, 64, 0.3)',
+    color: 'rgba(20, 63, 64, 0.8)',
   },
   title: {
     marginBottom: theme.spacing(2),
+  },
+  contentContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  content: {
+    width: '48%',
+    padding: theme.spacing(3),
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+  },
+  gifContainer: {
+    width: '48%',
+    padding: theme.spacing(3),
+    backgroundColor: 'rgba(20, 63, 64, 0.1)',
+  },
+  // gridContainer: {
+  //   padding: theme.spacing(3),
+  // },
+  divider: {
+    margin: `${theme.spacing(3)}px 0`,
+    borderBottom: '2px solid #143f40',
+    opacity: 0.2,
+  },
+  gridContainer: {
+    padding: theme.spacing(3),
+    margin: 'auto',
   },
 }));
 
@@ -16,7 +55,14 @@ const AboutPage = () => {
 
   return (
     <Paper className={classes.root}>
-      <Typography variant="h4" className={classes.title}>
+      <div className={classes.titleContainer}>
+        <Typography variant="h3" className={classes.title}>
+          ABOUT
+        </Typography>
+      </div>
+      <div className={classes.contentContainer}>
+      <div className={classes.content}>
+      <Typography variant="h5" className={classes.title}>
         About Us
       </Typography>
 
@@ -36,8 +82,13 @@ const AboutPage = () => {
         team works tirelessly to ensure that your journey is not just a trip but an
         enjoyable experience.
       </Typography>
-
-      <Grid container spacing={3}>
+      </div>
+      <div className={classes.gifContainer}>
+      <Lottie animationData={aboutLottie} />
+      </div>
+      </div>
+      <Divider className={classes.divider} />
+      <Grid container spacing={3} className={classes.gridContainer}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6">Our Vision</Typography>
           <Typography variant="body1" paragraph>
