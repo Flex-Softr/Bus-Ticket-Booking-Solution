@@ -9,6 +9,7 @@ import {
   Divider,
 } from "@mui/material";
 import "./FixSeat.css";
+import Swal from "sweetalert2";
 
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -29,7 +30,9 @@ const FixSeat = () => {
   const [selectedGender, setSelectedGender] = useState("");
 
   const thesis = useLoaderData();
-  console.log(thesis);
+  console.log(thesis.selectedSeats
+);
+
   const [selectedSeats, setSelectedSeats] = useState([]);
 
   const onSubmit = async (data) => {
@@ -38,7 +41,7 @@ const FixSeat = () => {
       toast.error("Please select a seat before submitting.");
       return;
     }
-
+  
     const storedata = {
       departureDate: data?.departureDate,
       pickupPoint: data?.pickupPoint,
@@ -52,30 +55,23 @@ const FixSeat = () => {
       departureTime: thesis.time,
       seatId: selectedSeats,
     };
-
+  
     try {
       // Make a POST request to reserve seats
       const response = await axios.post(
         "http://localhost:5000/seat-reservation",
         storedata
       );
-
+  
       if (response.status === 200) {
-        // console.log(response.data);
         toast.success("Reserved a seat for passenger");
-        async (reservationId, updateData) => {
-          try {
-            const response = await axios.put(
-              `http://localhost:5000/seat-reservation/${reservationId}`,
-              updateData
-            );
-            console.log(response.data);
-            // Handle the response data as needed
-          } catch (error) {
-            console.error(error);
-            // Handle errors
-          }
-        };
+  
+        // Update selected seats on the server after successful reservation
+        await updateSelectedSeatsOnServer(thesis._id, {
+          selectedSeats: selectedSeats,
+          gender: data.gender, // Pass the gender to the server
+        });
+  
         // Additional logic if the reservation is successful
       } else {
         console.error(response.data.message);
@@ -86,26 +82,70 @@ const FixSeat = () => {
       toast.error("An unexpected error occurred");
     }
   };
+  
+  const updateSelectedSeatsOnServer = async (reservationId, updateData) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/allbus/${reservationId}`, // Update the endpoint as per your server API
+        {
+          selectedSeats: updateData.selectedSeats,
+          gender: updateData.gender, // Pass the gender to the server
+        }
+      );
+  
+      if (response.status === 200) {
+        console.log(response.data);
+        // Additional logic if the update is successful
+      } else {
+        console.error(response.data.message);
+        toast.error("Failed to update selected seats on the server");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("An unexpected error occurred while updating selected seats");
+    }
+  };
+  
 
   const handleSeatClick = (seatId, reserved, gender) => {
-    // Check if the seat is already reserved
-    if (reserved && gender) {
-      toast.warning("This seat is already reserved.");
-      return;
-    }
+    Swal.fire({
+      text: "Do you want to select this seat?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, selecte this!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Check if the seat is already reserved
+        if (reserved && gender) {
+          toast.warning("This seat is already reserved.");
+          return;
+        }
 
-    // Check if the seat is already selected
-    const isSeatSelected = selectedSeats.find((seat) => seat.id === seatId);
+        // Check if the seat is already selected
+        const isSeatSelected = selectedSeats.find((seat) => seat.id === seatId);
+        console.log(isSeatSelected);
 
-    // If selected, remove it; otherwise, add it to the array
-    if (isSeatSelected) {
-      setSelectedSeats(selectedSeats.filter((seat) => seat.id !== seatId));
-    } else {
-      setSelectedSeats([...selectedSeats, { id: seatId }]);
-    }
+        // If selected, remove it; otherwise, add it to the array
+        if (isSeatSelected) {
+          setSelectedSeats(selectedSeats.filter((seat) => seat.id !== seatId));
+        } else {
+          setSelectedSeats([...selectedSeats, { id: seatId }]);
+        }
 
-    // Update the seat status in the database
-    updateSeatReservationStatus(seatId, { reserved, gender: selectedGender });
+        // Update the seat status in the database
+        updateSeatReservationStatus(seatId, {
+          reserved,
+          gender: selectedGender,
+        });
+        Swal.fire({
+          title: "selected!",
+          // text: "Your file has been deleted.",
+          icon: "success",
+        });
+      }
+    });
   };
 
   const updateSeatReservationStatus = async (seatId, updateData) => {
@@ -128,6 +168,8 @@ const FixSeat = () => {
       toast.error("An unexpected error occurred while updating seat status");
     }
   };
+
+  console.log("Selected Seats:", selectedSeats);
 
   return (
     <Box className="grid md:grid-cols-2 grid-cols-1 gap-[50px] md:w-10/12 mx-auto my-20">
@@ -184,6 +226,7 @@ const FixSeat = () => {
               // eslint-disable-next-line no-undef
               {...register("serialNumber", { required: true })}
               defaultValue={thesis?.serialNumber}
+              required
             />
             {errors.slNumber && (
               <span className="text-red-700">This field is required</span>
@@ -195,6 +238,7 @@ const FixSeat = () => {
               fullWidth
               label="Passengers Name"
               {...register("passengersName", { required: true })}
+              required
             />
             {errors.passengersName && (
               <span className="text-red-700">This field is required</span>
@@ -206,6 +250,7 @@ const FixSeat = () => {
               fullWidth
               label="Passengers Number"
               {...register("passengersNumber", { required: true })}
+              required
             />
             {errors.passengersNumber && (
               <span className="text-red-700">This field is required</span>
@@ -304,12 +349,9 @@ const FixSeat = () => {
                           }}
                           required
                         >
-                          {row.gender === "female" && (
-                            <img src={seat.femaleImageSrc} alt="" />
-                          )}
-                          {row.gender !== "female" && (
+                          <button disabled={seat.reserved}>
                             <img src={seat.imageSrc} alt="" />
-                          )}
+                          </button>
                         </li>
                       ))}
                     </ol>
