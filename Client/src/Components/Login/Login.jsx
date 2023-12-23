@@ -13,6 +13,8 @@ import { useContext } from "react";
 import { AuthContext } from "../Providers/AuthProvider/AuthProvider";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Lottie from "lottie-react";
+import animationData from "../../../public/signin.json"; // Replace with the path to your Lottie animation JSON file
 
 const Login = () => {
   const { signIn, loader, setloader } = useContext(AuthContext);
@@ -123,12 +125,14 @@ const Login = () => {
         </Container>
       </div>
       <div>
-        <img
-          className="loginPhoto img-fluid mt-14"
-          src="https://i.ibb.co/0VsCnxL/Login-Photo-1.jpg"
-          alt=""
-        />
-      </div>
+      <Lottie
+        className="loginAnimation mt-14"
+        animationData={animationData}
+        loop
+        autoplay
+        style={{ width: "480px", height: "400px" }}
+      />
+    </div>
     </div>
   );
 };

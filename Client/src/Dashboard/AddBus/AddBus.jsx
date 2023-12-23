@@ -71,7 +71,7 @@ const AddBus = () => {
   return (
     <Box
       sx={{ backgroundColor: "#fff", borderRadius: "3px" }}
-      className="px-5 md:px-20 py-10 md:w-11/12 mx-auto"
+      className=" md:px-20 py-10 md:w-11/12 mx-auto"
       style={{ boxShadow: " rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
     >
       <Box
@@ -250,7 +250,7 @@ const AddBus = () => {
           </div>
         </div>
 
-        <div className="flex gap-2 mb-4 w-full">
+        <div className="flex md:gap-2 mb-4 md:w-full ">
           <div className="flex-1">
             <TextField
               label="departureDate"
