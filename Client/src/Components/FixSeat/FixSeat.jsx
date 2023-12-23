@@ -52,7 +52,7 @@ const FixSeat = () => {
       passengersName: data?.passengersName,
       passengersNumber: data?.passengersNumber,
       gender: data?.gender,
-      departureTime: thesis.time,
+      departureTime: thesis?.time,
       seatId: selectedSeats,
     };
   
@@ -337,11 +337,11 @@ const FixSeat = () => {
                           title={seat.reserved ? "Reserved Seat" : ""}
                           style={{
                             backgroundColor:
-                              seat.reserved && seat.gender === "Female"
+                              seat.reserved && seat.gender == "Female"
                                 ? "#f76399a6" // Female reserved seat color
-                                : seat.reserved && seat.gender === "Male"
-                                ? "#544bb99a" // Male reserved seat color
-                                : seat.reserved === true
+                                : seat.reserved && seat.gender == "Male"
+                                ? "#9792d5" // Male reserved seat color
+                                : seat.reserved == true
                                 ? "#2b75768b"
                                 : "", // Default seat color
                             borderRadius: "50%",

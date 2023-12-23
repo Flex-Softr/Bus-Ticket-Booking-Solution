@@ -108,6 +108,7 @@ exports.updateSeatReservationStatus = async (req, res) => {
 
     const result = await seatDataCollection.updateOne(filter, update);
 
+
     if (result.modifiedCount > 0) {
       res.status(200).json({ message: 'Seat status updated successfully' });
     } else {
