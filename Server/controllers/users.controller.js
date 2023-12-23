@@ -93,32 +93,47 @@ exports.postSeatReservation = async (req, res) => {
   res.send(result);
 };
 
-exports.updateSeatReservationStatus = async (req, res) => {
-  const seatId = req.params.id;
-  const updateData = req.body;
+// get selected seat bus
+exports.getselectedseat = async (req, res) => {
+  const query = req.query.busId;
+  // const query = { _id: new ObjectId(id) };
+  const result = await reservationCollection.findOne(query);
+  res.send(result);
+}
+// exports.getReservedSeatsByBusId = async (req, res) => {
+//   const busId = req.body.busId;
 
-  try {
-    const filter = { "seats.id": seatId };
-    const update = {
-      $set: {
-        "seats.$.reserved": true,
-        "seats.$.gender": updateData.gender,
-      },
-    };
+//   try {
+//     const query = { busId: new ObjectId(busId) }; // Assuming busId is stored as an ObjectId
+//     const result = await reservationCollection.find(busId).toArray();
+//     res.send(result);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send("Internal Server Error");
+//   }
+// };
+  // try {
+  //   const filter = { "seats.id": seatId };
+  //   const update = {
+  //     $set: {
+  //       "seats.$.reserved": true,
+  //       "seats.$.gender": updateData.gender,
+  //     },
+  //   };
 
-    const result = await seatDataCollection.updateOne(filter, update);
+  //   const result = await seatDataCollection.updateOne(filter, update);
 
 
-    if (result.modifiedCount > 0) {
-      res.status(200).json({ message: 'Seat status updated successfully' });
-    } else {
-      res.status(404).json({ message: 'Seat not found' });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
+  //   if (result.modifiedCount > 0) {
+  //     res.status(200).json({ message: 'Seat status updated successfully' });
+  //   } else {
+  //     res.status(404).json({ message: 'Seat not found' });
+  //   }
+  // } catch (error) {
+  //   console.error(error);
+  //   res.status(500).json({ message: 'Internal server error' });
+  // }
+
 
 exports.addSupervisors = async (req, res) => {
   const item = req.body;
@@ -145,27 +160,27 @@ exports.getFixSeat = async (req, res) => {
   res.send(result);
 };
 
-exports.getselectedSeat = async (req, res) => {
-  const { busId } = req.params;
-  const { selectedSeats } = req.body;
+// exports.getselectedSeat = async (req, res) => {
+//   const { busId } = req.params;
+//   const { selectedSeats } = req.body;
 
-  try {
-    const result = await busDataCollection.updateOne(
-      { _id: new ObjectId(busId) },
-      { $set: { selectedSeats: selectedSeats
-      } }
-    );
+//   try {
+//     const result = await busDataCollection.updateOne(
+//       { _id: new ObjectId(busId) },
+//       { $set: { selectedSeats: selectedSeats
+//       } }
+//     );
 
-    if (result.modifiedCount > 0) {
-      res.status(200).json({ message: 'Bus data updated successfully' });
-    } else {
-      res.status(404).json({ message: 'Bus not found' });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
+//     if (result.modifiedCount > 0) {
+//       res.status(200).json({ message: 'Bus data updated successfully' });
+//     } else {
+//       res.status(404).json({ message: 'Bus not found' });
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: 'Internal server error' });
+//   }
+// };
 
 exports.deletebus = async (req, res) => {
   const id = req.params.id;
