@@ -73,7 +73,7 @@ const AddCounter = () => {
   return (
     <Box
       sx={{ backgroundColor: "#fff", borderRadius: "3px" }}
-      className="px-20 py-10 md:w-11/12 mx-auto"
+      className="md:px-20 md:py-10 md:w-11/12 mx-auto"
       style={{ boxShadow: " rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
     >
       <Container component="main" maxWidth="xs">

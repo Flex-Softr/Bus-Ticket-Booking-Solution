@@ -25,6 +25,7 @@ import SupervisorForm from "./Dashboard/SupervisorAccount/SupervisorForm.jsx";
 import { Update } from "@mui/icons-material";
 import AboutPage from "./Components/AboutPage/AboutPage.jsx";
 import ContactPage from "./Components/ContactPage/ContactPage.jsx";
+import DashboardHome from "./Dashboard/DashboardHome/DashboardHome.jsx";
 // import SupervisorForm from "./Dashboard/SupervisorAccount/SupervisorAccount.jsx";
 
 // Create a client
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
     path: "/dashboard",
     element: <DashboardLayout />,
     children: [
+      {
+       path:"/dashboard",
+       element:<DashboardHome/>
+      },
       {
         path: "addbus",
         element: <AddBus />,

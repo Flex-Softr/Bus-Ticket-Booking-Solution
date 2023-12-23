@@ -66,7 +66,7 @@ const SupervisorForm = () => {
   return (
     <Box
       sx={{ backgroundColor: "#fff", borderRadius: "3px" }}
-      className="px-20 py-10 md:w-11/12 mx-auto"
+      className="md:px-20 py-10 md:w-11/12 mx-auto"
       style={{ boxShadow: " rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
     >
       <Container component="main" maxWidth="xs">
@@ -88,7 +88,7 @@ const SupervisorForm = () => {
             <GroupAddIcon
               sx={{ fontSize: "44px" }} color= "primary" />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography className="text-center" component="h1" variant="h5">
             Add Supervisor Information
           </Typography>
           <Box

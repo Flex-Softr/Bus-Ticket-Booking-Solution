@@ -75,16 +75,16 @@ const Header = () => {
     return (
       <>
         <Link to="/">
-          <Button color="inherit">Home</Button>
+          <Button className="font-bold" >Home</Button>
         </Link>
 
         <Divider sx={{ bgcolor: "#aaa" }} />
         <Link to="/about">
-          <Button color="inherit">About</Button>
+          <Button className="font-bold" >About</Button>
         </Link>
         <Divider sx={{ bgcolor: "#aaa" }} />
         <Link to="/contact">
-          <Button color="inherit">Contact</Button>
+          <Button className="font-bold" >Contact</Button>
         </Link>
       </>
     );

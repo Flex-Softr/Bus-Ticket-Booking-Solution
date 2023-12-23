@@ -50,7 +50,7 @@ const ContactPage = () => {
             name="message"
             className="border border-[#143f40b8] p-3 w-full"
             placeholder="Message"
-            rows="10"
+            rows="5"
           ></textarea>
           <Button
             type="submit"

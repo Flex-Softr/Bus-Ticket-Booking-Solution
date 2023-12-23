@@ -20,7 +20,7 @@ const {
   postSeatReservation,
   // updateSeatReservationStatus,
   // getselectedSeat,
-  getselectedseat,
+  getReservedData,
   getReservedSeatsByBusId
 } = require("../controllers/users.controller");
 
@@ -38,7 +38,7 @@ router.post("/ticket", postTickets);
 router.post("/seat-reservation", postSeatReservation);
 
 // get selected seat bus
-router.get("/resarvedSeat/:id", getselectedseat);
+router.get("/resarvedSeat/:id", getReservedData);
 // router.get("/reserved-seats/:busId", getReservedSeatsByBusId);
 
 

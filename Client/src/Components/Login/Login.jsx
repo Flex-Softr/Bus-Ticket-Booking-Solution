@@ -13,6 +13,8 @@ import { useContext } from "react";
 import { AuthContext } from "../Providers/AuthProvider/AuthProvider";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Lottie from "lottie-react";
+import animationData from "../../../public/signin.json"; // Replace with the path to your Lottie animation JSON file
 
 const Login = () => {
   const { signIn, loader, setloader } = useContext(AuthContext);
@@ -123,13 +125,77 @@ const Login = () => {
         </Container>
       </div>
       <div>
-        <img
-          className="loginPhoto img-fluid mt-14"
-          src="https://i.ibb.co/0VsCnxL/Login-Photo-1.jpg"
-          alt=""
-        />
-      </div>
+      <Lottie
+        className="loginAnimation mt-14"
+        animationData={animationData}
+        loop
+        autoplay
+        style={{ width: "480px", height: "400px" }}
+      />
+    </div>
     </div>
   );
 };
 export default Login;
+
+
+
+// <Divider fullWidth />
+// <Box
+//   textAlign="center"
+//   className="demoseat"
+//   display="flex"
+//   alignItems="center"
+//   justifyContent="center"
+//   marginTop="20px"
+//   gap="15px"
+// >
+//   {/* available seat*/}
+//   <Box>
+//     <img
+//       style={{ backgroundColor: "", borderRadius: "10px" }}
+//       src="https://i.ibb.co/DV9xm9j/D3.png"
+//       alt=""
+//     />
+//     <p>available</p>
+//   </Box>
+
+//   {/* when this seat is for female*/}
+//   <Box>
+//     <img
+//       style={{
+//         backgroundColor: "#f76399a6",
+//         borderRadius: "10px",
+//       }}
+//       src="https://i.ibb.co/DV9xm9j/D3.png"
+//       alt=""
+//     />
+//     <p>Female</p>
+//   </Box>
+
+//   {/* when this seat is for male*/}
+//   <Box>
+//     <img
+//       style={{
+//         backgroundColor: "#544bb99a",
+//         borderRadius: "10px",
+//       }}
+//       src="https://i.ibb.co/DV9xm9j/D3.png"
+//       alt=""
+//     />
+//     <p>Male</p>
+//   </Box>
+
+//   {/* when this seat is for others*/}
+//   <Box>
+//     <img
+//       style={{
+//         backgroundColor: "#2b75768b",
+//         borderRadius: "10px",
+//       }}
+//       src="https://i.ibb.co/DV9xm9j/D3.png"
+//       alt=""
+//     />
+//     <p>Others</p>
+//   </Box>
+// </Box>
