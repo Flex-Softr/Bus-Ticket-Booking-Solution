@@ -47,8 +47,12 @@
   .seat {
     display: flex;
     flex: 0 0 14.28%;
-    padding: 5px;
+    padding: 10px;
     position: relative;
+  }
+
+  .seat:hover{
+    background: #b9b9b98a;
   }
   
   .seat label {
@@ -68,6 +72,8 @@
   .seat label:hover {
     cursor: pointer;
     box-shadow: 0 0 0px 2px green;
+    color: #3333334d;
+    
   }
   
   .seat:nth-child(2) {
@@ -78,11 +84,16 @@
     margin-bottom: 13%;
   }
  
-.seat img{
+.seat img, .demoseat img{
   width: 40px;
   height: 45px;
  
 }
+.demoseat img{
+  padding: 5px;
+}
+
+
 .lastseat img{
   width: 35px;
   height: 45px;
