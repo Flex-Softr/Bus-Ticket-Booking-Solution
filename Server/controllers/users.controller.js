@@ -94,12 +94,40 @@ exports.postSeatReservation = async (req, res) => {
 };
 
 // get selected seat bus
-exports.getselectedseat = async (req, res) => {
-  const query = req.query.busId;
-  // const query = { _id: new ObjectId(id) };
-  const result = await reservationCollection.findOne(query);
-  res.send(result);
-}
+// exports.getReservedData = async (req, res) => {
+//   const busId=req.params.id;
+//   console.log(busId)
+//   const filter= {_id: new ObjectId(busId)}
+//   const result = await reservationCollection.findOne(filter)
+
+//   res.send(result)
+// }
+
+exports.getReservedData = async (req, res) => {
+  const busId = req.params.id;
+  console.log("Received request for busId:", busId);
+
+  try {
+    
+
+    // Find all documents that match the specified busId
+    const filter = { busId: busId };
+    console.log("Filter:", filter);
+
+    const result = await reservationCollection.find(filter).toArray();
+
+    if (result.length > 0) {
+      console.log("Found reservation data:", result);
+      res.json(result);
+    } else {
+      console.log("No reservation data found for the given busId");
+      res.status(404).json({ error: "No reservation data found for the given busId" });
+    }
+  } catch (error) {
+    console.error("Error fetching reservation data:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
 // exports.getReservedSeatsByBusId = async (req, res) => {
 //   const busId = req.body.busId;
 

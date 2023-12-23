@@ -18,6 +18,7 @@ import useSeats from "../../hooks/useSeats";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import useSelectedseatbus from "../../hooks/useSelectedseatbus";
+import Swal from "sweetalert2";
 
 const FixSeat = () => {
   const {
@@ -35,25 +36,22 @@ const FixSeat = () => {
   console.log(thesis._id);
   
   
-  useEffect(() => {
-    fetch(`http://localhost:5000/resarvedSeat?busId=${thesis._id}`)
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        // setMytoys(data)
+  // useEffect(() => {
+  //   fetch(`http://localhost:5000/resarvedSeat?busId=${thesis._id}`)
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       console.log(data)
+  //       // setMytoys(data)
 
-      })
-  })
+  //     })
+  // })
 
   const [selectedSeats, setSelectedSeats] = useState([]);
 
-  const onSubmit = async (data) => {
-    if (selectedSeats.length === 0) {
-      console.error("Please select a seat before submitting.");
-      toast.error("Please select a seat before submitting.");
-      return;
-    }
 
+  const [confirmationSeats, setConfirmationSeats] = useState({});
+  const [reservationData, setReservationData] = useState(null);
+  const onSubmit = (data) => {
     const storedata = {
       departureDate: data?.departureDate,
       pickupPoint: data?.pickupPoint,
@@ -64,42 +62,79 @@ const FixSeat = () => {
       passengersName: data?.passengersName,
       passengersNumber: data?.passengersNumber,
       gender: data?.gender,
-      departureTime: thesis?.time,
-      seatId: selectedSeats,
+      departureTime: thesis.time,
+      seatIds: selectedSeats,
     };
+    console.log(storedata);
+
+    fetch('http://localhost:5000/seat-reservation',{
+      method:"POST",
+      headers:{
+          'content-type':'application/json'
+      },
+      body:JSON.stringify(storedata)
+  })
+  .then(res => res.json())
+  .then(result=>{
+      console.log(result)
+      if(result.insertedId){
+          Swal.fire({
+              position: 'top-center',
+              icon: 'success',
+              title: 'Your Post has been saved',
+              showConfirmButton: false,
+              timer: 1500
+          })
+
+     }
+          
+   
+           
+    
+  })
+
   
 
-    try {
-      // Make a POST request to reserve seats
-      const response = await axios.post(
-        "http://localhost:5000/seat-reservation",
-        storedata
-      );
+    // Add the selected seats to the confirmationSeats object
+    setConfirmationSeats((prevSeats) => ({
+      ...prevSeats,
+      [storedata.busId]: selectedSeats,
+    }));
 
-      if (response.status === 200) {
-        toast.success("Reserved a seat for passenger");
-      } else {
-        console.error(response.data.message);
-        toast.error("Failed to reserve seat");
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error("An unexpected error occurred");
-    }
+    // Reset the selected seats for the current confirmation
+    setSelectedSeats([]);
   };
-  const handleSeatClick = (seatId) => {
-    console.log(seatId)
-   
-        // Check if the seat is already selected
-        const isSeatSelected = selectedSeats.find((seat) => seat.id === seatId);
-        console.log(isSeatSelected);
-
-        // If selected, remove it; otherwise, add it to the array
-        if (isSeatSelected) {
-          setSelectedSeats(selectedSeats.filter((seat) => seat.id !== seatId));
+  console.log("Client-side _id:", thesis?._id);
+  useEffect(() => {
+    // Fetch reservation data
+    fetch(`http://localhost:5000/resarvedSeat/${thesis?._id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          console.error("Error fetching reservation data:", data.error);
         } else {
-          setSelectedSeats([...selectedSeats, { id: seatId }]);
+          setReservationData(data);
         }
+      })
+      .catch((error) => console.error("Error fetching reservation data:", error));
+  }, [thesis?._id]);
+  
+  console.log("reservtion data",reservationData)
+
+
+
+  const handleSeatClick = (seatId) => {
+    console.log(`Seat clicked: ${seatId}`);
+
+    // Check if the seat is already selected
+    const isSeatSelected = selectedSeats.includes(seatId);
+
+    // If selected, remove it; otherwise, add it to the array
+    if (isSeatSelected) {
+      setSelectedSeats(selectedSeats.filter((id) => id !== seatId));
+    } else {
+      setSelectedSeats([...selectedSeats, seatId]);
+    }
   };
 
   return (
@@ -224,7 +259,12 @@ const FixSeat = () => {
         </Grid>
       </form>
       {/* bus seat======================================> */}
-      <div>
+     
+       
+       
+           
+
+            <div>
         <div className="plane ps-7  py-3 w-full">
           <ol>
             <li>
@@ -252,116 +292,25 @@ const FixSeat = () => {
                         <li
                           key={seat.id}
                           className={`seat cursor-pointer ${
-                            selectedSeats.find(
-                              (selectedSeat) => selectedSeat.id === seat.id
-                            )
-                              ? "selected"
-                              : ""
-                          } ${seat.reserved ? "reserved" : ""}`}
-                          onClick={() =>
-                            handleSeatClick(
-                              seat.id,
-                              selectedGender,
-                              seat.reserved
-                            )
-                          }
-                          title={seat.reserved ? "Reserved Seat" : ""}
-                          style={{
-                            // backgroundColor:
-                            //   seat.reserved && seat.gender === "Female"
-                            //     ? "#f76399a6" // Female reserved seat color
-                            //     : seat.reserved && seat.gender === "Male"
-                            //     ? "#544bb99a" // Male reserved seat color
-                            //     : seat.reserved === true
-                            //     ? "#2b75768b"
-                            //     : "", // Default seat color
-                            // backgroundColor:
-                            //   seat.reserved && seat.gender == "Female"
-                            //     ? "#f76399a6" // Female reserved seat color
-                            //     : seat.reserved && seat.gender == "Male"
-                            //     ? "#9792d5" // Male reserved seat color
-                            //     : seat.reserved == true
-                            //     ? "#2b75768b"
-                            //     : "", // Default seat color
-                            borderRadius: "50%",
-                            cursor: seat.reserved ? "context-menu" : "pointer",
-                          }}
-                          required
+                            selectedSeats.includes(seat.id) ? "selected" : ""
+                          }`}
+                          onClick={() => handleSeatClick(seat.id)}
                         >
-                          <button>
-                            <img src={seat.imageSrc} alt="" />
-                          </button>
+                          <img src={seat.imageSrc} alt="" />
                         </li>
                       ))}
                     </ol>
                   </li>
                 ))}
               </ul>
-
-              {/* seat color */}
-              <Divider fullWidth />
-              <Box
-                textAlign="center"
-                className="demoseat"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                marginTop="20px"
-                gap="15px"
-              >
-                {/* available seat*/}
-                <Box>
-                  <img
-                    style={{ backgroundColor: "", borderRadius: "10px" }}
-                    src="https://i.ibb.co/DV9xm9j/D3.png"
-                    alt=""
-                  />
-                  <p>available</p>
-                </Box>
-
-                {/* when this seat is for female*/}
-                <Box>
-                  <img
-                    style={{
-                      backgroundColor: "#f76399a6",
-                      borderRadius: "10px",
-                    }}
-                    src="https://i.ibb.co/DV9xm9j/D3.png"
-                    alt=""
-                  />
-                  <p>Female</p>
-                </Box>
-
-                {/* when this seat is for male*/}
-                <Box>
-                  <img
-                    style={{
-                      backgroundColor: "#544bb99a",
-                      borderRadius: "10px",
-                    }}
-                    src="https://i.ibb.co/DV9xm9j/D3.png"
-                    alt=""
-                  />
-                  <p>Male</p>
-                </Box>
-
-                {/* when this seat is for others*/}
-                <Box>
-                  <img
-                    style={{
-                      backgroundColor: "#2b75768b",
-                      borderRadius: "10px",
-                    }}
-                    src="https://i.ibb.co/DV9xm9j/D3.png"
-                    alt=""
-                  />
-                  <p>Others</p>
-                </Box>
-              </Box>
             </div>
           </ol>
         </div>
       </div>
+            
+         
+       
+     
       <ToastContainer />
     </Box>
   );
