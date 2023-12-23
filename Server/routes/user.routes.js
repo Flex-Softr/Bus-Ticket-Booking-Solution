@@ -18,8 +18,10 @@ const {
   getSingleSupervisor,
   getSeats,
   postSeatReservation,
-  updateSeatReservationStatus,
-  getselectedSeat,
+  // updateSeatReservationStatus,
+  // getselectedSeat,
+  getselectedseat,
+  getReservedSeatsByBusId
 } = require("../controllers/users.controller");
 
 const router = express.Router();
@@ -34,8 +36,14 @@ router.get("/allbus/:id", getFixSeat);
 router.get("/users/:email", getUserByEmail);
 router.post("/ticket", postTickets);
 router.post("/seat-reservation", postSeatReservation);
-router.put("/allbus/:busId", getselectedSeat);
-router.put("/seat-reservation/:id", updateSeatReservationStatus);
+
+// get selected seat bus
+router.get("/resarvedSeat/:id", getselectedseat);
+// router.get("/reserved-seats/:busId", getReservedSeatsByBusId);
+
+
+// router.put("/allbus/:busId", getselectedSeat);
+// router.put("/seat-reservation/:id", updateSeatReservationStatus);
 router.post("/supervisor", addSupervisors);
 router.post("/add-account", addAccount);
 router.get("/add-account", getAccount);

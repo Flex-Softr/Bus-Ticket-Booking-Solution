@@ -9,14 +9,15 @@ import {
   Divider,
 } from "@mui/material";
 import "./FixSeat.css";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import useSeats from "../../hooks/useSeats";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import useSelectedseatbus from "../../hooks/useSelectedseatbus";
 
 const FixSeat = () => {
   const {
@@ -25,13 +26,23 @@ const FixSeat = () => {
     formState: { errors },
   } = useForm();
 
-  const { allSeats, refetch } = useSeats();
-
+  const { allSeats } = useSeats();
+  
   const [selectedGender, setSelectedGender] = useState("");
-
+  
   const thesis = useLoaderData();
-  console.log(thesis.selectedSeats
-);
+  console.log(thesis._id);
+  
+  
+  useEffect(() => {
+    fetch(`http://localhost:5000/resarvedSeat?busId=${thesis._id}`)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        // setMytoys(data)
+
+      })
+  })
 
   const [selectedSeats, setSelectedSeats] = useState([]);
 
@@ -41,7 +52,7 @@ const FixSeat = () => {
       toast.error("Please select a seat before submitting.");
       return;
     }
-  
+
     const storedata = {
       departureDate: data?.departureDate,
       pickupPoint: data?.pickupPoint,
@@ -56,23 +67,16 @@ const FixSeat = () => {
       seatId: selectedSeats,
     };
   
+
     try {
       // Make a POST request to reserve seats
       const response = await axios.post(
         "http://localhost:5000/seat-reservation",
         storedata
       );
-  
+
       if (response.status === 200) {
         toast.success("Reserved a seat for passenger");
-  
-        // Update selected seats on the server after successful reservation
-        await updateSelectedSeatsOnServer(thesis._id, {
-          selectedSeats: selectedSeats,
-          gender: data.gender, // Pass the gender to the server
-        });
-  
-        // Additional logic if the reservation is successful
       } else {
         console.error(response.data.message);
         toast.error("Failed to reserve seat");
@@ -82,47 +86,9 @@ const FixSeat = () => {
       toast.error("An unexpected error occurred");
     }
   };
-  
-  const updateSelectedSeatsOnServer = async (reservationId, updateData) => {
-    try {
-      const response = await axios.put(
-        `http://localhost:5000/allbus/${reservationId}`, // Update the endpoint as per your server API
-        {
-          selectedSeats: updateData.selectedSeats,
-          gender: updateData.gender, // Pass the gender to the server
-        }
-      );
-  
-      if (response.status === 200) {
-        console.log(response.data);
-        // Additional logic if the update is successful
-      } else {
-        console.error(response.data.message);
-        toast.error("Failed to update selected seats on the server");
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error("An unexpected error occurred while updating selected seats");
-    }
-  };
-  
-
-  const handleSeatClick = (seatId, reserved, gender) => {
-    Swal.fire({
-      text: "Do you want to select this seat?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, selecte this!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Check if the seat is already reserved
-        if (reserved && gender) {
-          toast.warning("This seat is already reserved.");
-          return;
-        }
-
+  const handleSeatClick = (seatId) => {
+    console.log(seatId)
+   
         // Check if the seat is already selected
         const isSeatSelected = selectedSeats.find((seat) => seat.id === seatId);
         console.log(isSeatSelected);
@@ -133,43 +99,7 @@ const FixSeat = () => {
         } else {
           setSelectedSeats([...selectedSeats, { id: seatId }]);
         }
-
-        // Update the seat status in the database
-        updateSeatReservationStatus(seatId, {
-          reserved,
-          gender: selectedGender,
-        });
-        Swal.fire({
-          title: "selected!",
-          // text: "Your file has been deleted.",
-          icon: "success",
-        });
-      }
-    });
   };
-
-  const updateSeatReservationStatus = async (seatId, updateData) => {
-    try {
-      const response = await axios.put(
-        `http://localhost:5000/seat-reservation/${seatId}`,
-        updateData
-      );
-
-      if (response.status === 200) {
-        console.log(response.data);
-        refetch();
-        // Additional logic if the reservation is successful
-      } else {
-        console.error(response.data.message);
-        toast.error("Failed to update seat status");
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error("An unexpected error occurred while updating seat status");
-    }
-  };
-
-  console.log("Selected Seats:", selectedSeats);
 
   return (
     <Box className="grid md:grid-cols-2 grid-cols-1 gap-[50px] md:w-10/12 mx-auto my-20">
@@ -336,14 +266,14 @@ const FixSeat = () => {
                           }
                           title={seat.reserved ? "Reserved Seat" : ""}
                           style={{
-                            backgroundColor:
-                              seat.reserved && seat.gender === "Female"
-                                ? "#f76399a6" // Female reserved seat color
-                                : seat.reserved && seat.gender === "Male"
-                                ? "#544bb99a" // Male reserved seat color
-                                : seat.reserved === true
-                                ? "#2b75768b"
-                                : "", // Default seat color
+                            // backgroundColor:
+                            //   seat.reserved && seat.gender === "Female"
+                            //     ? "#f76399a6" // Female reserved seat color
+                            //     : seat.reserved && seat.gender === "Male"
+                            //     ? "#544bb99a" // Male reserved seat color
+                            //     : seat.reserved === true
+                            //     ? "#2b75768b"
+                            //     : "", // Default seat color
                             borderRadius: "50%",
                             cursor: seat.reserved ? "context-menu" : "pointer",
                           }}
