@@ -123,14 +123,20 @@
 /* Add this CSS to your styles */
 @media (max-width: 600px) {
   form {
-    width: 90%;
+    width: 80%;
+    margin: auto;
+    
   }
+ 
 }
+
 
 @media (min-width: 601px) and (max-width: 1200px) {
   form {
     width: 80%;
+    margin: auto;
   }
+ 
 }
 
 

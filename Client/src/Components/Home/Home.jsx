@@ -31,19 +31,6 @@ const Home = () => {
     label: ticket.name,
   }));
 
-  // const onSubmit = (data) => {
-  //   const { pickupPoint, droppingPoint } = data;
-
-  //   if (pickupPoint.value === droppingPoint.value) {
-  //     toast.error("Pickup and Dropping points cannot be the same");
-  //     return;
-  //   }
-
-  //   localStorage.setItem("formData", JSON.stringify(data));
-  //   console.log(data);
-  //   navigate("/find-ticket");
-  // };
-
   const onSubmit = (data) => {
     const { pickupPoint, droppingPoint, departureDate } = data;
 
@@ -112,7 +99,7 @@ const Home = () => {
             Make a seat
           </Typography>
 
-          <form className="mt-3 " onSubmit={handleSubmit(onSubmit)}>
+          <form className="mt-3 form-section" onSubmit={handleSubmit(onSubmit)}>
             <div className="md:flex mx-auto md:gap-0 justify-center">
               <div>
                 <Controller
@@ -166,7 +153,7 @@ const Home = () => {
                     type="date"
                     placeholder="Select Date"
                     {...field}
-                    className="md:w-10/12 mx-2 p-2 field-style mb-5 border-[#143f40] mt-3"
+                    className="w-10/12 mx-2 p-2 field-style mb-5 border-[#143f40] mt-3"
                   />
                 )}
               />

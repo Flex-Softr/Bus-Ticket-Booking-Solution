@@ -10,12 +10,13 @@ import {
 } from "@mui/material";
 import "./FixSeat.css";
 // import Swal from "sweetalert2";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import useSeats from "../../hooks/useSeats";
-import { ToastContainer, toast } from "react-toastify";
+
 import axios from "axios";
 import useSelectedseatbus from "../../hooks/useSelectedseatbus";
 import Swal from "sweetalert2";
@@ -56,7 +57,8 @@ const FixSeat = () => {
 
     console.log(storedata);
 
-    fetch("http://localhost:5000/seat-reservation", {
+    if(selectedSeats.length >0 ){
+      fetch("http://localhost:5000/seat-reservation", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -68,15 +70,29 @@ const FixSeat = () => {
         console.log(result);
         if (result.insertedId) {
           Swal.fire({
-            position: "top-center",
-            icon: "success",
-            title: "Your Post has been saved",
-            showConfirmButton: false,
-            timer: 1500,
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Confirm it!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                title: "Confirmed!",
+                text: "Your Seat has been Booked .",
+                icon: "success"
+              });
+            }
           });
           e.target.reset();
         }
       });
+    } else{
+      toast.error("No Seat Selected ..!");
+      return ;
+    }
 
     // Add the selected seats to the confirmationSeats object
     setConfirmationSeats((prevSeats) => ({
@@ -125,9 +141,9 @@ const FixSeat = () => {
   return (
     <Box className="grid md:grid-cols-2 grid-cols-1 gap-[50px] md:w-10/12 mx-auto my-20">
       <form
-        className="w-full"
+        className="w-full :"
         onSubmit={handleSubmit(onSubmit)}
-        style={{ maxWidth: 450, height: 660, margin: "auto" }}
+        style={{ maxWidth: 450, height: 660,  }}
       >
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -269,7 +285,7 @@ const FixSeat = () => {
               <ul>
                 {allSeats.map((row) => (
                   <li key={row.row}>
-                    <ol className="seats gap-1">
+                    <ol className="seats gap-1 ">
                       {row.seats.map((seat) => {
                         const isSeatSelected = selectedSeats.includes(seat.id);
 
@@ -283,8 +299,8 @@ const FixSeat = () => {
                         // Set seat image style based on reservation
                         const seatImageStyle = {
                           backgroundColor: "",
-                          borderRadius: "10px",
-                          padding: '3px',
+                          borderRadius: "8px",
+                         
                           border: isSeatSelected ? "2px solid #000" : "none",
                           cursor: isSeatSelected ? "context-menu" : "pointer",
                         };
@@ -305,7 +321,7 @@ const FixSeat = () => {
                         }
 
                         return (
-                          <li key={seat.id} className="seat cursor-pointer mb-5">
+                          <li key={seat.id} className="seat cursor-pointer mb-1">
                             <img
                               src={seat.imageSrc}
                               alt=""
@@ -331,7 +347,9 @@ const FixSeat = () => {
             display="flex"
             alignItems="center"
             justifyContent="center"
-            marginTop="20px"
+            marginTop="35px"
+            marginBottom="20px"
+            
             gap="15px"
           >
             <h5 className="font-bold text-[#143f40]">Seat Indicator</h5>

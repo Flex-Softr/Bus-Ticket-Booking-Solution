@@ -115,10 +115,10 @@ const Header = () => {
               <Divider />
             </>
           )}
-          <MenuItem onClick={handleHeaderTop}>
+          <Link to="/profile"><MenuItem  onClick={handleHeaderTop}>
             <AccountCircleIcon sx={{ marginRight: 1 }} />
             Profile
-          </MenuItem>
+          </MenuItem ></Link>
           <Divider />
           <MenuItem onClick={handleLogout}>
             <LogoutIcon sx={{ marginRight: 1 }} />
@@ -135,11 +135,11 @@ const Header = () => {
         <div className="w-10/12 py-2 md:flex items-center flex-row justify-between mx-auto">
           <ul className="flex md:mb-0 mb-2 items-center text-lg text-gray-500 gap-4">
             <li className="flex items-center">
-              <FaPhoneAlt className="text-blue-600" /> +9123434543
+              <FaPhoneAlt className="style-logo"style={{ fontSize: '20px' }} /> +9123434543
             </li>
             <li className="h-[20px] w-[1px] bg-gray-700"></li>
             <li className="flex items-center">
-              <MdOutlineEmail className="text-blue-600" /> helloeasy.co
+              <MdOutlineEmail className="style-logo me-1" style={{ fontSize: '28px' }} /> travel@trek.com
             </li>
           </ul>
 
@@ -147,14 +147,14 @@ const Header = () => {
             <div className="border-2 text-lg flex gap-3 rounded border-gray-400 p-2">
               {user ? (
                 <button
-                  className="flex items-center capitalize text-blue-600"
+                  className="flex items-center capitalize color"
                   onClick={handleLogout}
                 >
                   <LogoutIcon /> logout
                 </button>
               ) : (
                 <Link
-                  className="flex items-center text-blue-600 gap-1"
+                  className="flex items-center color gap-1"
                   to="/login"
                 >
                   <MdLogin /> Sign In

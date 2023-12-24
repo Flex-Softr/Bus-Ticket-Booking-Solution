@@ -19,8 +19,7 @@ import ShowTicket from "./ShowTicket";
 
 function FindTicket() {
   const [normalizedBusTickets, setNormalizedBusTickets] = useState([]);
-  const [busTickets, setBusTickets] = useState([]);
-  const [filteredBusTickets, setFilteredBusTickets] = useState([]);
+
   const { control, handleSubmit, register, setValue } = useForm();
 
   // Retrieve data from local storage
@@ -119,7 +118,7 @@ function FindTicket() {
   }, []);
 
   const onSubmit = (data) => {
-  console.log("Form Data:", data);
+    console.log("Form Data:", data);
 
     const filteredBusData = allBusData.filter(
       (bus) =>
@@ -130,17 +129,15 @@ function FindTicket() {
 
     setNormalizedBusTickets(filteredBusData);
 
-  setFilteredBusTickets(filteredTickets);
+    // Save form data to local storage
+    const formDataToSave = {
+      pickupPoint: { value: data.pickupPoint, label: data.pickupPoint },
+      droppingPoint: { value: data.droppingPoint, label: data.droppingPoint },
+      departureDate: data.departureDate,
+      type: data.type,
+    };
 
-  // Save form data to local storage
-  const formDataToSave = {
-    pickupPoint: data.pickupPoint,
-    droppingPoint: data.droppingPoint,
-    departureDate: data.departureDate,
-    type: data.type,
-  };
-
-  localStorage.setItem("formData", JSON.stringify(formDataToSave));
+    localStorage.setItem("formData", JSON.stringify(formDataToSave));
   };
   return (
     <>

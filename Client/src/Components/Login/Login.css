@@ -8,7 +8,10 @@
     object-fit: contain;
     animation: move 4s infinite ease alternate;
 }
-
+.loginIcon{
+    background-color: #103B3B !important;
+    
+}
 @keyframes move{
     from{
         transform: translateY(-10px);
