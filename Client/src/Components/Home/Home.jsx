@@ -79,7 +79,7 @@ const Home = () => {
       <div className="md:flex items-center justify-center">
         <div className="md:absolute -z-20 top-5 md:h-full h-[350px]  flex w-full overflow-hidden">
           <img
-            className="home-img w-full h-[500px] mx-auto"
+            className="home-img -z-40 w-full h-[500px] mx-auto"
             src={bgskyline}
             alt=""
           />

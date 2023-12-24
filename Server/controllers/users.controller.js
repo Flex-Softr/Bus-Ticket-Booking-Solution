@@ -105,19 +105,19 @@ exports.postSeatReservation = async (req, res) => {
 
 exports.getReservedData = async (req, res) => {
   const busId = req.params.id;
-  console.log("Received request for busId:", busId);
+  // console.log("Received request for busId:", busId);
 
   try {
     
 
     // Find all documents that match the specified busId
     const filter = { busId: busId };
-    console.log("Filter:", filter);
+    // console.log("Filter:", filter);
 
     const result = await reservationCollection.find(filter).toArray();
 
     if (result.length > 0) {
-      console.log("Found reservation data:", result);
+      // console.log("Found reservation data:", result);
       res.json(result);
     } else {
       console.log("No reservation data found for the given busId");

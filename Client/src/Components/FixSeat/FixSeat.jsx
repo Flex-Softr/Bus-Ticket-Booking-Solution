@@ -35,21 +35,11 @@ const FixSeat = () => {
   const thesis = useLoaderData();
   console.log(thesis._id);
 
-  // useEffect(() => {
-  //   fetch(`http://localhost:5000/resarvedSeat?busId=${thesis._id}`)
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       console.log(data)
-  //       // setMytoys(data)
-
-  //     })
-  // })
-
   const [selectedSeats, setSelectedSeats] = useState([]);
 
   const [confirmationSeats, setConfirmationSeats] = useState({});
   const [reservationData, setReservationData] = useState(null);
-  const onSubmit = (data) => {
+  const onSubmit = (data, e) => {
     const storedata = {
       departureDate: data?.departureDate,
       pickupPoint: data?.pickupPoint,
@@ -63,6 +53,7 @@ const FixSeat = () => {
       departureTime: thesis.time,
       seatIds: selectedSeats,
     };
+
     console.log(storedata);
 
     fetch("http://localhost:5000/seat-reservation", {
@@ -83,6 +74,7 @@ const FixSeat = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+          e.target.reset();
         }
       });
 
@@ -110,7 +102,9 @@ const FixSeat = () => {
       .catch((error) =>
         console.error("Error fetching reservation data:", error)
       );
-  }, [thesis?._id]);
+  }, [thesis?._id, reservationData]);
+
+  console.log("reservtion data", reservationData);
 
   console.log("reservtion data", reservationData);
 
@@ -270,22 +264,59 @@ const FixSeat = () => {
             </li>
 
             {/* all seats */}
+
             <div>
               <ul>
                 {allSeats.map((row) => (
                   <li key={row.row}>
                     <ol className="seats gap-1">
-                      {row.seats.map((seat) => (
-                        <li
-                          key={seat.id}
-                          className={`seat cursor-pointer ${
-                            selectedSeats.includes(seat.id) ? "selected" : ""
-                          }`}
-                          onClick={() => handleSeatClick(seat.id)}
-                        >
-                          <img src={seat.imageSrc} alt="" />
-                        </li>
-                      ))}
+                      {row.seats.map((seat) => {
+                        const isSeatSelected = selectedSeats.includes(seat.id);
+
+                        // Check if the seat is reserved for a specific gender
+                        const reservation =
+                          reservationData &&
+                          reservationData.find((reservation) =>
+                            reservation.seatIds.includes(seat.id)
+                          );
+
+                        // Set seat image style based on reservation
+                        const seatImageStyle = {
+                          backgroundColor: "",
+                          borderRadius: "10px",
+                          padding: '3px',
+                          border: isSeatSelected ? "2px solid #000" : "none",
+                          cursor: isSeatSelected ? "context-menu" : "pointer",
+                        };
+
+                        // Set button disabled state for each gender
+                        let isButtonDisabled = false;
+                        if (reservation) {
+                          if (reservation.gender === "Male") {
+                            seatImageStyle.backgroundColor = "#9797D5";
+                            isButtonDisabled = true;
+                          } else if (reservation.gender === "Female") {
+                            seatImageStyle.backgroundColor = "#FA99BC";
+                            isButtonDisabled = true;
+                          } else if (reservation.gender === "Others") {
+                            seatImageStyle.backgroundColor = "#8BB3B4";
+                            isButtonDisabled = true;
+                          }
+                        }
+
+                        return (
+                          <li key={seat.id} className="seat cursor-pointer mb-5">
+                            <img
+                              src={seat.imageSrc}
+                              alt=""
+                              style={seatImageStyle}
+                              onClick={() =>
+                                !isButtonDisabled && handleSeatClick(seat.id)
+                              }
+                            />
+                          </li>
+                        );
+                      })}
                     </ol>
                   </li>
                 ))}
@@ -303,11 +334,12 @@ const FixSeat = () => {
             marginTop="20px"
             gap="15px"
           >
+            <h5 className="font-bold text-[#143f40]">Seat Indicator</h5>
             {/* available seat*/}
             <Box>
               <img
-                style={{ backgroundColor: "", borderRadius: "10px" }}
-                src="https://i.ibb.co/DV9xm9j/D3.png"
+                style={{  borderRadius: "45%", }}
+                src="https://i.ibb.co/9whMc4Q/seat.png"
                 alt=""
               />
               <p>available</p>
@@ -318,9 +350,10 @@ const FixSeat = () => {
               <img
                 style={{
                   backgroundColor: "#f76399a6",
-                  borderRadius: "10px",
+                  borderRadius: "45%",
+
                 }}
-                src="https://i.ibb.co/DV9xm9j/D3.png"
+                src="https://i.ibb.co/9whMc4Q/seat.png"
                 alt=""
               />
               <p>Female</p>
@@ -331,9 +364,9 @@ const FixSeat = () => {
               <img
                 style={{
                   backgroundColor: "#544bb99a",
-                  borderRadius: "10px",
+                  borderRadius: "45%",
                 }}
-                src="https://i.ibb.co/DV9xm9j/D3.png"
+                src="https://i.ibb.co/9whMc4Q/seat.png"
                 alt=""
               />
               <p>Male</p>
@@ -344,9 +377,9 @@ const FixSeat = () => {
               <img
                 style={{
                   backgroundColor: "#2b75768b",
-                  borderRadius: "10px",
+                  borderRadius: "45%",
                 }}
-                src="https://i.ibb.co/DV9xm9j/D3.png"
+                src="https://i.ibb.co/9whMc4Q/seat.png"
                 alt=""
               />
               <p>Others</p>

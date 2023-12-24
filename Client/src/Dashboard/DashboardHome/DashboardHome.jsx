@@ -5,7 +5,7 @@ import animationData from "../../../public/dashboard.json";
 const DashboardHome = () => {
     return (
         <div>
-            <div><h3>Dashboard Data coming soon...</h3></div>
+            <div><h3>Dashboard Data is coming soon...</h3></div>
         <Lottie
           className="loginAnimation"
           animationData={animationData}
