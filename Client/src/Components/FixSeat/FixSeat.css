@@ -106,6 +106,15 @@
  
 }
 
+/* seat style css */
+
+.seat.selected {
+  background-color: lightgray;
+  /* Add any other styles you want for selected seats */
+}
+
+
+
 
 
 

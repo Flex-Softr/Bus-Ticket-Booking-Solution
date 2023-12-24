@@ -35,23 +35,14 @@ const FixSeat = () => {
   const thesis = useLoaderData();
   console.log(thesis._id);
   
-  
-  // useEffect(() => {
-  //   fetch(`http://localhost:5000/resarvedSeat?busId=${thesis._id}`)
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       console.log(data)
-  //       // setMytoys(data)
-
-  //     })
-  // })
+ 
 
   const [selectedSeats, setSelectedSeats] = useState([]);
 
 
   const [confirmationSeats, setConfirmationSeats] = useState({});
   const [reservationData, setReservationData] = useState(null);
-  const onSubmit = (data) => {
+  const onSubmit = (data,e) => {
     const storedata = {
       departureDate: data?.departureDate,
       pickupPoint: data?.pickupPoint,
@@ -64,7 +55,9 @@ const FixSeat = () => {
       gender: data?.gender,
       departureTime: thesis.time,
       seatIds: selectedSeats,
+      
     };
+
     console.log(storedata);
 
     fetch('http://localhost:5000/seat-reservation',{
@@ -85,7 +78,7 @@ const FixSeat = () => {
               showConfirmButton: false,
               timer: 1500
           })
-
+e.target.reset();
      }
           
    
@@ -117,7 +110,7 @@ const FixSeat = () => {
         }
       })
       .catch((error) => console.error("Error fetching reservation data:", error));
-  }, [thesis?._id]);
+  }, [thesis?._id,reservationData]);
   
   console.log("reservtion data",reservationData)
 
@@ -283,27 +276,63 @@ const FixSeat = () => {
             </li>
 
             {/* all seats */}
-            <div>
+      
+<div>
               <ul>
                 {allSeats.map((row) => (
                   <li key={row.row}>
                     <ol className="seats gap-1">
-                      {row.seats.map((seat) => (
-                        <li
-                          key={seat.id}
-                          className={`seat cursor-pointer ${
-                            selectedSeats.includes(seat.id) ? "selected" : ""
-                          }`}
-                          onClick={() => handleSeatClick(seat.id)}
-                        >
-                          <img src={seat.imageSrc} alt="" />
-                        </li>
-                      ))}
+                      {row.seats.map((seat) => {
+                        const isSeatSelected = selectedSeats.includes(seat.id);
+
+                        // Check if the seat is reserved for a specific gender
+                        const reservation =
+                          reservationData &&
+                          reservationData.find((reservation) =>
+                            reservation.seatIds.includes(seat.id)
+                          );
+
+                        // Set seat image style based on reservation
+                        const seatImageStyle = {
+                          backgroundColor: "",
+                          borderRadius: "10px",
+                          border: isSeatSelected ? "2px solid #000" : "none",
+                          cursor: isSeatSelected  ? 'context-menu' : 'pointer',
+                        };
+
+                        // Set button disabled state for each gender
+                        let isButtonDisabled = false;
+                        if (reservation) {
+                          if (reservation.gender === "Male") {
+                            seatImageStyle.backgroundColor = "#9797D5";
+                            isButtonDisabled = true;
+                          } else if (reservation.gender === "Female") {
+                            seatImageStyle.backgroundColor = "#FA99BC";
+                            isButtonDisabled = true;
+                          } else if (reservation.gender === "Others") {
+                            seatImageStyle.backgroundColor = "#8BB3B4";
+                            isButtonDisabled = true;
+                          }
+                        }
+
+                        return (
+                          <li key={seat.id} className="seat cursor-pointer">
+                            <img
+                              src={seat.imageSrc}
+                              alt=""
+                              style={seatImageStyle}
+                              onClick={() => !isButtonDisabled && handleSeatClick(seat.id)}
+                            />
+                            
+                          </li>
+                        );
+                      })}
                     </ol>
                   </li>
                 ))}
               </ul>
             </div>
+
           </ol>
 
           <Divider fullWidth />
@@ -365,6 +394,7 @@ const FixSeat = () => {
     <p>Others</p>
   </Box>
 </Box>
+          
         </div>
 
         
