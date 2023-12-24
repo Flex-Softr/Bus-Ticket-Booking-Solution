@@ -28,14 +28,13 @@ const FixSeat = () => {
   } = useForm();
 
   const { allSeats } = useSeats();
-  console.log(allSeats)
-  
+  console.log(allSeats);
+
   const [selectedGender, setSelectedGender] = useState("");
-  
+
   const thesis = useLoaderData();
   console.log(thesis._id);
-  
-  
+
   // useEffect(() => {
   //   fetch(`http://localhost:5000/resarvedSeat?busId=${thesis._id}`)
   //     .then(res => res.json())
@@ -47,7 +46,6 @@ const FixSeat = () => {
   // })
 
   const [selectedSeats, setSelectedSeats] = useState([]);
-
 
   const [confirmationSeats, setConfirmationSeats] = useState({});
   const [reservationData, setReservationData] = useState(null);
@@ -67,33 +65,26 @@ const FixSeat = () => {
     };
     console.log(storedata);
 
-    fetch('http://localhost:5000/seat-reservation',{
-      method:"POST",
-      headers:{
-          'content-type':'application/json'
+    fetch("http://localhost:5000/seat-reservation", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
       },
-      body:JSON.stringify(storedata)
-  })
-  .then(res => res.json())
-  .then(result=>{
-      console.log(result)
-      if(result.insertedId){
+      body: JSON.stringify(storedata),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        if (result.insertedId) {
           Swal.fire({
-              position: 'top-center',
-              icon: 'success',
-              title: 'Your Post has been saved',
-              showConfirmButton: false,
-              timer: 1500
-          })
-
-     }
-          
-   
-           
-    
-  })
-
-  
+            position: "top-center",
+            icon: "success",
+            title: "Your Post has been saved",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
 
     // Add the selected seats to the confirmationSeats object
     setConfirmationSeats((prevSeats) => ({
@@ -116,12 +107,12 @@ const FixSeat = () => {
           setReservationData(data);
         }
       })
-      .catch((error) => console.error("Error fetching reservation data:", error));
+      .catch((error) =>
+        console.error("Error fetching reservation data:", error)
+      );
   }, [thesis?._id]);
-  
-  console.log("reservtion data",reservationData)
 
-
+  console.log("reservtion data", reservationData);
 
   const handleSeatClick = (seatId) => {
     console.log(`Seat clicked: ${seatId}`);
@@ -259,12 +250,8 @@ const FixSeat = () => {
         </Grid>
       </form>
       {/* bus seat======================================> */}
-     
-       
-       
-           
 
-            <div>
+      <div>
         <div className="plane ps-7  py-3 w-full">
           <ol>
             <li>
@@ -307,73 +294,67 @@ const FixSeat = () => {
           </ol>
 
           <Divider fullWidth />
-<Box
-  textAlign="center"
-  className="demoseat"
-  display="flex"
-  alignItems="center"
-  justifyContent="center"
-  marginTop="20px"
-  gap="15px"
->
-  {/* available seat*/}
-  <Box>
-    <img
-      style={{ backgroundColor: "", borderRadius: "10px" }}
-      src="https://i.ibb.co/DV9xm9j/D3.png"
-      alt=""
-    />
-    <p>available</p>
-  </Box>
+          <Box
+            textAlign="center"
+            className="demoseat"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            marginTop="20px"
+            gap="15px"
+          >
+            {/* available seat*/}
+            <Box>
+              <img
+                style={{ backgroundColor: "", borderRadius: "10px" }}
+                src="https://i.ibb.co/DV9xm9j/D3.png"
+                alt=""
+              />
+              <p>available</p>
+            </Box>
 
-  {/* when this seat is for female*/}
-  <Box>
-    <img
-      style={{
-        backgroundColor: "#f76399a6",
-        borderRadius: "10px",
-      }}
-      src="https://i.ibb.co/DV9xm9j/D3.png"
-      alt=""
-    />
-    <p>Female</p>
-  </Box>
+            {/* when this seat is for female*/}
+            <Box>
+              <img
+                style={{
+                  backgroundColor: "#f76399a6",
+                  borderRadius: "10px",
+                }}
+                src="https://i.ibb.co/DV9xm9j/D3.png"
+                alt=""
+              />
+              <p>Female</p>
+            </Box>
 
-  {/* when this seat is for male*/}
-  <Box>
-    <img
-      style={{
-        backgroundColor: "#544bb99a",
-        borderRadius: "10px",
-      }}
-      src="https://i.ibb.co/DV9xm9j/D3.png"
-      alt=""
-    />
-    <p>Male</p>
-  </Box>
+            {/* when this seat is for male*/}
+            <Box>
+              <img
+                style={{
+                  backgroundColor: "#544bb99a",
+                  borderRadius: "10px",
+                }}
+                src="https://i.ibb.co/DV9xm9j/D3.png"
+                alt=""
+              />
+              <p>Male</p>
+            </Box>
 
-  {/* when this seat is for others*/}
-  <Box>
-    <img
-      style={{
-        backgroundColor: "#2b75768b",
-        borderRadius: "10px",
-      }}
-      src="https://i.ibb.co/DV9xm9j/D3.png"
-      alt=""
-    />
-    <p>Others</p>
-  </Box>
-</Box>
+            {/* when this seat is for others*/}
+            <Box>
+              <img
+                style={{
+                  backgroundColor: "#2b75768b",
+                  borderRadius: "10px",
+                }}
+                src="https://i.ibb.co/DV9xm9j/D3.png"
+                alt=""
+              />
+              <p>Others</p>
+            </Box>
+          </Box>
         </div>
-
-        
-
       </div>
-            
-         
-       
-     
+
       <ToastContainer />
     </Box>
   );
