@@ -60,9 +60,9 @@ const Login = () => {
               alignItems: "center",
             }}
           >
-            <Avatar
-              className="bg-blue-600"
-              sx={{ m: 1, bgcolor: "secondary.main" }}
+            <Avatar sx={{ fontSize: "44px" }}
+              className="loginIcon"
+             
             >
               <LockOutlinedIcon />
             </Avatar>
@@ -116,7 +116,7 @@ const Login = () => {
                     disabled={loader}
                   >
                     {loader ? <span>
-                      <AutorenewIcon className="animate-spin" /> sign In ... </span>: ' Sign In'}
+                      <AutorenewIcon className="animate-spin"  /> sign In ... </span>: ' Sign In'}
                    
                   </Button>
               </div>
