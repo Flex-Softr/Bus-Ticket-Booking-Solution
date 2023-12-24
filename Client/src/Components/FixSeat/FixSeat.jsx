@@ -28,21 +28,18 @@ const FixSeat = () => {
   } = useForm();
 
   const { allSeats } = useSeats();
-  console.log(allSeats)
-  
+  console.log(allSeats);
+
   const [selectedGender, setSelectedGender] = useState("");
-  
+
   const thesis = useLoaderData();
   console.log(thesis._id);
-  
- 
 
   const [selectedSeats, setSelectedSeats] = useState([]);
 
-
   const [confirmationSeats, setConfirmationSeats] = useState({});
   const [reservationData, setReservationData] = useState(null);
-  const onSubmit = (data,e) => {
+  const onSubmit = (data, e) => {
     const storedata = {
       departureDate: data?.departureDate,
       pickupPoint: data?.pickupPoint,
@@ -55,38 +52,31 @@ const FixSeat = () => {
       gender: data?.gender,
       departureTime: thesis.time,
       seatIds: selectedSeats,
-      
     };
 
     console.log(storedata);
 
-    fetch('http://localhost:5000/seat-reservation',{
-      method:"POST",
-      headers:{
-          'content-type':'application/json'
+    fetch("http://localhost:5000/seat-reservation", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
       },
-      body:JSON.stringify(storedata)
-  })
-  .then(res => res.json())
-  .then(result=>{
-      console.log(result)
-      if(result.insertedId){
+      body: JSON.stringify(storedata),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        if (result.insertedId) {
           Swal.fire({
-              position: 'top-center',
-              icon: 'success',
-              title: 'Your Post has been saved',
-              showConfirmButton: false,
-              timer: 1500
-          })
-e.target.reset();
-     }
-          
-   
-           
-    
-  })
-
-  
+            position: "top-center",
+            icon: "success",
+            title: "Your Post has been saved",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          e.target.reset();
+        }
+      });
 
     // Add the selected seats to the confirmationSeats object
     setConfirmationSeats((prevSeats) => ({
@@ -109,12 +99,14 @@ e.target.reset();
           setReservationData(data);
         }
       })
-      .catch((error) => console.error("Error fetching reservation data:", error));
-  }, [thesis?._id,reservationData]);
-  
-  console.log("reservtion data",reservationData)
+      .catch((error) =>
+        console.error("Error fetching reservation data:", error)
+      );
+  }, [thesis?._id, reservationData]);
 
+  console.log("reservtion data", reservationData);
 
+  console.log("reservtion data", reservationData);
 
   const handleSeatClick = (seatId) => {
     console.log(`Seat clicked: ${seatId}`);
@@ -252,12 +244,8 @@ e.target.reset();
         </Grid>
       </form>
       {/* bus seat======================================> */}
-     
-       
-       
-           
 
-            <div>
+      <div>
         <div className="plane ps-7  py-3 w-full">
           <ol>
             <li>
@@ -276,8 +264,8 @@ e.target.reset();
             </li>
 
             {/* all seats */}
-      
-<div>
+
+            <div>
               <ul>
                 {allSeats.map((row) => (
                   <li key={row.row}>
@@ -296,8 +284,9 @@ e.target.reset();
                         const seatImageStyle = {
                           backgroundColor: "",
                           borderRadius: "10px",
+                          padding: '3px',
                           border: isSeatSelected ? "2px solid #000" : "none",
-                          cursor: isSeatSelected  ? 'context-menu' : 'pointer',
+                          cursor: isSeatSelected ? "context-menu" : "pointer",
                         };
 
                         // Set button disabled state for each gender
@@ -316,14 +305,15 @@ e.target.reset();
                         }
 
                         return (
-                          <li key={seat.id} className="seat cursor-pointer">
+                          <li key={seat.id} className="seat cursor-pointer mb-5">
                             <img
                               src={seat.imageSrc}
                               alt=""
                               style={seatImageStyle}
-                              onClick={() => !isButtonDisabled && handleSeatClick(seat.id)}
+                              onClick={() =>
+                                !isButtonDisabled && handleSeatClick(seat.id)
+                              }
                             />
-                            
                           </li>
                         );
                       })}
@@ -332,78 +322,72 @@ e.target.reset();
                 ))}
               </ul>
             </div>
-
           </ol>
 
           <Divider fullWidth />
-<Box
-  textAlign="center"
-  className="demoseat"
-  display="flex"
-  alignItems="center"
-  justifyContent="center"
-  marginTop="20px"
-  gap="15px"
->
-  {/* available seat*/}
-  <Box>
-    <img
-      style={{ backgroundColor: "", borderRadius: "10px" }}
-      src="https://i.ibb.co/DV9xm9j/D3.png"
-      alt=""
-    />
-    <p>available</p>
-  </Box>
+          <Box
+            textAlign="center"
+            className="demoseat"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            marginTop="20px"
+            gap="15px"
+          >
+            <h5 className="font-bold text-[#143f40]">Seat Indicator</h5>
+            {/* available seat*/}
+            <Box>
+              <img
+                style={{  borderRadius: "45%", }}
+                src="https://i.ibb.co/9whMc4Q/seat.png"
+                alt=""
+              />
+              <p>available</p>
+            </Box>
 
-  {/* when this seat is for female*/}
-  <Box>
-    <img
-      style={{
-        backgroundColor: "#f76399a6",
-        borderRadius: "10px",
-      }}
-      src="https://i.ibb.co/DV9xm9j/D3.png"
-      alt=""
-    />
-    <p>Female</p>
-  </Box>
+            {/* when this seat is for female*/}
+            <Box>
+              <img
+                style={{
+                  backgroundColor: "#f76399a6",
+                  borderRadius: "45%",
 
-  {/* when this seat is for male*/}
-  <Box>
-    <img
-      style={{
-        backgroundColor: "#544bb99a",
-        borderRadius: "10px",
-      }}
-      src="https://i.ibb.co/DV9xm9j/D3.png"
-      alt=""
-    />
-    <p>Male</p>
-  </Box>
+                }}
+                src="https://i.ibb.co/9whMc4Q/seat.png"
+                alt=""
+              />
+              <p>Female</p>
+            </Box>
 
-  {/* when this seat is for others*/}
-  <Box>
-    <img
-      style={{
-        backgroundColor: "#2b75768b",
-        borderRadius: "10px",
-      }}
-      src="https://i.ibb.co/DV9xm9j/D3.png"
-      alt=""
-    />
-    <p>Others</p>
-  </Box>
-</Box>
-          
+            {/* when this seat is for male*/}
+            <Box>
+              <img
+                style={{
+                  backgroundColor: "#544bb99a",
+                  borderRadius: "45%",
+                }}
+                src="https://i.ibb.co/9whMc4Q/seat.png"
+                alt=""
+              />
+              <p>Male</p>
+            </Box>
+
+            {/* when this seat is for others*/}
+            <Box>
+              <img
+                style={{
+                  backgroundColor: "#2b75768b",
+                  borderRadius: "45%",
+                }}
+                src="https://i.ibb.co/9whMc4Q/seat.png"
+                alt=""
+              />
+              <p>Others</p>
+            </Box>
+          </Box>
         </div>
-
-        
-
       </div>
-            
-         
-       
-     
+
       <ToastContainer />
     </Box>
   );
