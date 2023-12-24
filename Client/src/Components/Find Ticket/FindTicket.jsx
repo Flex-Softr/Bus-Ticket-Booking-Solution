@@ -19,7 +19,8 @@ import ShowTicket from "./ShowTicket";
 
 function FindTicket() {
   const [normalizedBusTickets, setNormalizedBusTickets] = useState([]);
-
+  const [busTickets, setBusTickets] = useState([]);
+  const [filteredBusTickets, setFilteredBusTickets] = useState([]);
   const { control, handleSubmit, register, setValue } = useForm();
 
   // Retrieve data from local storage
@@ -107,28 +108,28 @@ function FindTicket() {
   // };
 
   const onSubmit = (data) => {
-    console.log("Form Data:", data);
+  console.log("Form Data:", data);
 
-    const filteredBusTickets = normalizedBusTickets.filter(
-      (ticket) =>
-        ticket.busType.toLowerCase() === data.type.toLowerCase() &&
-        ticket.pickupPoint.label.toLowerCase() ===
-          data.pickupPoint.toLowerCase() &&
-        ticket.droppingPoint.label.toLowerCase() ===
-          data.droppingPoint.toLowerCase()
-    );
+  const filteredTickets = busTickets.filter(
+    (ticket) =>
+      ticket.busType.toLowerCase() === data.type.toLowerCase() &&
+      ticket.pickupPoint.label.toLowerCase() === data.pickupPoint.toLowerCase() &&
+      ticket.droppingPoint.label.toLowerCase() === data.droppingPoint.toLowerCase()
+  );
 
-    setNormalizedBusTickets(filteredBusTickets);
+  console.log("Filtered Tickets:", filteredTickets);
 
-    // Save form data to local storage
-    const formDataToSave = {
-      pickupPoint: { value: data.pickupPoint, label: data.pickupPoint },
-      droppingPoint: { value: data.droppingPoint, label: data.droppingPoint },
-      departureDate: data.departureDate,
-      type: data.type,
-    };
+  setFilteredBusTickets(filteredTickets);
 
-    localStorage.setItem("formData", JSON.stringify(formDataToSave));
+  // Save form data to local storage
+  const formDataToSave = {
+    pickupPoint: data.pickupPoint,
+    droppingPoint: data.droppingPoint,
+    departureDate: data.departureDate,
+    type: data.type,
+  };
+
+  localStorage.setItem("formData", JSON.stringify(formDataToSave));
   };
 
   return (
