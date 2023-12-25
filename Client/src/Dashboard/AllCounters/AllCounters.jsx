@@ -124,7 +124,7 @@ const AllCounters = () => {
               style={{ color: "#fff" }}
               sx={{ backgroundColor: (theme) => theme.palette.primary.main }}
             >
-              <TableCell>Serial</TableCell>
+              <TableCell>#</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Password</TableCell>
@@ -142,9 +142,7 @@ const AllCounters = () => {
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{row.account_name}</TableCell>
                     <TableCell>{row.email}</TableCell>
-                    <TableCell>{row.password.length > 3
-                      ? `${row.password.substring(0, 3)}`
-                      : row.password}</TableCell>
+                    <TableCell>{row.password}</TableCell>
                   <TableCell>
                     <Tooltip title="Delete">
                       <IconButton onClick={() => handleDeleteClick(row._id)}>
@@ -243,7 +241,7 @@ const AllCounters = () => {
               style={{ color: "#fff" }}
               sx={{ backgroundColor: (theme) => theme.palette.primary.main }}
             >
-              <TableCell>Serial</TableCell>
+              <TableCell>#</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Password</TableCell>
@@ -261,9 +259,7 @@ const AllCounters = () => {
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{row.account_name}</TableCell>
                     <TableCell>{row.email}</TableCell>
-                    <TableCell>{row.password.length > 3
-                      ? `${row.password.substring(0, 3)}`
-                      : row.password}</TableCell>
+                    <TableCell>{row.password}</TableCell>
                   <TableCell>
                     <Tooltip title="Delete">
                       <IconButton onClick={() => handleDeleteClick(row._id)}>

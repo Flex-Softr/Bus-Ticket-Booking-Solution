@@ -40,3 +40,12 @@
   .bg{
     background-color: #ff5f020a;
     }
+    @media (max-width: 600px) {
+      .form-section{
+        margin: 0 auto;
+      }
+    }
+    
+    @media (min-width: 601px) and (max-width: 1200px) {
+     
+    }

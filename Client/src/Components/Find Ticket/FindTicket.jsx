@@ -106,19 +106,28 @@ function FindTicket() {
   //   setNormalizedBusTickets(filteredBusTickets);
   // };
 
+  const [allBusData, setAllBusData] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/allbus")
+      .then((res) => res.json())
+      .then((data) => {
+        setAllBusData(data || []);
+      })
+      .catch((error) => console.error("Error fetching all bus data:", error));
+  }, []);
+
   const onSubmit = (data) => {
     console.log("Form Data:", data);
 
-    const filteredBusTickets = normalizedBusTickets.filter(
-      (ticket) =>
-        ticket.busType.toLowerCase() === data.type.toLowerCase() &&
-        ticket.pickupPoint.label.toLowerCase() ===
-          data.pickupPoint.toLowerCase() &&
-        ticket.droppingPoint.label.toLowerCase() ===
-          data.droppingPoint.toLowerCase()
+    const filteredBusData = allBusData.filter(
+      (bus) =>
+        bus.busType.toLowerCase() === data.type.toLowerCase() &&
+        bus.pickupPoint.label.toLowerCase() === data.pickupPoint.toLowerCase() &&
+        bus.droppingPoint.label.toLowerCase() === data.droppingPoint.toLowerCase()
     );
 
-    setNormalizedBusTickets(filteredBusTickets);
+    setNormalizedBusTickets(filteredBusData);
 
     // Save form data to local storage
     const formDataToSave = {
@@ -130,7 +139,6 @@ function FindTicket() {
 
     localStorage.setItem("formData", JSON.stringify(formDataToSave));
   };
-
   return (
     <>
       <div className="flex bg-slate-600">

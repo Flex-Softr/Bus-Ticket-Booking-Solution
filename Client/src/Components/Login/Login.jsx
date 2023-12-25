@@ -13,6 +13,8 @@ import { useContext } from "react";
 import { AuthContext } from "../Providers/AuthProvider/AuthProvider";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Lottie from "lottie-react";
+import animationData from "../../../public/signin.json"; // Replace with the path to your Lottie animation JSON file
 
 const Login = () => {
   const { signIn, loader, setloader } = useContext(AuthContext);
@@ -58,9 +60,9 @@ const Login = () => {
               alignItems: "center",
             }}
           >
-            <Avatar
-              className="bg-blue-600"
-              sx={{ m: 1, bgcolor: "secondary.main" }}
+            <Avatar sx={{ fontSize: "44px" }}
+              className="loginIcon"
+             
             >
               <LockOutlinedIcon />
             </Avatar>
@@ -114,7 +116,7 @@ const Login = () => {
                     disabled={loader}
                   >
                     {loader ? <span>
-                      <AutorenewIcon className="animate-spin" /> sign In ... </span>: ' Sign In'}
+                      <AutorenewIcon className="animate-spin"  /> sign In ... </span>: ' Sign In'}
                    
                   </Button>
               </div>
@@ -123,13 +125,17 @@ const Login = () => {
         </Container>
       </div>
       <div>
-        <img
-          className="loginPhoto img-fluid mt-14"
-          src="https://i.ibb.co/0VsCnxL/Login-Photo-1.jpg"
-          alt=""
-        />
-      </div>
+      <Lottie
+        className="loginAnimation mt-14"
+        animationData={animationData}
+        loop
+        autoplay
+        style={{ width: "480px", height: "400px" }}
+      />
+    </div>
     </div>
   );
 };
 export default Login;
+
+

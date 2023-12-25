@@ -6,118 +6,166 @@ import {
   RadioGroup,
   TextField,
   Box,
+  Divider,
 } from "@mui/material";
 import "./FixSeat.css";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import useSeats from "../../hooks/useSeats";
+import Swal from "sweetalert2";
 
+// Define the FixSeat component
 const FixSeat = () => {
+  // Initialize react-hook-form
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm();
 
+  // Fetch seat data using custom hook
   const { allSeats } = useSeats();
 
-  // const storedData = JSON.parse(localStorage.getItem("formData")) || {};
-  // console.log("Stored Data:", storedData);
-
-  // Get the stored date from local storage
-  // const [selectedDate, setSelectedDate] = useState(
-  //   storedData.departureDate || ""
-  // );
-
-  // const [seatingData, setSeatingData] = useState(null);
-
-  // useEffect(() => {
-  //   // Fetch seating data or use the provided JSON directly
-  //   // For example, you can fetch data from an API or use local data
-  //   const fetchData = async () => {
-  //     // Assuming the JSON is stored locally
-  //     const response = await fetch("../../../public/seats.json");
-  //     const data = await response.json();
-  //     setSeatingData(data);
-  //   };
-
-  //   fetchData();
-  // }, []); // Empty dependency array means useEffect runs only once on mount
-
-  // const handleDateChange = (event) => {
-  //   setSelectedDate(event.target.value);
-  // };
-
-  // Set default values for form fields
-  // useEffect(() => {
-  //   Object.entries(storedData).forEach(([key, value]) => {
-  //     if (key !== "date") {
-  //       setValue(key, value.value);
-  //     }
-  //   });
-  // }, [storedData, setValue]);
-
-  // const onSubmit = (data) => {
-  //   console.log(data); // You can handle form submission logic here
-  // };
-
-  // const [selectedSeat, setSelectedSeat] = useState(null);
-
-  const onSubmit = (data) => {
-    // const formDataWithSeat = {
-    //   ...data,
-    //   selectedSeat: selectedSeat,
-    // };
-    // console.log(formDataWithSeat, data);
-    // Add logic to handle form submission here
-    console.log(data);
-  };
-
-  // useEffect(() => {
-  //   if (selectedSeat !== null) {
-  //     // Do not submit the form automatically when a seat is selected
-  //     // onSubmit({});
-  //     // Reset the selected seat to avoid duplicate submissions
-  //     setSelectedSeat(null);
-  //   }
-  // }, [selectedSeat]);
-
-  // const handleSeatClick = (seatId) => {
-  //   console.log(`Seat clicked: ${seatId}`);
-  //   setSelectedSeat(seatId);
-  // };
-
+  // Get data from react-router-dom
   const thesis = useLoaderData();
 
-  const { serialNumber, pickupPoint, droppingPoint } = thesis;
+  // State variables for selected and confirmed seats
+  const [selectedSeats, setSelectedSeats] = useState([]);
+  const [confirmedSeats, setConfirmedSeats] = useState([]);
 
-  // seat id for changing the design after clicking
-  // const handleSeatClick = (seatId) => {
-  //   console.log(`Seat clicked: ${seatId}`);
-  // };
+  // State variable for selected gender
+  const [selectedGender, setSelectedGender] = useState("");
+
+  // State variables for reservation data
+  const [reservationData, setReservationData] = useState(null);
+
+  // Form submission handler
+  const onSubmit = (data, e) => {
+    // Prepare data for API request
+    const storedata = {
+      departureDate: data?.departureDate,
+      pickupPoint: data?.pickupPoint,
+      droppingPoint: data?.droppingPoint,
+      busType: thesis?.busType,
+      busId: thesis?._id,
+      serialNumber: data?.serialNumber,
+      passengersName: data?.passengersName,
+      passengersNumber: data?.passengersNumber,
+      gender: data?.gender,
+      departureTime: thesis.time,
+      seatIds: selectedSeats,
+    };
+
+    // Check if any seat is selected
+    if (selectedSeats.length > 0) {
+      // Make API request for seat reservation
+      fetch("http://localhost:5000/seat-reservation", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(storedata),
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          // Handle API response
+          console.log(result);
+          if (result.insertedId) {
+            // Show confirmation dialog using SweetAlert
+            Swal.fire({
+              title: "Are you sure?",
+              text: "You won't be able to revert this!",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Yes, Confirm it!",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // Show success message using SweetAlert
+                Swal.fire({
+                  title: "Confirmed!",
+                  text: "Your Seat has been Booked.",
+                  icon: "success",
+                });
+              }
+            });
+
+            // Reset the form
+            e.target.reset();
+          }
+        });
+    } else {
+      // If no seat is selected, show an error toast
+      toast.error("No Seat Selected ..!");
+      return;
+    }
+
+    // Update the confirmed seats state
+    setConfirmedSeats([...confirmedSeats, ...selectedSeats]);
+
+    // Reset the selected seats for the current confirmation
+    setSelectedSeats([]);
+  };
+
+  // Fetch reservation data using useEffect
+  useEffect(() => {
+    fetch(`http://localhost:5000/resarvedSeat/${thesis?._id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          console.error("Error fetching reservation data:", data.error);
+        } else {
+          setReservationData(data);
+        }
+      })
+      .catch((error) =>
+        console.error("Error fetching reservation data:", error)
+      );
+  }, [thesis?._id, reservationData]);
+
+  // Handle seat click event
+  const handleSeatClick = (seatId) => {
+    // Check if the seat is confirmed
+    const isSeatConfirmed = confirmedSeats.includes(seatId);
+
+    // If confirmed, do nothing
+    if (isSeatConfirmed) {
+      return;
+    }
+
+    // Check if the seat is already selected
+    const isSeatSelected = selectedSeats.includes(seatId);
+
+    // If selected, remove it; otherwise, add it to the array
+    if (isSeatSelected) {
+      setSelectedSeats(selectedSeats.filter((id) => id !== seatId));
+    } else {
+      setSelectedSeats([...selectedSeats, seatId]);
+    }
+  };
 
   return (
     <Box className="grid md:grid-cols-2 grid-cols-1 gap-[50px] md:w-10/12 mx-auto my-20">
       <form
-        className="w-full"
+        className="w-full :"
         onSubmit={handleSubmit(onSubmit)}
-        // style={{ maxWidth: 400, height: 630, margin: "auto" }}
+        style={{ maxWidth: 450, height: 660 }}
       >
         <Grid container spacing={2}>
           {/* <Grid item xs={12}>
             <TextField
               className="w-full"
-              type="date"
               label="Departure Date"
               {...register("departureDate")}
-              value={selectedDate}
-              onChange={handleDateChange}
+              defaultValue={thesis?.departureDate}
               InputLabelProps={{
                 shrink: true,
               }}
+              readOnly={true}
             />
             {errors.date && (
               <span className="text-red-700">This field is required</span>
@@ -129,6 +177,7 @@ const FixSeat = () => {
               fullWidth
               label="Pickup Point"
               {...register("pickupPoint", { required: true })}
+              defaultValue={thesis?.pickupPoint?.value}
             />
             {errors.pickupPoint && (
               <span className="text-red-700">This field is required</span>
@@ -140,6 +189,7 @@ const FixSeat = () => {
               fullWidth
               label="Dropping Point"
               {...register("droppingPoint", { required: true })}
+              defaultValue={thesis?.droppingPoint?.value}
             />
             {errors.droppingPoint && (
               <span className="text-red-700">This field is required</span>
@@ -149,21 +199,11 @@ const FixSeat = () => {
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
-              value={pickupPoint}
-              label="pickupPoint"
-              {...register("pickupPoint", { required: true })}
-            />
-            {errors.pickupPoint && (
-              <span className="text-red-700">This field is required</span>
-            )}
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              value={serialNumber}
               label="SL Number"
-              {...register("slNumber", { required: true })}
+              // eslint-disable-next-line no-undef
+              {...register("serialNumber", { required: true })}
+              defaultValue={thesis?.serialNumber}
+              required
             />
             {errors.slNumber && (
               <span className="text-red-700">This field is required</span>
@@ -175,6 +215,7 @@ const FixSeat = () => {
               fullWidth
               label="Passengers Name"
               {...register("passengersName", { required: true })}
+              required
             />
             {errors.passengersName && (
               <span className="text-red-700">This field is required</span>
@@ -186,6 +227,7 @@ const FixSeat = () => {
               fullWidth
               label="Passengers Number"
               {...register("passengersNumber", { required: true })}
+              required
             />
             {errors.passengersNumber && (
               <span className="text-red-700">This field is required</span>
@@ -193,7 +235,11 @@ const FixSeat = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <RadioGroup row>
+            <RadioGroup
+              row
+              value={selectedGender}
+              onChange={(e) => setSelectedGender(e.target.value)}
+            >
               <FormControlLabel
                 control={<Radio {...register("gender", { required: true })} />}
                 label="Male"
@@ -210,6 +256,7 @@ const FixSeat = () => {
                 value="Others"
               />
             </RadioGroup>
+
             {errors.gender && (
               <span className="text-red-700">This field is required</span>
             )}
@@ -223,10 +270,9 @@ const FixSeat = () => {
         </Grid>
       </form>
       {/* bus seat======================================> */}
-      <div>
-        <div className="plane ps-8 pe-3 py-3 w-full">
-          <div className="select"></div>
 
+      <div>
+        <div className="plane ps-7  py-3 w-full">
           <ol>
             <li>
               <ol className="seats ">
@@ -244,29 +290,134 @@ const FixSeat = () => {
             </li>
 
             {/* all seats */}
-            {/* all seats */}
+
             <div>
               <ul>
                 {allSeats.map((row) => (
                   <li key={row.row}>
-                    <ol className="seats gap-2">
-                      {row.seats.map((seat) => (
-                        <li
-                          key={seat.id}
-                          className="seat cursor-pointer"
-                          onClick={() => handleSeatClick(seat.id)}
-                        >
-                          <img src={seat.imageSrc} alt="" />
-                        </li>
-                      ))}
+                    <ol className="seats gap-1 ">
+                      {row.seats.map((seat) => {
+                        const isSeatSelected = selectedSeats.includes(seat.id);
+
+                        // Check if the seat is reserved for a specific gender
+                        const reservation =
+                          reservationData &&
+                          reservationData.find((reservation) =>
+                            reservation.seatIds.includes(seat.id)
+                          );
+
+                        // Set seat image style based on reservation
+                        const seatImageStyle = {
+                          backgroundColor: "",
+                          borderRadius: "8px",
+
+                          border: isSeatSelected ? "2px solid #000" : "none",
+                          cursor: isSeatSelected ? "context-menu" : "pointer",
+                        };
+
+                        // Set button disabled state for each gender
+                        let isButtonDisabled = false;
+                        if (reservation) {
+                          if (reservation.gender === "Male") {
+                            seatImageStyle.backgroundColor = "#9797D5";
+                            isButtonDisabled = true;
+                          } else if (reservation.gender === "Female") {
+                            seatImageStyle.backgroundColor = "#FA99BC";
+                            isButtonDisabled = true;
+                          } else if (reservation.gender === "Others") {
+                            seatImageStyle.backgroundColor = "#8BB3B4";
+                            isButtonDisabled = true;
+                          }
+                        }
+
+                        return (
+                          <li
+                            key={seat.id}
+                            className="seat cursor-pointer mb-1"
+                          >
+                            <img
+                              src={seat.imageSrc}
+                              alt=""
+                              style={seatImageStyle}
+                              onClick={() =>
+                                !isButtonDisabled && handleSeatClick(seat.id)
+                              }
+                            />
+                          </li>
+                        );
+                      })}
                     </ol>
                   </li>
                 ))}
               </ul>
             </div>
           </ol>
+
+          <Divider fullWidth />
+          <Box
+            textAlign="center"
+            className="demoseat"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            marginTop="35px"
+            marginBottom="20px"
+            gap="15px"
+          >
+            <h5 className="font-bold text-[#143f40]">Seat Indicator</h5>
+            {/* available seat*/}
+            <Box>
+              <img
+                style={{ borderRadius: "45%" }}
+                src="https://i.ibb.co/9whMc4Q/seat.png"
+                alt=""
+              />
+              <p>available</p>
+            </Box>
+
+            {/* when this seat is for female*/}
+            <Box>
+              <img
+                style={{
+                  backgroundColor: "#f76399a6",
+                  borderRadius: "45%",
+                }}
+                src="https://i.ibb.co/9whMc4Q/seat.png"
+                alt=""
+              />
+              <p>Female</p>
+            </Box>
+
+            {/* when this seat is for male*/}
+            <Box>
+              <img
+                style={{
+                  backgroundColor: "#544bb99a",
+                  borderRadius: "45%",
+                }}
+                src="https://i.ibb.co/9whMc4Q/seat.png"
+                alt=""
+              />
+              <p>Male</p>
+            </Box>
+
+            {/* when this seat is for others*/}
+            <Box>
+              <img
+                style={{
+                  backgroundColor: "#2b75768b",
+                  borderRadius: "45%",
+                }}
+                src="https://i.ibb.co/9whMc4Q/seat.png"
+                alt=""
+              />
+              <p>Others</p>
+            </Box>
+          </Box>
         </div>
       </div>
+
+      <ToastContainer />
     </Box>
   );
 };

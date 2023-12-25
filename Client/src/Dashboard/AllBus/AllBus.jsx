@@ -1,3 +1,4 @@
+import React from "react";
 import useAllBusData from "../../hooks/useAllBusData";
 import Box from "@mui/material/Box";
 import { useState } from "react";
@@ -78,12 +79,17 @@ const DataTable = () => {
 
   return (
     <Box
-      sx={{ backgroundColor: "#fff", borderRadius: "3px" }}
+      sx={{
+        backgroundColor: "#fff",
+        borderRadius: "3px",
+        overflowX: "auto", // Enable horizontal scrolling for small screens
+      }}
       className="md:px-5 py-10 lg:w-11/12 mx-auto"
       style={{ boxShadow: " rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
     >
       <Box
         display="flex"
+        flexDirection={{ xs: "column", md: "row" }}
         alignItems="center"
         justifyContent="space-between"
         marginBottom="20px"
@@ -96,8 +102,13 @@ const DataTable = () => {
         >
           Remaining all bus
         </Typography>
-        <Box display="flex" alignItems="center" gap="5px">
-          <Box position="relative" width="200px">
+        <Box
+          display="flex"
+          alignItems="center"
+          gap="5px"
+          flexDirection={{ xs: "column", md: "row" }}
+        >
+          <Box position="relative" width={{ xs: "100%", md: "200px" }}>
             <Input
               title="search by supervisor name or bus name"
               type="text"
@@ -115,33 +126,45 @@ const DataTable = () => {
               }}
             />
           </Box>
-          <Tooltip title="Delete" arrow>
-            <Link to="/dashboard/addbus">
-              <IconButton>
-                <AddBoxIcon color="primary" />
-              </IconButton>
-            </Link>
-          </Tooltip>
-          <Tooltip title="Filter" placement="right" arrow>
-            <div>
-              <IconButton onClick={handleMenuClick}>
-                <FilterListIcon color="primary" />
-              </IconButton>
-              <Menu
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleMenuClose}
-              >
-                <MenuItem onClick={() => handleMenuItemClick("newestToOldest")}>
-                  Newest to Oldest
-                </MenuItem>
-                <Divider />
-                <MenuItem onClick={() => handleMenuItemClick("oldestToNewest")}>
-                  Oldest to Newest
-                </MenuItem>
-              </Menu>
-            </div>
-          </Tooltip>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent={{ xs: "flex-start", md: "space-between" }}
+            width="100%"
+            marginTop={{ xs: "10px", md: "0" }}
+          >
+            <Tooltip title="Delete" arrow>
+              <Link to="/dashboard/addbus">
+                <IconButton>
+                  <AddBoxIcon color="primary" />
+                </IconButton>
+              </Link>
+            </Tooltip>
+            <Tooltip title="Filter" placement="right" arrow>
+              <div>
+                <IconButton onClick={handleMenuClick}>
+                  <FilterListIcon color="primary" />
+                </IconButton>
+                <Menu
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={handleMenuClose}
+                >
+                  <MenuItem
+                    onClick={() => handleMenuItemClick("newestToOldest")}
+                  >
+                    Newest to Oldest
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem
+                    onClick={() => handleMenuItemClick("oldestToNewest")}
+                  >
+                    Oldest to Newest
+                  </MenuItem>
+                </Menu>
+              </div>
+            </Tooltip>
+          </Box>
         </Box>
       </Box>
 

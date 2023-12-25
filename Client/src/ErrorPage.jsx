@@ -14,7 +14,7 @@ const ErrorPage = () => {
   };
 
   return (
-    <div className="bg-[#f6f6f6]">
+    <div className="bg-[#f6f6f6] px-5">
       <div className="text-center h-screen flex items-center justify-center flex-col md:w-1/2 mx-auto ">
         <Lottie style={{ height: 300 }} animationData={ErrorAnimation} />
         <h3 className="text-[#65676b] text-[20px] font-bold">{`This content isn't available right now`}</h3>

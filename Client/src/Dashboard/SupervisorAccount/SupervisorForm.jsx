@@ -1,6 +1,6 @@
 // import React from 'react';
 import { useForm, Controller } from "react-hook-form";
-import CountertopsIcon from "@mui/icons-material/Countertops";
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import {
   TextField,
   Button,
@@ -66,7 +66,7 @@ const SupervisorForm = () => {
   return (
     <Box
       sx={{ backgroundColor: "#fff", borderRadius: "3px" }}
-      className="px-20 py-10 md:w-11/12 mx-auto"
+      className="md:px-20 py-10 md:w-11/12 mx-auto"
       style={{ boxShadow: " rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
     >
       <Container component="main" maxWidth="xs">
@@ -79,12 +79,16 @@ const SupervisorForm = () => {
           }}
         >
           <Avatar
-            className="bg-blue-600"
-            sx={{ m: 1, bgcolor: "secondary.main" }}
+            sx={{  padding: "30px",
+            borderRadius: "50%",
+            height: "40px",
+            width: "40px",
+            backgroundColor: "#d6d8da",}}
           >
-            <CountertopsIcon />
+            <GroupAddIcon
+              sx={{ fontSize: "44px" }} color= "primary" />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography className="text-center" component="h1" variant="h5">
             Add Supervisor Information
           </Typography>
           <Box

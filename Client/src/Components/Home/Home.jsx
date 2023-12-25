@@ -31,30 +31,22 @@ const Home = () => {
     label: ticket.name,
   }));
 
-  // const onSubmit = (data) => {
-  //   const { pickupPoint, droppingPoint } = data;
-
-  //   if (pickupPoint.value === droppingPoint.value) {
-  //     toast.error("Pickup and Dropping points cannot be the same");
-  //     return;
-  //   }
-
-  //   localStorage.setItem("formData", JSON.stringify(data));
-  //   console.log(data);
-  //   navigate("/find-ticket");
-  // };
-
   const onSubmit = (data) => {
     const { pickupPoint, droppingPoint, departureDate } = data;
 
     const selectedDate = new Date(departureDate);
+    selectedDate.setHours(0, 0, 0, 0); // Set time to midnight
+
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0); // Set time to midnight
 
     if (pickupPoint.value === droppingPoint.value) {
       toast.error("Pickup and Dropping points cannot be the same");
       return;
     }
 
-    if (selectedDate < new Date()) {
+    // Check if the selected date is earlier than the current date
+    if (selectedDate.getTime() < currentDate.getTime()) {
       toast.error("Selected date cannot be earlier than the current date");
       return;
     }
@@ -74,7 +66,7 @@ const Home = () => {
       <div className="md:flex items-center justify-center">
         <div className="md:absolute -z-20 top-5 md:h-full h-[350px]  flex w-full overflow-hidden">
           <img
-            className="home-img w-full h-[500px] mx-auto"
+            className="home-img -z-40 w-full h-[500px] mx-auto"
             src={bgskyline}
             alt=""
           />
@@ -107,7 +99,7 @@ const Home = () => {
             Make a seat
           </Typography>
 
-          <form className="mt-3 " onSubmit={handleSubmit(onSubmit)}>
+          <form className="mt-3 form-section" onSubmit={handleSubmit(onSubmit)}>
             <div className="md:flex mx-auto md:gap-0 justify-center">
               <div>
                 <Controller
@@ -161,7 +153,7 @@ const Home = () => {
                     type="date"
                     placeholder="Select Date"
                     {...field}
-                    className="md:w-10/12 mx-2 p-2 field-style mb-5 border-[#143f40] mt-3"
+                    className="w-10/12 mx-2 p-2 field-style mb-5 border-[#143f40] mt-3"
                   />
                 )}
               />
@@ -181,7 +173,7 @@ const Home = () => {
           <br />
         </Box>
       </div>
-    </div>
+</div>
   );
 };
 

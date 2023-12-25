@@ -41,6 +41,7 @@ async function run() {
     //     .collection("supervisorData");
     const collections = {
       bdDistrictsCollection: client.db("cityTicket").collection("bdDistricts"),
+      reservationCollection: client.db("cityTicket").collection("reservation"),
       accountsDataCollection: client
         .db("cityTicket")
         .collection("accountsData"),

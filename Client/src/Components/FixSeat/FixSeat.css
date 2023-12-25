@@ -9,6 +9,8 @@
   
   .plane {
     border: 1px solid rgb(221, 218, 218);    
+    width: 440px !important;
+    padding-right: 0px;
   }
   
   .select {
@@ -45,8 +47,12 @@
   .seat {
     display: flex;
     flex: 0 0 14.28%;
-    padding: 5px;
+    padding: 10px;
     position: relative;
+  }
+
+  .seat:hover{
+    background: #b9b9b98a;
   }
   
   .seat label {
@@ -66,21 +72,28 @@
   .seat label:hover {
     cursor: pointer;
     box-shadow: 0 0 0px 2px green;
+    color: #3333334d;
+    
   }
   
   .seat:nth-child(2) {
-    margin-right: 25%;
+    margin-right: 32%;
   }
   .frontSiteofBus:nth-child(1){
-    margin-right: 60%;
+    margin-right: 65%;
     margin-bottom: 13%;
   }
  
-.seat img{
-  width: 45px;
+.seat img, .demoseat img{
+  width: 40px;
   height: 45px;
  
 }
+.demoseat img{
+  padding: 5px;
+}
+
+
 .lastseat img{
   width: 35px;
   height: 45px;
@@ -93,6 +106,15 @@
  
 }
 
+/* seat style css */
+
+.seat.selected {
+  background-color: lightgray;
+  /* Add any other styles you want for selected seats */
+}
+
+
+
 
 
 
@@ -101,14 +123,20 @@
 /* Add this CSS to your styles */
 @media (max-width: 600px) {
   form {
-    width: 90%;
+    width: 80%;
+    margin: auto;
+    
   }
+ 
 }
+
 
 @media (min-width: 601px) and (max-width: 1200px) {
   form {
     width: 80%;
+    margin: auto;
   }
+ 
 }
 
 
