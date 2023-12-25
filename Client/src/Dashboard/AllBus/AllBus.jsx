@@ -24,6 +24,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
+import { Helmet } from "react-helmet-async";
 
 const DataTable = () => {
   const { allBusData, refetch } = useAllBusData();
@@ -78,161 +79,166 @@ const DataTable = () => {
   };
 
   return (
-    <Box
-      sx={{
-        backgroundColor: "#fff",
-        borderRadius: "3px",
-        overflowX: "auto", // Enable horizontal scrolling for small screens
-      }}
-      className="md:px-5 py-10 lg:w-11/12 mx-auto"
-      style={{ boxShadow: " rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
-    >
+    <>
+      <Helmet>
+        <title> TravelTrek - All Bus </title>
+      </Helmet>
       <Box
-        display="flex"
-        flexDirection={{ xs: "column", md: "row" }}
-        alignItems="center"
-        justifyContent="space-between"
-        marginBottom="20px"
+        sx={{
+          backgroundColor: "#fff",
+          borderRadius: "3px",
+          overflowX: "auto", // Enable horizontal scrolling for small screens
+        }}
+        className="md:px-5 py-10 lg:w-11/12 mx-auto"
+        style={{ boxShadow: " rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
       >
-        <Typography
-          variant="h5"
-          marginBottom="0"
-          textTransform="capitalize"
-          gutterBottom
-        >
-          Remaining all bus
-        </Typography>
         <Box
           display="flex"
-          alignItems="center"
-          gap="5px"
           flexDirection={{ xs: "column", md: "row" }}
+          alignItems="center"
+          justifyContent="space-between"
+          marginBottom="20px"
         >
-          <Box position="relative" width={{ xs: "100%", md: "200px" }}>
-            <Input
-              title="search by supervisor name or bus name"
-              type="text"
-              onChange={handleSearch}
-              placeholder="Search..."
-              className="border-b-2 py-1 w-full"
-            />
-            <SearchIcon
-              sx={{
-                position: "absolute",
-                top: "10px",
-                right: "0",
-                color: "#999",
-                cursor: "text",
-              }}
-            />
-          </Box>
+          <Typography
+            variant="h5"
+            marginBottom="0"
+            textTransform="capitalize"
+            gutterBottom
+          >
+            Remaining all bus
+          </Typography>
           <Box
             display="flex"
             alignItems="center"
-            justifyContent={{ xs: "flex-start", md: "space-between" }}
-            width="100%"
-            marginTop={{ xs: "10px", md: "0" }}
+            gap="5px"
+            flexDirection={{ xs: "column", md: "row" }}
           >
-            <Tooltip title="Delete" arrow>
-              <Link to="/dashboard/addbus">
-                <IconButton>
-                  <AddBoxIcon color="primary" />
-                </IconButton>
-              </Link>
-            </Tooltip>
-            <Tooltip title="Filter" placement="right" arrow>
-              <div>
-                <IconButton onClick={handleMenuClick}>
-                  <FilterListIcon color="primary" />
-                </IconButton>
-                <Menu
-                  anchorEl={anchorEl}
-                  open={Boolean(anchorEl)}
-                  onClose={handleMenuClose}
-                >
-                  <MenuItem
-                    onClick={() => handleMenuItemClick("newestToOldest")}
+            <Box position="relative" width={{ xs: "100%", md: "200px" }}>
+              <Input
+                title="search by supervisor name or bus name"
+                type="text"
+                onChange={handleSearch}
+                placeholder="Search..."
+                className="border-b-2 py-1 w-full"
+              />
+              <SearchIcon
+                sx={{
+                  position: "absolute",
+                  top: "10px",
+                  right: "0",
+                  color: "#999",
+                  cursor: "text",
+                }}
+              />
+            </Box>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent={{ xs: "flex-start", md: "space-between" }}
+              width="100%"
+              marginTop={{ xs: "10px", md: "0" }}
+            >
+              <Tooltip title="Delete" arrow>
+                <Link to="/dashboard/addbus">
+                  <IconButton>
+                    <AddBoxIcon color="primary" />
+                  </IconButton>
+                </Link>
+              </Tooltip>
+              <Tooltip title="Filter" placement="right" arrow>
+                <div>
+                  <IconButton onClick={handleMenuClick}>
+                    <FilterListIcon color="primary" />
+                  </IconButton>
+                  <Menu
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={handleMenuClose}
                   >
-                    Newest to Oldest
-                  </MenuItem>
-                  <Divider />
-                  <MenuItem
-                    onClick={() => handleMenuItemClick("oldestToNewest")}
-                  >
-                    Oldest to Newest
-                  </MenuItem>
-                </Menu>
-              </div>
-            </Tooltip>
+                    <MenuItem
+                      onClick={() => handleMenuItemClick("newestToOldest")}
+                    >
+                      Newest to Oldest
+                    </MenuItem>
+                    <Divider />
+                    <MenuItem
+                      onClick={() => handleMenuItemClick("oldestToNewest")}
+                    >
+                      Oldest to Newest
+                    </MenuItem>
+                  </Menu>
+                </div>
+              </Tooltip>
+            </Box>
           </Box>
         </Box>
-      </Box>
 
-      <TableContainer component={Paper} className="w-full">
-        <Table width="100%">
-          <TableHead>
-            <TableRow
-              style={{ color: "#fff" }}
-              sx={{ backgroundColor: (theme) => theme.palette.primary.main }}
-            >
-              <TableCell>Serial No</TableCell>
-              <TableCell>Bus Name</TableCell>
-              <TableCell>Departure Time</TableCell>
-              <TableCell>Pickup / Dropping Point</TableCell>
-              <TableCell>Supervisor Name</TableCell>
-              <TableCell>Bus Type</TableCell>
-              <TableCell>Action</TableCell>
-            </TableRow>
-          </TableHead>
-
-          {filteredBus && filteredBus.length > 0 ? (
-            <TableBody>
-              {filteredBus.map((row) => (
-                <TableRow key={row._id}>
-                  <TableCell>{row.serialNumber}</TableCell>
-                  <TableCell>{row.busName}</TableCell>
-                  <TableCell>{row.time}</TableCell>
-                  <TableCell>
-                    {row.pickupPoint.label} / {row.droppingPoint.label}
-                  </TableCell>
-                  <TableCell>{row.supervisorName.label}</TableCell>
-                  <TableCell>{row.busType}</TableCell>
-                  <TableCell>
-                    <Tooltip title="Delete">
-                      <IconButton onClick={() => handleDeleteClick(row._id)}>
-                        <DeleteForeverIcon color="primary" />
-                      </IconButton>
-                    </Tooltip>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          ) : (
-            <Box
-              height="20vh"
-              width="100%"
-              sx={{
-                color: "#999",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                textAlign: "center",
-              }}
-            >
-              <Typography
-                variant="h5"
-                marginBottom="0"
-                textTransform="capitalize"
-                gutterBottom
+        <TableContainer component={Paper} className="w-full">
+          <Table width="100%">
+            <TableHead>
+              <TableRow
+                style={{ color: "#fff" }}
+                sx={{ backgroundColor: (theme) => theme.palette.primary.main }}
               >
-                No Bus Available
-              </Typography>
-            </Box>
-          )}
-        </Table>
-      </TableContainer>
-    </Box>
+                <TableCell>Serial No</TableCell>
+                <TableCell>Bus Name</TableCell>
+                <TableCell>Departure Time</TableCell>
+                <TableCell>Pickup / Dropping Point</TableCell>
+                <TableCell>Supervisor Name</TableCell>
+                <TableCell>Bus Type</TableCell>
+                <TableCell>Action</TableCell>
+              </TableRow>
+            </TableHead>
+
+            {filteredBus && filteredBus.length > 0 ? (
+              <TableBody>
+                {filteredBus.map((row) => (
+                  <TableRow key={row._id}>
+                    <TableCell>{row.serialNumber}</TableCell>
+                    <TableCell>{row.busName}</TableCell>
+                    <TableCell>{row.time}</TableCell>
+                    <TableCell>
+                      {row.pickupPoint.label} / {row.droppingPoint.label}
+                    </TableCell>
+                    <TableCell>{row.supervisorName.label}</TableCell>
+                    <TableCell>{row.busType}</TableCell>
+                    <TableCell>
+                      <Tooltip title="Delete">
+                        <IconButton onClick={() => handleDeleteClick(row._id)}>
+                          <DeleteForeverIcon color="primary" />
+                        </IconButton>
+                      </Tooltip>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            ) : (
+              <Box
+                height="20vh"
+                width="100%"
+                sx={{
+                  color: "#999",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  marginBottom="0"
+                  textTransform="capitalize"
+                  gutterBottom
+                >
+                  No Bus Available
+                </Typography>
+              </Box>
+            )}
+          </Table>
+        </TableContainer>
+      </Box>
+    </>
   );
 };
 
