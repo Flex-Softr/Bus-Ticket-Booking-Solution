@@ -16,6 +16,7 @@ import {
 // import { ArrowForward, DirectionsBus } from "@mui/icons-material";
 import LocationOffIcon from "@mui/icons-material/LocationOff";
 import ShowTicket from "./ShowTicket";
+import { Helmet } from "react-helmet-async";
 
 function FindTicket() {
   const [normalizedBusTickets, setNormalizedBusTickets] = useState([]);
@@ -123,8 +124,10 @@ function FindTicket() {
     const filteredBusData = allBusData.filter(
       (bus) =>
         bus.busType.toLowerCase() === data.type.toLowerCase() &&
-        bus.pickupPoint.label.toLowerCase() === data.pickupPoint.toLowerCase() &&
-        bus.droppingPoint.label.toLowerCase() === data.droppingPoint.toLowerCase()
+        bus.pickupPoint.label.toLowerCase() ===
+          data.pickupPoint.toLowerCase() &&
+        bus.droppingPoint.label.toLowerCase() ===
+          data.droppingPoint.toLowerCase()
     );
 
     setNormalizedBusTickets(filteredBusData);
@@ -141,6 +144,9 @@ function FindTicket() {
   };
   return (
     <>
+      <Helmet>
+        <title> TravelTrek - Find Ticket </title>
+      </Helmet>
       <div className="flex bg-slate-600">
         <div className="flex flex-wrap grow gap-4 pb-20 mt-10 bg-gray-200">
           {/* find ticket form section */}

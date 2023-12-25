@@ -26,6 +26,8 @@ import { Update } from "@mui/icons-material";
 import AboutPage from "./Components/AboutPage/AboutPage.jsx";
 import ContactPage from "./Components/ContactPage/ContactPage.jsx";
 import DashboardHome from "./Dashboard/DashboardHome/DashboardHome.jsx";
+
+import { HelmetProvider } from "react-helmet-async";
 // import SupervisorForm from "./Dashboard/SupervisorAccount/SupervisorAccount.jsx";
 
 // Create a client
@@ -55,7 +57,6 @@ const router = createBrowserRouter([
       {
         path: "/fixSeat",
         element: <FixSeat />,
-        
       },
       {
         path: "/find-ticket",
@@ -76,8 +77,8 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     children: [
       {
-       path:"/dashboard",
-       element:<DashboardHome/>
+        path: "/dashboard",
+        element: <DashboardHome />,
       },
       {
         path: "addbus",
@@ -121,15 +122,17 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <QueryClientProvider client={queryClient}>
-        <CssBaseline />
-        <StyledEngineProvider>
-          <AuthProvider>
-            <RouterProvider router={router} />
-          </AuthProvider>
-        </StyledEngineProvider>
-      </QueryClientProvider>
-    </ThemeProvider>
+    <HelmetProvider>
+      <ThemeProvider theme={theme}>
+        <QueryClientProvider client={queryClient}>
+          <CssBaseline />
+          <StyledEngineProvider>
+            <AuthProvider>
+              <RouterProvider router={router} />
+            </AuthProvider>
+          </StyledEngineProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
+    </HelmetProvider>
   </React.StrictMode>
 );
