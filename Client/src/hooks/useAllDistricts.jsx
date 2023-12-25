@@ -8,7 +8,7 @@ const useAllDistricts = () => {
   } = useQuery({
     queryKey: ["allDistricts"],
     queryFn: async () => {
-      const response = await fetch("http://localhost:5000/ticket");
+      const response = await fetch("https://server-khaki-theta.vercel.app/ticket");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
