@@ -9,38 +9,42 @@ import {
   Divider,
 } from "@mui/material";
 import "./FixSeat.css";
-// import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import useSeats from "../../hooks/useSeats";
-
-import axios from "axios";
-import useSelectedseatbus from "../../hooks/useSelectedseatbus";
 import Swal from "sweetalert2";
 
+// Define the FixSeat component
 const FixSeat = () => {
+  // Initialize react-hook-form
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
+  // Fetch seat data using custom hook
   const { allSeats } = useSeats();
-  console.log(allSeats);
 
+  // Get data from react-router-dom
+  const thesis = useLoaderData();
+
+  // State variables for selected and confirmed seats
+  const [selectedSeats, setSelectedSeats] = useState([]);
+  const [confirmedSeats, setConfirmedSeats] = useState([]);
+
+  // State variable for selected gender
   const [selectedGender, setSelectedGender] = useState("");
 
-  const thesis = useLoaderData();
-  console.log(thesis._id);
-
-  const [selectedSeats, setSelectedSeats] = useState([]);
-
-  const [confirmationSeats, setConfirmationSeats] = useState({});
+  // State variables for reservation data
   const [reservationData, setReservationData] = useState(null);
+
+  // Form submission handler
   const onSubmit = (data, e) => {
+    // Prepare data for API request
     const storedata = {
       departureDate: data?.departureDate,
       pickupPoint: data?.pickupPoint,
@@ -55,57 +59,60 @@ const FixSeat = () => {
       seatIds: selectedSeats,
     };
 
-    console.log(storedata);
-
-    if(selectedSeats.length >0 ){
+    // Check if any seat is selected
+    if (selectedSeats.length > 0) {
+      // Make API request for seat reservation
       fetch("http://localhost:5000/seat-reservation", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(storedata),
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-        if (result.insertedId) {
-          Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, Confirm it!"
-          }).then((result) => {
-            if (result.isConfirmed) {
-              Swal.fire({
-                title: "Confirmed!",
-                text: "Your Seat has been Booked .",
-                icon: "success"
-              });
-            }
-          });
-          e.target.reset();
-        }
-      });
-    } else{
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(storedata),
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          // Handle API response
+          console.log(result);
+          if (result.insertedId) {
+            // Show confirmation dialog using SweetAlert
+            Swal.fire({
+              title: "Are you sure?",
+              text: "You won't be able to revert this!",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Yes, Confirm it!",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // Show success message using SweetAlert
+                Swal.fire({
+                  title: "Confirmed!",
+                  text: "Your Seat has been Booked.",
+                  icon: "success",
+                });
+              }
+            });
+
+            // Reset the form
+            e.target.reset();
+          }
+        });
+    } else {
+      // If no seat is selected, show an error toast
       toast.error("No Seat Selected ..!");
-      return ;
+      return;
     }
 
-    // Add the selected seats to the confirmationSeats object
-    setConfirmationSeats((prevSeats) => ({
-      ...prevSeats,
-      [storedata.busId]: selectedSeats,
-    }));
+    // Update the confirmed seats state
+    setConfirmedSeats([...confirmedSeats, ...selectedSeats]);
 
     // Reset the selected seats for the current confirmation
     setSelectedSeats([]);
   };
-  console.log("Client-side _id:", thesis?._id);
+
+  // Fetch reservation data using useEffect
   useEffect(() => {
-    // Fetch reservation data
     fetch(`http://localhost:5000/resarvedSeat/${thesis?._id}`)
       .then((response) => response.json())
       .then((data) => {
@@ -120,12 +127,15 @@ const FixSeat = () => {
       );
   }, [thesis?._id, reservationData]);
 
-  console.log("reservtion data", reservationData);
-
-  console.log("reservtion data", reservationData);
-
+  // Handle seat click event
   const handleSeatClick = (seatId) => {
-    console.log(`Seat clicked: ${seatId}`);
+    // Check if the seat is confirmed
+    const isSeatConfirmed = confirmedSeats.includes(seatId);
+
+    // If confirmed, do nothing
+    if (isSeatConfirmed) {
+      return;
+    }
 
     // Check if the seat is already selected
     const isSeatSelected = selectedSeats.includes(seatId);
