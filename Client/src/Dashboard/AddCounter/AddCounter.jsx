@@ -46,7 +46,9 @@ const AddCounter = () => {
           email: data?.email,
           password: data?.password,
           role: data?.role,
+         
         };
+        console.log(saveAccount)
         fetch("https://server-khaki-theta.vercel.app/add-account", {
           method: "POST",
           headers: {
@@ -160,46 +162,39 @@ const AddCounter = () => {
                   )}
                 </Grid>
                 <Grid item xs={12}>
-                  <FormControl component="fieldset">
-                    <FormLabel component="legend">Role</FormLabel>
-                    <Controller
-                      name="role"
-                      control={control}
-                      defaultValue=""
-                      rules={{ required: "Role is required" }}
-                      render={({ field }) => (
-                        // <RadioGroup {...field}>
-                        //   <FormControlLabel
-                        //     value="user"
-                        //     control={<Radio />}
-                        //     label="Counter"
-                        //   />
-                        //   <FormControlLabel
-                        //     value="admin"
-                        //     control={<Radio />}
-                        //     label="Admin"
-                        //   />
-                        // </RadioGroup>
-                        <RadioGroup row>
-                          <FormControlLabel
-                            value="user"
-                            control={<Radio />}
-                            label="Counter"
-                            style={{ marginRight: "20px" }} // Adjust margin as needed
-                          />
-                          <FormControlLabel
-                            value="admin"
-                            control={<Radio />}
-                            label="Admin"
-                          />
-                        </RadioGroup>
-                      )}
-                    />
-                    {errors.role && (
-                      <p className="text-red-600">{errors.role.message}</p>
-                    )}
-                  </FormControl>
-                </Grid>
+  <FormControl component="fieldset">
+    <FormLabel component="legend">Role</FormLabel>
+    <Controller
+      name="role"
+      control={control}
+      defaultValue=""
+      rules={{ required: "Role is required" }}
+      render={({ field }) => (
+        <RadioGroup
+          row
+          value={field.value}
+          onChange={(e) => field.onChange(e.target.value)}
+        >
+          <FormControlLabel
+            value="user"
+            control={<Radio />}
+            label="Counter"
+            style={{ marginRight: "20px" }} // Adjust margin as needed
+          />
+          <FormControlLabel
+            value="admin"
+            control={<Radio />}
+            label="Admin"
+          />
+        </RadioGroup>
+      )}
+    />
+    {errors.role && (
+      <p className="text-red-600">{errors.role.message}</p>
+    )}
+  </FormControl>
+</Grid>
+
               </Grid>
               <Button
                 type="submit"
