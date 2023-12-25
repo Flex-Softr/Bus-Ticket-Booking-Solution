@@ -157,10 +157,10 @@ const FixSeat = () => {
       <form
         className="w-full :"
         onSubmit={handleSubmit(onSubmit)}
-        style={{ maxWidth: 450, height: 660,  }}
+        style={{ maxWidth: 450, height: 660 }}
       >
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <TextField
               className="w-full"
               label="Departure Date"
@@ -174,7 +174,7 @@ const FixSeat = () => {
             {errors.date && (
               <span className="text-red-700">This field is required</span>
             )}
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12}>
             <TextField
@@ -314,7 +314,7 @@ const FixSeat = () => {
                         const seatImageStyle = {
                           backgroundColor: "",
                           borderRadius: "8px",
-                         
+
                           border: isSeatSelected ? "2px solid #000" : "none",
                           cursor: isSeatSelected ? "context-menu" : "pointer",
                         };
@@ -335,7 +335,10 @@ const FixSeat = () => {
                         }
 
                         return (
-                          <li key={seat.id} className="seat cursor-pointer mb-1">
+                          <li
+                            key={seat.id}
+                            className="seat cursor-pointer mb-1"
+                          >
                             <img
                               src={seat.imageSrc}
                               alt=""
@@ -363,14 +366,13 @@ const FixSeat = () => {
             justifyContent="center"
             marginTop="35px"
             marginBottom="20px"
-            
             gap="15px"
           >
             <h5 className="font-bold text-[#143f40]">Seat Indicator</h5>
             {/* available seat*/}
             <Box>
               <img
-                style={{  borderRadius: "45%", }}
+                style={{ borderRadius: "45%" }}
                 src="https://i.ibb.co/9whMc4Q/seat.png"
                 alt=""
               />
@@ -383,7 +385,6 @@ const FixSeat = () => {
                 style={{
                   backgroundColor: "#f76399a6",
                   borderRadius: "45%",
-
                 }}
                 src="https://i.ibb.co/9whMc4Q/seat.png"
                 alt=""
