@@ -114,7 +114,7 @@ const Header = () => {
               </Link>
               <Divider />
             </>
-          )}
+          )} 
           <Link to="/profile"><MenuItem  onClick={handleHeaderTop}>
             <AccountCircleIcon sx={{ marginRight: 1 }} />
             Profile

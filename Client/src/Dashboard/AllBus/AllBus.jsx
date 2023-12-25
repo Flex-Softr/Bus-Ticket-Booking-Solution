@@ -68,7 +68,7 @@ const DataTable = () => {
       });
 
       if (result.isConfirmed) {
-        await axios.delete(`http://localhost:5000/deletebus/${id}`);
+        await axios.delete(`https://server-khaki-theta.vercel.app/deletebus/${id}`);
         refetch();
         Swal.fire("Deleted!", "Your file has been deleted.", "success");
       }

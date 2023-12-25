@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import * as React from "react";
+import { useEffect, useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -28,6 +29,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import Tooltip from "@mui/material/Tooltip";
 import DirectionsBusFilledIcon from "@mui/icons-material/DirectionsBusFilled";
 import { Helmet } from "react-helmet-async";
+
 
 const drawerWidth = 240;
 
@@ -111,6 +113,7 @@ export default function DashboardLayout() {
 
   // Function to get the text for the AppBar based on the current route
   const getAppBarText = () => {
+   
     const pathname = location.pathname;
     switch (pathname) {
       case "/dashboard":
@@ -133,6 +136,7 @@ export default function DashboardLayout() {
         return "Add-Supervisor";
     }
   };
+
 
   return (
     <>

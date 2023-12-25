@@ -38,7 +38,7 @@ const SupervisorForm = () => {
     };
 
     axios
-      .post("http://localhost:5000/supervisor", newItem)
+      .post("https://server-khaki-theta.vercel.app/supervisor", newItem)
       .then((responseData) => {
         console.log(responseData.data);
         if (responseData.data.insertedId) {

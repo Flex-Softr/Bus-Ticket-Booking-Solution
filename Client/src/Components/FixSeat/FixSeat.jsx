@@ -62,48 +62,52 @@ const FixSeat = () => {
 
     // Check if any seat is selected
     if (selectedSeats.length > 0) {
-      // Make API request for seat reservation
-      fetch("http://localhost:5000/seat-reservation", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(storedata),
-      })
-        .then((res) => res.json())
-        .then((result) => {
-          // Handle API response
-          console.log(result);
-          if (result.insertedId) {
-            // Show confirmation dialog using SweetAlert
-            Swal.fire({
-              title: "Are you sure?",
-              text: "You won't be able to revert this!",
-              icon: "warning",
-              showCancelButton: true,
-              confirmButtonColor: "#3085d6",
-              cancelButtonColor: "#d33",
-              confirmButtonText: "Yes, Confirm it!",
-            }).then((result) => {
-              if (result.isConfirmed) {
+      // Show confirmation dialog using SweetAlert
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Confirm it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Make API request for seat reservation
+          fetch("https://server-khaki-theta.vercel.app/seat-reservation", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(storedata),
+          })
+            .then((res) => res.json())
+            .then((result) => {
+              // Handle API response
+              console.log(result);
+              if (result.insertedId) {
                 // Show success message using SweetAlert
                 Swal.fire({
                   title: "Confirmed!",
                   text: "Your Seat has been Booked.",
                   icon: "success",
                 });
+    
+                // Reset the form
+                e.target.reset();
               }
             });
-
-            // Reset the form
-            e.target.reset();
-          }
-        });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          // If the user clicks the cancel button, unselect the seats
+          setSelectedSeats([]);
+        }
+      });
     } else {
       // If no seat is selected, show an error toast
       toast.error("No Seat Selected ..!");
       return;
     }
+    
 
     // Update the confirmed seats state
     setConfirmedSeats([...confirmedSeats, ...selectedSeats]);
@@ -114,7 +118,7 @@ const FixSeat = () => {
 
   // Fetch reservation data using useEffect
   useEffect(() => {
-    fetch(`http://localhost:5000/resarvedSeat/${thesis?._id}`)
+    fetch(`https://server-khaki-theta.vercel.app/resarvedSeat/${thesis?._id}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
@@ -126,7 +130,7 @@ const FixSeat = () => {
       .catch((error) =>
         console.error("Error fetching reservation data:", error)
       );
-  }, [thesis?._id, reservationData]);
+  }, [thesis?._id, reservationData,]);
 
   // Handle seat click event
   const handleSeatClick = (seatId) => {

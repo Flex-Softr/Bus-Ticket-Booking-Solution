@@ -81,7 +81,7 @@ const AllSupervisor = () => {
       });
 
       if (result.isConfirmed) {
-        await axios.delete(`http://localhost:5000/supervisors/${id}`);
+        await axios.delete(`https://server-khaki-theta.vercel.app/supervisors/${id}`);
         // setRefetch(!refetch);
         refetch();
         Swal.fire("Deleted!", "Your file has been deleted.", "success");
