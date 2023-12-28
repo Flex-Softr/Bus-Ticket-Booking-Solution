@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const axiosSecure = axios.create({
-  baseURL: 'http://localhost:5000/', 
+  baseURL: 'https://server-khaki-theta.vercel.app/', 
 });
 
 const useAxiosSecure = () => {

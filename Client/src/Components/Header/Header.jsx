@@ -22,6 +22,7 @@ import useSingleUser from "../../hooks/useSingleUser";
 import Swal from "sweetalert2";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import logo from '../../assets/logo.png'
 
 const Header = () => {
   const { user, logout } = useContext(AuthContext);
@@ -114,7 +115,7 @@ const Header = () => {
               </Link>
               <Divider />
             </>
-          )}
+          )} 
           <Link to="/profile"><MenuItem  onClick={handleHeaderTop}>
             <AccountCircleIcon sx={{ marginRight: 1 }} />
             Profile
@@ -202,7 +203,7 @@ const Header = () => {
               <Typography variant="">
                 <img
                   className="img-logo"
-                  src="../../../public/logo.png"
+                  src={logo }
                   alt=""
                 />
               </Typography>

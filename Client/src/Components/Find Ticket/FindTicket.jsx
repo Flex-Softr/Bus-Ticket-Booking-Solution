@@ -53,7 +53,7 @@ function FindTicket() {
   const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/ticket") // Replace with your actual endpoint
+    fetch("https://server-khaki-theta.vercel.app/ticket") // Replace with your actual endpoint
       .then((res) => res.json())
       .then((data) => {
         // Assuming the array of tickets is in the response
@@ -110,7 +110,7 @@ function FindTicket() {
   const [allBusData, setAllBusData] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/allbus")
+    fetch("https://server-khaki-theta.vercel.app/allbus")
       .then((res) => res.json())
       .then((data) => {
         setAllBusData(data || []);

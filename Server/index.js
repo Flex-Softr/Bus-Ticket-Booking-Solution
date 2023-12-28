@@ -9,12 +9,29 @@ const userRouter = require("./routes/user.routes");
 const usersController = require("./controllers/users.controller");
 
 // middleware
-app.use(cors());
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://traveltrek-6303c.web.app"); // Adjust to your frontend URL
+  res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+
+  // Handle preflight requests
+  if (req.method === "OPTIONS") {
+    res.sendStatus(204);
+    return;
+  }
+
+  next();
+});
+
 app.use(express.json());
 
-const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+const { MongoClient, ServerApiVersion } = require("mongodb");
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.2uczcxe.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.2uczcxe.mongodb.net`;
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -26,20 +43,8 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
     // await client.connect();
-    client.connect();
 
-    //  exports.bdDistrictsCollection = client
-    //     .db("cityTicket")
-    //     .collection("bdDistricts");
-    //     exports.accountsDataCollection = client
-    //     .db("cityTicket")
-    //     .collection("accountsData");
-    //     exports.busDataCollection = client.db("cityTicket").collection("busData");
-    //     exports.supervisorDataCollection = client
-    //     .db("cityTicket")
-    //     .collection("supervisorData");
     const collections = {
       bdDistrictsCollection: client.db("cityTicket").collection("bdDistricts"),
       reservationCollection: client.db("cityTicket").collection("reservation"),
@@ -57,23 +62,23 @@ async function run() {
     };
 
     usersController.setupCollections(collections);
-    // app.use
     app.use(userRouter);
-    await client.db("admin").command({ ping: 1 });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
+
+    console.log("Connected to MongoDB!");
   } finally {
-    // Ensures that the client will close when you finish/error
+    // Ensure that the client will close when you finish/error
     // await client.close();
   }
 }
-run().catch(console.dir);
 
 app.get("/", (req, res) => {
   res.send("Nabilar Chocolate House");
 });
 
 app.listen(port, () => {
-  console.log(`Nabila loves chocolate ${port}`);
+  console.log(`Server is running on port ${port}`);
+});
+
+run().catch((error) => {
+  console.error("Error during server startup:", error);
 });
