@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Typography,
   Paper,
@@ -78,56 +77,59 @@ const AboutPage = () => {
       <Helmet>
         <title> TravelTrek - About </title>
       </Helmet>
-      <Paper className={classes.root}>
-        <div className={classes.titleContainer}>
-          <Typography variant="h3" className={classes.title}>
-            ABOUT
-          </Typography>
-        </div>
-        <div className={classes.contentContainer}>
-          <div className={classes.content}>
-            <Typography variant="h5" className={classes.title}>
-              About Us
-            </Typography>
-            <Typography variant="body1" paragraph>
-              Welcome to our bus booking platform! We are dedicated to providing
-              a seamless and convenient bus booking experience for our users.
-            </Typography>
-            <Typography variant="body1" paragraph>
-              Our mission is to connect people and places by offering a reliable
-              and comfortable mode of transportation. With a wide range of
-              routes and schedules, we aim to make travel accessible to
-              everyone.
-            </Typography>
-            <Typography variant="body1" paragraph>
-              At our bus booking service, we prioritize safety and customer
-              satisfaction. Our team works tirelessly to ensure that your
-              journey is not just a trip but an enjoyable experience.
+      <div className="mx-8">
+        <Paper className={classes.root}>
+          <div className={classes.titleContainer}>
+            <Typography variant="h3" className={classes.title}>
+              ABOUT
             </Typography>
           </div>
-          <div className={classes.gifContainer}>
-            <Lottie animationData={aboutLottie} />
+          <div className={classes.contentContainer}>
+            <div className={classes.content}>
+              <Typography variant="h5" className={classes.title}>
+                About Us
+              </Typography>
+              <Typography variant="body1" paragraph>
+                Welcome to our bus booking platform! We are dedicated to
+                providing a seamless and convenient bus booking experience for
+                our users.
+              </Typography>
+              <Typography variant="body1" paragraph>
+                Our mission is to connect people and places by offering a
+                reliable and comfortable mode of transportation. With a wide
+                range of routes and schedules, we aim to make travel accessible
+                to everyone.
+              </Typography>
+              <Typography variant="body1" paragraph>
+                At our bus booking service, we prioritize safety and customer
+                satisfaction. Our team works tirelessly to ensure that your
+                journey is not just a trip but an enjoyable experience.
+              </Typography>
+            </div>
+            <div className={classes.gifContainer}>
+              <Lottie animationData={aboutLottie} />
+            </div>
           </div>
-        </div>
-        <Divider className={classes.divider} />
-        <Grid container spacing={3} className={classes.gridContainer}>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="h6">Our Vision</Typography>
-            <Typography variant="body1" paragraph>
-              To be the leading bus booking platform, connecting communities and
-              providing reliable transportation services.
-            </Typography>
+          <Divider className={classes.divider} />
+          <Grid container spacing={3} className={classes.gridContainer}>
+            <Grid item xs={12} sm={6}>
+              <Typography variant="h6">Our Vision</Typography>
+              <Typography variant="body1" paragraph>
+                To be the leading bus booking platform, connecting communities
+                and providing reliable transportation services.
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Typography variant="h6">Contact Us</Typography>
+              <Typography variant="body1">
+                Email: travel@trek.com
+                <br />
+                Phone: +9123434543
+              </Typography>
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="h6">Contact Us</Typography>
-            <Typography variant="body1">
-              Email: travel@trek.com
-              <br />
-              Phone: +9123434543
-            </Typography>
-          </Grid>
-        </Grid>
-      </Paper>
+        </Paper>
+      </div>
     </>
   );
 };

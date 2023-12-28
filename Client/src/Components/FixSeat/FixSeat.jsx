@@ -154,29 +154,13 @@ const FixSeat = () => {
       <Helmet>
         <title> TravelTrek - Fix Seat </title>
       </Helmet>
-      <Box className="grid md:grid-cols-2 grid-cols-1 gap-[50px] md:w-10/12 mx-auto my-20">
+      <Box className="grid md:grid-cols-2 grid-cols-1 gap-[50px] md:w-10/12 w-96 mx-auto my-20">
         <form
           className="w-full :"
           onSubmit={handleSubmit(onSubmit)}
           style={{ maxWidth: 450, height: 660 }}
         >
           <Grid container spacing={2}>
-            {/* <Grid item xs={12}>
-            <TextField
-              className="w-full"
-              label="Departure Date"
-              {...register("departureDate")}
-              defaultValue={thesis?.departureDate}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              readOnly={true}
-            />
-            {errors.date && (
-              <span className="text-red-700">This field is required</span>
-            )}
-          </Grid> */}
-
             <Grid item xs={12}>
               <TextField
                 fullWidth
@@ -288,7 +272,8 @@ const FixSeat = () => {
         {/* bus seat======================================> */}
 
         <div>
-          <div className="plane ps-7  py-3 w-full">
+          {/* <div className="plane ps-7  py-3 md:w-full p-4 "> */}
+          <div className="p-4 md:w-full py-0 lg:py-3">
             <ol>
               <li>
                 <ol className="seats ">
@@ -308,7 +293,7 @@ const FixSeat = () => {
               {/* all seats */}
 
               <div>
-                <ul>
+                <ul className="sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                   {allSeats.map((row) => (
                     <li key={row.row}>
                       <ol className="seats gap-1 ">
