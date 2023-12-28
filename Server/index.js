@@ -11,10 +11,7 @@ const usersController = require("./controllers/users.controller");
 // middleware
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "https://traveltrek-6303c.web.app"); // Adjust to your frontend URL
-  res.header(
-    "Access-Control-Allow-Methods",
-    "GET,HEAD,PUT,PATCH,POST,DELETE"
-  );
+  res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
   res.header("Access-Control-Allow-Credentials", true);
   res.header(
     "Access-Control-Allow-Headers",
