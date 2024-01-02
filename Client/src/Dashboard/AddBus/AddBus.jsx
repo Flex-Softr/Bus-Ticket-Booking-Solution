@@ -16,6 +16,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import Select from "react-select";
 
 const busTypes = ["AC", "Non-AC"];
 
@@ -43,7 +44,7 @@ const AddBus = () => {
     setLoading(true);
     console.log(data);
     axios
-      .post("https://server-khaki-theta.vercel.app/addbus", data)
+      .post("http://localhost:5000/addbus", data)
       .then((res) => {
         console.log("post", res.data);
         Swal.fire({

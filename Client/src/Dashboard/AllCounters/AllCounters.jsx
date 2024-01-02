@@ -51,7 +51,7 @@ const AllCounters = () => {
       });
 
       if (result.isConfirmed) {
-        await axios.delete(`https://server-khaki-theta.vercel.app/delete-account/${id}`);
+        await axios.delete(`http://localhost:5000/delete-account/${id}`);
         refetch();
         Swal.fire("Deleted!", "Your file has been deleted.", "success");
       }
