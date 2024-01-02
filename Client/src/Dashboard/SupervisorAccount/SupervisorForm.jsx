@@ -1,6 +1,6 @@
 // import React from 'react';
 import { useForm, Controller } from "react-hook-form";
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import {
   TextField,
   Button,
@@ -38,7 +38,7 @@ const SupervisorForm = () => {
     };
 
     axios
-      .post("https://server-khaki-theta.vercel.app/supervisor", newItem)
+      .post("http://localhost:5000/supervisor", newItem)
       .then((responseData) => {
         console.log(responseData.data);
         if (responseData.data.insertedId) {
@@ -79,14 +79,15 @@ const SupervisorForm = () => {
           }}
         >
           <Avatar
-            sx={{  padding: "30px",
-            borderRadius: "50%",
-            height: "40px",
-            width: "40px",
-            backgroundColor: "#d6d8da",}}
+            sx={{
+              padding: "30px",
+              borderRadius: "50%",
+              height: "40px",
+              width: "40px",
+              backgroundColor: "#d6d8da",
+            }}
           >
-            <GroupAddIcon
-              sx={{ fontSize: "44px" }} color= "primary" />
+            <GroupAddIcon sx={{ fontSize: "44px" }} color="primary" />
           </Avatar>
           <Typography className="text-center" component="h1" variant="h5">
             Add Supervisor Information
