@@ -1,116 +1,116 @@
 * {
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-size: 16px;
-    
-  }
-  
-  .plane {
-    border: 1px solid rgb(221, 218, 218);    
-    width: 440px !important;
-    padding-right: 0px;
-  }
-  
-  .select {
-    
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-  }
-  
-  .select h1 {
-    width: 60%;
-    margin: 100px auto 35px auto;
-  }
-  
-  .exit {
-    position: relative;
-    height: 50px;
-  }
- 
-  
-  ol {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .seats {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-  }
-  
-  .seat {
-    display: flex;
-    flex: 0 0 14.28%;
-    padding: 10px;
-    position: relative;
-  }
+  box-sizing: border-box;
+}
 
-  .seat:hover{
-    background: #b9b9b98a;
-  }
+body {
+  font-size: 16px;
   
-  .seat label {
-    display: block;
-    position: relative;
-    width: 100%;
-    text-align: center;
-    font-size: 14px;
-    font-weight: bolder;
-    line-height: 1.5rem;
-    padding: 4px 0;
-    background: #5bfc60;
-    border-radius: 5px; 
-    color: black; 
-  }
+}
+
+.plane {
+  border: 1px solid rgb(221, 218, 218);    
+  width: 440px !important;
+  padding-right: 0px;
+}
+
+.select {
   
-  .seat label:hover {
-    cursor: pointer;
-    box-shadow: 0 0 0px 2px green;
-    color: #3333334d;
-    
-  }
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.select h1 {
+  width: 60%;
+  margin: 100px auto 35px auto;
+}
+
+.exit {
+  position: relative;
+  height: 50px;
+}
+
+
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.seats {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+}
+
+.seat {
+  display: flex;
+  flex: 0 0 14.28%;
+  padding: 10px;
+  position: relative;
+}
+
+.seat:hover{
+  background: #b9b9b98a;
+}
+
+.seat label {
+  display: block;
+  position: relative;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bolder;
+  line-height: 1.5rem;
+  padding: 4px 0;
+  background: #5bfc60;
+  border-radius: 5px; 
+  color: black; 
+}
+
+.seat label:hover {
+  cursor: pointer;
+  box-shadow: 0 0 0px 2px green;
+  color: #3333334d;
   
-  .seat:nth-child(2) {
-    margin-right: 32%;
-  }
-  .frontSiteofBus:nth-child(1){
-    margin-right: 65%;
-    margin-bottom: 13%;
-  }
- 
+}
+
+.seat:nth-child(2) {
+  margin-right: 32%;
+}
+.frontSiteofBus:nth-child(1){
+  margin-right: 65%;
+  margin-bottom: 13%;
+}
+
 .seat img, .demoseat img{
-  width: 40px;
-  height: 45px;
- 
+width: 40px;
+height: 45px;
+
 }
 .demoseat img{
-  padding: 5px;
+padding: 5px;
 }
 
 
 .lastseat img{
-  width: 35px;
-  height: 45px;
- 
+width: 35px;
+height: 45px;
+
 }
 .steering-wheel{
-  width: 55px;
-  height: 55px;
-  
- 
+width: 55px;
+height: 55px;
+
+
 }
 
 /* seat style css */
 
 .seat.selected {
-  background-color: lightgray;
-  /* Add any other styles you want for selected seats */
+background-color: lightgray;
+/* Add any other styles you want for selected seats */
 }
 
 
@@ -122,23 +122,22 @@
 
 /* Add this CSS to your styles */
 @media (max-width: 600px) {
-  form {
-    width: 80%;
-    margin: auto;
-    
-  }
- 
+form {
+  width: 80%;
+  margin: auto;
+  
+}
+
 }
 
 
 @media (min-width: 601px) and (max-width: 1200px) {
-  form {
-    width: 80%;
-    margin: auto;
-  }
- 
+form {
+  width: 80%;
+  margin: auto;
 }
 
+}
 
 
 
