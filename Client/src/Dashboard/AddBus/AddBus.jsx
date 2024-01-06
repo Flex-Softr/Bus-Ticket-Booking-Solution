@@ -17,15 +17,17 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Select from "react-select";
+import useAllZilla from "../../hooks/useAllZilla";
 
 const busTypes = ["AC", "Non-AC"];
 
 const AddBus = () => {
   const { allDistricts } = useAllDistricts();
   const { supervisors } = useSuoervisor();
+  const { allZilla } = useAllZilla();
   const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
-
+  const [selectedOption, setSelectedOption] = useState(null);
   const locations = allDistricts.map((ticket) => ({
     value: ticket.name,
     label: ticket.name,
@@ -41,8 +43,10 @@ const AddBus = () => {
   } = useForm();
 
   const onSubmit = (data) => {
+    data.selectedZilla = selectedOption;
     setLoading(true);
     console.log(data);
+
     axios
       .post("http://localhost:5000/addbus", data)
       .then((res) => {
@@ -261,6 +265,20 @@ const AddBus = () => {
             </div>
           </div>
 
+          {/* -------------- multi selected input field ----------- */}
+          <div className="mb-4 flex-1">
+            <FormControl fullWidth className="">
+              <Select
+                defaultValue={selectedOption}
+                onChange={setSelectedOption}
+                options={allZilla?.districts}
+                placeholder="select multiple districts"
+                isMulti
+              />
+            </FormControl>
+          </div>
+
+          {/* date and time */}
           <div className="flex md:gap-2 mb-4 md:w-full ">
             <div className="flex-1">
               <TextField
@@ -282,6 +300,7 @@ const AddBus = () => {
             </div>
           </div>
 
+          {/* bus type */}
           <div className="mb-4">
             <FormControl fullWidth>
               <Controller
