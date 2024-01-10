@@ -1,0 +1,12 @@
+.css-13cymwt-control {
+    border-color: hsl(181.36deg 9.09% 65.55%) !important;
+}
+
+.css-1nmdiq5-menu{
+    z-index: 200000!important;
+}
+
+.css-13cymwt-control:hover{
+    border-color: none !important;
+    outline: none !important;
+}

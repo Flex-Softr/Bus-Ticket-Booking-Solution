@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Select from "react-select";
 import useAllZilla from "../../hooks/useAllZilla";
-
+import './AddBus.css'
 const busTypes = ["AC", "Non-AC"];
 
 const AddBus = () => {

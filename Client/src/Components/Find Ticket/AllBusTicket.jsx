@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import { ArrowForward, DirectionsBus } from "@mui/icons-material";
-import { Button,  Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 // import busImg from "../../assets/DB35.gif";
 import { Link } from "react-router-dom";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 const AllBusTicket = ({ allBus }) => {
-  
   const {
     busName,
     pickupPoint,
@@ -17,18 +17,31 @@ const AllBusTicket = ({ allBus }) => {
     serialNumber,
     time,
     _id,
+    selectedZilla,
   } = allBus;
 
   return (
     <div>
       {/* <img className=" h-20 w-20" src={busImg} alt="" /> */}
       <div className="flex flex-wrap justify-center items-center bg-gray-50 rounded">
-        <div className="basis-6/12 grow mb-2 p-4">
-          <div>
-            <Typography className="font-semibold text-xl mb-5">
+      <div className="flex justify-between capitalize w-full mt-5 items-center mx-4 border-b-2 pb-4 ">
+            <Typography className=" font-semibold text-xl">
               {busName} - {serialNumber}
             </Typography>
+            
+            <Typography>
+              {selectedZilla &&
+                selectedZilla?.map((any, index) => (
+                  <span key={index} className="text-xl text-gray-700">
+                    {any?.value}
+                   <span className="text-blue-600">{index < selectedZilla?.length - 1 && " > "}</span>
+                  </span>
+                ))}
+            </Typography>
           </div>
+        <div className="basis-6/12 grow mb-2 p-4">
+          
+         
 
           <Typography className="font-semibold text-xl">
             {pickupPoint.value} - {droppingPoint.value}
@@ -72,6 +85,7 @@ const AllBusTicket = ({ allBus }) => {
               <span className=" font-semibold">Number: </span>
               {supervisorNumber.label}
             </Typography>
+
           </div>
         </div>
         <div className="basis-6/12 flex justify-evenly grow p-2">
@@ -98,8 +112,8 @@ const AllBusTicket = ({ allBus }) => {
             </Typography>
           </div>
         </div>
-        <div className="basis-full grow">
-          <Link to={`/fixSeat/${_id}`} >
+        <div className="basis-full grow mb-5">
+          <Link to={`/fixSeat/${_id}`}>
             <Button
               variant="contained"
               className="px-6 py-2 my-3 mx-auto block"
