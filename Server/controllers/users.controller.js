@@ -6,6 +6,7 @@ let busDataCollection;
 let supervisorDataCollection;
 let seatDataCollection;
 let reservationCollection;
+let destinationCollection;
 
 exports.setupCollections = (collections) => {
   bdDistrictsCollection = collections.bdDistrictsCollection;
@@ -14,6 +15,7 @@ exports.setupCollections = (collections) => {
   supervisorDataCollection = collections.supervisorDataCollection;
   seatDataCollection = collections.seatDataCollection;
   reservationCollection = collections.reservationCollection;
+  destinationCollection = collections.destinationCollection;
 };
 
 exports.getTicket = async (req, res) => {
@@ -27,7 +29,10 @@ exports.getAccount = async (req, res) => {
 };
 
 exports.getSupervisors = async (req, res) => {
-  const result = await supervisorDataCollection.find().sort({ createdAt: 1 }).toArray();
+  const result = await supervisorDataCollection
+    .find()
+    .sort({ createdAt: 1 })
+    .toArray();
   res.send(result);
 };
 
@@ -54,23 +59,35 @@ exports.updateSupervisors = async (req, res) => {
     },
   };
 
-  const result = await supervisorDataCollection.updateOne(filter, supervisor, options);
+  const result = await supervisorDataCollection.updateOne(
+    filter,
+    supervisor,
+    options
+  );
   res.send(result);
 };
 
 exports.getAllBus = async (req, res) => {
-  const result = await busDataCollection.find().sort({ createdAt: 1 }).toArray();
+  const result = await busDataCollection
+    .find()
+    .sort({ createdAt: 1 })
+    .toArray();
   res.send(result);
 };
 
 exports.getSeats = async (req, res) => {
-  const result = await seatDataCollection.find().sort({ row: 1, "seats.id": 1 }).toArray();
+  const result = await seatDataCollection
+    .find()
+    .sort({ row: 1, "seats.id": 1 })
+    .toArray();
   res.send(result);
 };
 
 exports.deleteAccount = async (req, res) => {
   const id = req.params.id;
-  const result = await accountsDataCollection.deleteOne({ _id: new ObjectId(id) });
+  const result = await accountsDataCollection.deleteOne({
+    _id: new ObjectId(id),
+  });
   res.send(result);
 };
 
@@ -108,8 +125,6 @@ exports.getReservedData = async (req, res) => {
   // console.log("Received request for busId:", busId);
 
   try {
-    
-
     // Find all documents that match the specified busId
     const filter = { busId: busId };
     // console.log("Filter:", filter);
@@ -121,7 +136,9 @@ exports.getReservedData = async (req, res) => {
       res.json(result);
     } else {
       console.log("No reservation data found for the given busId");
-      res.status(404).json({ error: "No reservation data found for the given busId" });
+      res
+        .status(404)
+        .json({ error: "No reservation data found for the given busId" });
     }
   } catch (error) {
     console.error("Error fetching reservation data:", error);
@@ -140,28 +157,38 @@ exports.getReservedData = async (req, res) => {
 //     res.status(500).send("Internal Server Error");
 //   }
 // };
-  // try {
-  //   const filter = { "seats.id": seatId };
-  //   const update = {
-  //     $set: {
-  //       "seats.$.reserved": true,
-  //       "seats.$.gender": updateData.gender,
-  //     },
-  //   };
+// try {
+//   const filter = { "seats.id": seatId };
+//   const update = {
+//     $set: {
+//       "seats.$.reserved": true,
+//       "seats.$.gender": updateData.gender,
+//     },
+//   };
 
-  //   const result = await seatDataCollection.updateOne(filter, update);
+//   const result = await seatDataCollection.updateOne(filter, update);
 
+//   if (result.modifiedCount > 0) {
+//     res.status(200).json({ message: 'Seat status updated successfully' });
+//   } else {
+//     res.status(404).json({ message: 'Seat not found' });
+//   }
+// } catch (error) {
+//   console.error(error);
+//   res.status(500).json({ message: 'Internal server error' });
+// }
 
-  //   if (result.modifiedCount > 0) {
-  //     res.status(200).json({ message: 'Seat status updated successfully' });
-  //   } else {
-  //     res.status(404).json({ message: 'Seat not found' });
-  //   }
-  // } catch (error) {
-  //   console.error(error);
-  //   res.status(500).json({ message: 'Internal server error' });
-  // }
-
+exports.getDestination = async (req, res) => {
+  const result = await destinationCollection
+    .find(
+      {
+        name: { $regex: req.params.text },
+      },
+      { projection: { name: 1 } }
+    )
+    .toArray();
+  res.send(result);
+};
 
 exports.addSupervisors = async (req, res) => {
   const item = req.body;
@@ -218,6 +245,8 @@ exports.deletebus = async (req, res) => {
 
 exports.deleteSupervisors = async (req, res) => {
   const id = req.params.id;
-  const result = await supervisorDataCollection.deleteOne({ _id: new ObjectId(id) });
+  const result = await supervisorDataCollection.deleteOne({
+    _id: new ObjectId(id),
+  });
   res.send(result);
 };
