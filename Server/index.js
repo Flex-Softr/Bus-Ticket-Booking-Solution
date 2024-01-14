@@ -48,6 +48,8 @@ async function run() {
 
       busDataCollection: client.db("cityTicket").collection("busData"),
 
+      destinationCollection: client.db("cityTicket").collection("destination"),
+
       supervisorDataCollection: client
         .db("cityTicket")
         .collection("supervisorData"),

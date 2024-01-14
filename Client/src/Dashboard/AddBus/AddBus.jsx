@@ -31,6 +31,36 @@ const AddBus = () => {
     label: ticket.name,
   }));
 
+  const [names, setNames] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const handleNameChange = (inputValue, actionMeta) => {
+    let temp = [];
+
+    if (inputValue) {
+      try {
+        (async () => {
+          const data = await fetch(
+            `http://localhost:5000/allNames/${inputValue}`
+          );
+
+          const result = await data.json();
+          const name = result.map((n) => {
+            const option = {
+              label: n.name,
+              value: n.name,
+              color: "#" + Math.floor(Math.random() * 16777215).toString(),
+            };
+            temp.push(option);
+          });
+          setNames(temp);
+        })();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   const {
     control,
     register,
@@ -118,7 +148,6 @@ const AddBus = () => {
               />
             </div>
           </div>
-
           <div className="flex gap-2 w-full">
             <div className="mb-4 flex-1">
               <FormControl fullWidth>
@@ -196,6 +225,16 @@ const AddBus = () => {
             </div>
           </div>
 
+          <Select
+            className="bg-purple"
+            defaultValue={selectedOption}
+            onChange={setSelectedOption}
+            options={names}
+            isMulti
+            onInputChange={handleNameChange}
+          />
+
+          <br />
           <div className="flex gap-2 mb-4 w-full">
             <div className="flex-1">
               <FormControl fullWidth>
@@ -260,7 +299,6 @@ const AddBus = () => {
               </FormControl>
             </div>
           </div>
-
           <div className="flex md:gap-2 mb-4 md:w-full ">
             <div className="flex-1">
               <TextField
@@ -281,7 +319,6 @@ const AddBus = () => {
               />
             </div>
           </div>
-
           <div className="mb-4">
             <FormControl fullWidth>
               <Controller
@@ -313,7 +350,6 @@ const AddBus = () => {
               )}
             </FormControl>
           </div>
-
           <Button
             type="submit"
             variant="contained"
