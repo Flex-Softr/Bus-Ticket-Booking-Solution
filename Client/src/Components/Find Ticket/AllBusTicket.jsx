@@ -23,9 +23,9 @@ const AllBusTicket = ({ allBus }) => {
   return (
     <div>
       {/* <img className=" h-20 w-20" src={busImg} alt="" /> */}
-      <div className="flex flex-wrap justify-center items-center bg-gray-50 rounded">
+      <div className="flex flex-wrap justify-center items-center bg-white rounded">
       <div className="flex justify-between capitalize w-full mt-5 items-center mx-4 border-b-2 pb-4 ">
-            <Typography className=" font-semibold text-xl">
+            <Typography className=" font-semibold text-xl ">
               {busName} - {serialNumber}
             </Typography>
             
