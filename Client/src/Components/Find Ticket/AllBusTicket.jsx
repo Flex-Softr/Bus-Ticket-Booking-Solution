@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
 import { ArrowForward, DirectionsBus } from "@mui/icons-material";
-import { Button,  Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 // import busImg from "../../assets/DB35.gif";
 import { Link } from "react-router-dom";
 
 const AllBusTicket = ({ allBus }) => {
-  
   const {
     busName,
     pickupPoint,
@@ -16,6 +15,9 @@ const AllBusTicket = ({ allBus }) => {
     departureDate,
     serialNumber,
     time,
+    pickuptime,
+    droppingtime,
+    names,
     _id,
   } = allBus;
 
@@ -51,6 +53,20 @@ const AllBusTicket = ({ allBus }) => {
               className="inline-block text-yellow-400 my-1"
             >
               <DirectionsBus />
+              <span className="font-semibold">Destination: </span>
+              {names.map((destination, index) => (
+                <span key={index}>
+                  {destination.label}
+                  {index < names.length - 1 && ", "}
+                </span>
+              ))}
+            </Typography>
+
+            <Typography
+              varient="span"
+              className="inline-block text-yellow-400 my-1"
+            >
+              <DirectionsBus />
               <span className=" font-semibold">Supervisor: </span>
               {supervisorName.label}
             </Typography>
@@ -77,7 +93,7 @@ const AllBusTicket = ({ allBus }) => {
         <div className="basis-6/12 flex justify-evenly grow p-2">
           <div>
             <Typography varient="p" className="text-md font-semibold">
-              6:30 pm
+              {pickuptime} am
             </Typography>
             <Typography varient="p" className="text-gray-500">
               {pickupPoint.value}
@@ -91,7 +107,7 @@ const AllBusTicket = ({ allBus }) => {
           </div>
           <div>
             <Typography varient="p" className="text-md font-semibold">
-              7:30 pm
+              {droppingtime} pm
             </Typography>
             <Typography varient="p" className="text-gray-500">
               {droppingPoint.value}
@@ -99,7 +115,7 @@ const AllBusTicket = ({ allBus }) => {
           </div>
         </div>
         <div className="basis-full grow">
-          <Link to={`/fixSeat/${_id}`} >
+          <Link to={`/fixSeat/${_id}`}>
             <Button
               variant="contained"
               className="px-6 py-2 my-3 mx-auto block"

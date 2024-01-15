@@ -72,6 +72,7 @@ const AddBus = () => {
 
   const onSubmit = (data) => {
     setLoading(true);
+    data.names = selectedOption;
     console.log(data);
     axios
       .post("http://localhost:5000/addbus", data)
@@ -133,7 +134,7 @@ const AddBus = () => {
                 type="number"
                 label="Serial Number"
                 fullWidth
-                type="number"
+                // type="number"
                 {...register("serialNumber", {
                   required: "This field is required",
                 })}
@@ -148,6 +149,7 @@ const AddBus = () => {
               />
             </div>
           </div>
+
           <div className="flex gap-2 w-full">
             <div className="mb-4 flex-1">
               <FormControl fullWidth>
@@ -168,11 +170,12 @@ const AddBus = () => {
                     />
                   )}
                 />
-                {errors.droppingPoint && (
-                  <p className="text-red-600">{errors.droppingPoint.message}</p>
+                {errors.pickupPoint && (
+                  <p className="text-red-600">{errors.pickupPoint.message}</p>
                 )}
               </FormControl>
             </div>
+
             {/* pickup time */}
             <div className="mb-4 flex-1">
               <TextField
@@ -217,6 +220,7 @@ const AddBus = () => {
               <TextField
                 label="Dropping Time"
                 type="time"
+                name="droppingtime"
                 fullWidth
                 {...register("droppingtime", {
                   required: "This field is required",
@@ -225,8 +229,20 @@ const AddBus = () => {
             </div>
           </div>
 
+          {/* <Select
+            className="bg-purple"
+            defaultValue={selectedOption}
+            onChange={setSelectedOption}
+            options={names}
+            isMulti
+            onInputChange={handleNameChange}
+          /> */}
+
           <Select
             className="bg-purple"
+            // {...register("names", {
+            //   required: "This field is required",
+            // })}
             defaultValue={selectedOption}
             onChange={setSelectedOption}
             options={names}
