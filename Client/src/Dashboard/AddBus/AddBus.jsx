@@ -240,14 +240,17 @@ const AddBus = () => {
 
           <Select
             className="bg-purple"
-            // {...register("names", {
-            //   required: "This field is required",
-            // })}
             defaultValue={selectedOption}
             onChange={setSelectedOption}
             options={names}
             isMulti
             onInputChange={handleNameChange}
+            styles={{
+              container: (provided) => ({
+                ...provided,
+                zIndex: 9999, // Set your desired z-index value
+              }),
+            }}
           />
 
           <br />
