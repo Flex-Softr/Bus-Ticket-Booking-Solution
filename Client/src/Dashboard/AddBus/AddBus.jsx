@@ -18,13 +18,14 @@ import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Select from "react-select";
 import useAllZilla from "../../hooks/useAllZilla";
-import './AddBus.css'
+import "./AddBus.css";
 const busTypes = ["AC", "Non-AC"];
 
 const AddBus = () => {
   const { allDistricts } = useAllDistricts();
   const { supervisors } = useSuoervisor();
   const { allZilla } = useAllZilla();
+  console.log(allZilla);
   const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState(null);
@@ -32,6 +33,36 @@ const AddBus = () => {
     value: ticket.name,
     label: ticket.name,
   }));
+
+  const [names, setNames] = useState([]);
+  // const [selectedOption, setSelectedOption] = useState(null);
+
+  const handleNameChange = (inputValue, actionMeta) => {
+    let temp = [];
+
+    if (inputValue) {
+      try {
+        (async () => {
+          const data = await fetch(
+            `http://localhost:5000/allNames/${inputValue}`
+          );
+
+          const result = await data.json();
+          const name = result.map((n) => {
+            const option = {
+              label: n.name,
+              value: n.name,
+              color: "#" + Math.floor(Math.random() * 16777215).toString(),
+            };
+            temp.push(option);
+          });
+          setNames(temp);
+        })();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   const {
     control,
@@ -45,6 +76,7 @@ const AddBus = () => {
   const onSubmit = (data) => {
     data.selectedZilla = selectedOption;
     setLoading(true);
+    data.names = selectedOption;
     console.log(data);
 
     axios
@@ -107,7 +139,7 @@ const AddBus = () => {
                 type="number"
                 label="Serial Number"
                 fullWidth
-                type="number"
+                // type="number"
                 {...register("serialNumber", {
                   required: "This field is required",
                 })}
@@ -143,11 +175,12 @@ const AddBus = () => {
                     />
                   )}
                 />
-                {errors.droppingPoint && (
-                  <p className="text-red-600">{errors.droppingPoint.message}</p>
+                {errors.pickupPoint && (
+                  <p className="text-red-600">{errors.pickupPoint.message}</p>
                 )}
               </FormControl>
             </div>
+
             {/* pickup time */}
             <div className="mb-4 flex-1">
               <TextField
@@ -192,6 +225,7 @@ const AddBus = () => {
               <TextField
                 label="Dropping Time"
                 type="time"
+                name="droppingtime"
                 fullWidth
                 {...register("droppingtime", {
                   required: "This field is required",
@@ -200,6 +234,28 @@ const AddBus = () => {
             </div>
           </div>
 
+          {/* <Select
+            className="bg-purple"
+            defaultValue={selectedOption}
+            onChange={setSelectedOption}
+            options={names}
+            isMulti
+            onInputChange={handleNameChange}
+          /> */}
+          {/* -------------- multi selected input field ----------- */}
+          <div className="mb-4 flex-1">
+            <FormControl fullWidth className="">
+              <Select
+                defaultValue={selectedOption}
+                onChange={setSelectedOption}
+                options={allZilla?.districts}
+                placeholder="select multiple districts"
+                isMulti
+              />
+            </FormControl>
+          </div>
+
+          <br />
           <div className="flex gap-2 mb-4 w-full">
             <div className="flex-1">
               <FormControl fullWidth>
@@ -332,7 +388,6 @@ const AddBus = () => {
               )}
             </FormControl>
           </div>
-
           <Button
             type="submit"
             variant="contained"

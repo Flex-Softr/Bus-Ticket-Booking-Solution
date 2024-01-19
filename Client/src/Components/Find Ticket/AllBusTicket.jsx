@@ -16,6 +16,9 @@ const AllBusTicket = ({ allBus }) => {
     departureDate,
     serialNumber,
     time,
+    pickuptime,
+    droppingtime,
+    names,
     _id,
     selectedZilla,
   } = allBus;
@@ -64,6 +67,20 @@ const AllBusTicket = ({ allBus }) => {
               className="inline-block text-yellow-400 my-1"
             >
               <DirectionsBus />
+              <span className="font-semibold">Destination: </span>
+              {names.map((destination, index) => (
+                <span key={index}>
+                  {destination.label}
+                  {index < names.length - 1 && ", "}
+                </span>
+              ))}
+            </Typography>
+
+            <Typography
+              varient="span"
+              className="inline-block text-yellow-400 my-1"
+            >
+              <DirectionsBus />
               <span className=" font-semibold">Supervisor: </span>
               {supervisorName.label}
             </Typography>
@@ -91,7 +108,7 @@ const AllBusTicket = ({ allBus }) => {
         <div className="basis-6/12 flex justify-evenly grow p-2">
           <div>
             <Typography varient="p" className="text-md font-semibold">
-              6:30 pm
+              {pickuptime} am
             </Typography>
             <Typography varient="p" className="text-gray-500">
               {pickupPoint.value}
@@ -105,7 +122,7 @@ const AllBusTicket = ({ allBus }) => {
           </div>
           <div>
             <Typography varient="p" className="text-md font-semibold">
-              7:30 pm
+              {droppingtime} pm
             </Typography>
             <Typography varient="p" className="text-gray-500">
               {droppingPoint.value}
