@@ -23,6 +23,13 @@ const busTypes = ["AC", "Non-AC"];
 const AddBus = () => {
   const { allDistricts } = useAllDistricts();
   const { supervisors } = useSuoervisor();
+
+  const supervisorNames = supervisors.map((supervisor) => ({
+    label: supervisor.name,
+    value: supervisor._id,
+    phone: supervisor.phone,
+  }));
+
   const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
 
@@ -50,6 +57,7 @@ const AddBus = () => {
               label: n.name,
               value: n.name,
               color: "#" + Math.floor(Math.random() * 16777215).toString(),
+              // phone: n.phone,
             };
             temp.push(option);
           });
@@ -69,6 +77,37 @@ const AddBus = () => {
     reset,
     formState: { errors },
   } = useForm();
+
+  // Function to fetch supervisor details based on supervisor number
+  // const fetchSupervisorDetailsByNumber = async (supervisorNumber) => {
+  //   try {
+  //     const response = await fetch(
+  //       `http://localhost:5000/supervisorDetailsByNumber/${supervisorNumber}`
+  //     );
+  //     const data = await response.json();
+
+  //     // Assuming the API returns an object with phone number
+  //     const supervisorPhone = data.phone;
+
+  //     setValue("supervisorNumber", {
+  //       label: supervisorPhone,
+  //       value: supervisorNumber,
+  //     });
+
+  //     // Assuming you want to set the supervisor name as well
+  //     const supervisor = supervisors.find(
+  //       (sup) => sup._id === supervisorNumber
+  //     );
+
+  //     setValue("supervisorName", {
+  //       label: supervisor.name,
+  //       value: supervisor._id,
+  //       phone: supervisor.phone,
+  //     });
+  //   } catch (error) {
+  //     console.error("Error fetching supervisor details:", error);
+  //   }
+  // };
 
   const onSubmit = (data) => {
     setLoading(true);
@@ -229,15 +268,6 @@ const AddBus = () => {
             </div>
           </div>
 
-          {/* <Select
-            className="bg-purple"
-            defaultValue={selectedOption}
-            onChange={setSelectedOption}
-            options={names}
-            isMulti
-            onInputChange={handleNameChange}
-          /> */}
-
           <Select
             className="bg-purple"
             defaultValue={selectedOption}
@@ -265,15 +295,16 @@ const AddBus = () => {
                   render={({ field }) => (
                     <Autocomplete
                       {...field}
-                      options={supervisors.map((supervisor) => ({
-                        label: supervisor.name,
-                        value: supervisor._id,
-                      }))}
-                      freeSolo
+                      options={supervisorNames}
                       renderInput={(params) => (
                         <TextField {...params} label="Supervisor Name" />
                       )}
-                      onChange={(_, value) => setValue("supervisorName", value)}
+                      onChange={(_, value) => {
+                        setValue("supervisorName", value);
+                        if (value) {
+                          setValue("supervisorNumber", value.phone); // Set supervisorNumber directly to phone
+                        }
+                      }}
                     />
                   )}
                 />
@@ -294,22 +325,10 @@ const AddBus = () => {
                   defaultValue=""
                   rules={{ required: "this field is required" }}
                   render={({ field }) => (
-                    <Autocomplete
-                      {...field}
-                      options={supervisors.map((supervisor) => ({
-                        label: supervisor.phone,
-                        value: supervisor._id,
-                      }))}
-                      freeSolo
-                      renderInput={(params) => (
-                        <TextField {...params} label="Supervisor Number" />
-                      )}
-                      onChange={(_, value) =>
-                        setValue("supervisorNumber", value)
-                      }
-                    />
+                    <TextField {...field} label="Supervisor Number" />
                   )}
                 />
+
                 {errors.supervisorNumber && (
                   <p className="text-red-600">
                     {errors.supervisorNumber.message}
