@@ -38,6 +38,7 @@ router.get("/allbus/:id", getFixSeat);
 router.get("/users/:email", getUserByEmail);
 router.post("/ticket", postTickets);
 router.post("/seat-reservation", postSeatReservation);
+// router.get("/destinationSearch/:text", searchDestination);
 
 // get selected seat bus
 router.get("/resarvedSeat/:id", getReservedData);

@@ -85,8 +85,8 @@ const AllBusTicket = ({ allBus }) => {
               className="inline-block text-yellow-400 my-1"
             >
               <DirectionsBus />
-              <span className=" font-semibold">Number: </span>
-              {supervisorNumber.label}
+              <span className=" font-semibold">Supervisor Number: </span>
+              {supervisorNumber}
             </Typography>
           </div>
         </div>
@@ -101,6 +101,7 @@ const AllBusTicket = ({ allBus }) => {
           </div>
           <div>
             <ArrowForward className="mx-auto block text-blue-400" />
+
             <Typography varient="p" className="text-sm mx-1 text-gray-500">
               {time}
             </Typography>
