@@ -35,7 +35,6 @@ const AddBus = () => {
   }));
 
   const [names, setNames] = useState([]);
-  // const [selectedOption, setSelectedOption] = useState(null);
 
   const handleNameChange = (inputValue, actionMeta) => {
     let temp = [];
@@ -234,14 +233,6 @@ const AddBus = () => {
             </div>
           </div>
 
-          {/* <Select
-            className="bg-purple"
-            defaultValue={selectedOption}
-            onChange={setSelectedOption}
-            options={names}
-            isMulti
-            onInputChange={handleNameChange}
-          /> */}
           {/* -------------- multi selected input field ----------- */}
           <div className="mb-4 flex-1">
             <FormControl fullWidth className="">
@@ -321,18 +312,6 @@ const AddBus = () => {
             </div>
           </div>
 
-          {/* -------------- multi selected input field ----------- */}
-          <div className="mb-4 flex-1">
-            <FormControl fullWidth className="">
-              <Select
-                defaultValue={selectedOption}
-                onChange={setSelectedOption}
-                options={allZilla?.districts}
-                placeholder="select multiple districts"
-                isMulti
-              />
-            </FormControl>
-          </div>
 
           {/* date and time */}
           <div className="flex md:gap-2 mb-4 md:w-full ">

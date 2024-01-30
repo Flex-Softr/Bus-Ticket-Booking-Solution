@@ -250,3 +250,15 @@ exports.deleteSupervisors = async (req, res) => {
   });
   res.send(result);
 };
+
+// search
+
+// exports.searchDestination = async (req, res) => {
+//   const searchText = req.params.text;
+//   const result = await busDataCollection
+//     .find({
+//       $or: [{ names: { $regex: searchText, $options: "i" } }],
+//     })
+//     .toArray();
+//   res.send(result);
+// };

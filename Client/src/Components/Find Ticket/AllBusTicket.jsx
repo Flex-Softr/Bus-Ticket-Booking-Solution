@@ -3,7 +3,6 @@ import { ArrowForward, DirectionsBus } from "@mui/icons-material";
 import { Button, Typography } from "@mui/material";
 // import busImg from "../../assets/DB35.gif";
 import { Link } from "react-router-dom";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 const AllBusTicket = ({ allBus }) => {
   const {
@@ -18,10 +17,10 @@ const AllBusTicket = ({ allBus }) => {
     time,
     pickuptime,
     droppingtime,
-    names,
     _id,
     selectedZilla,
   } = allBus;
+  console.log(allBus)
 
   return (
     <div>
@@ -60,20 +59,6 @@ const AllBusTicket = ({ allBus }) => {
             >
               <DirectionsBus />
               {busType}
-            </Typography>
-
-            <Typography
-              varient="span"
-              className="inline-block text-yellow-400 my-1"
-            >
-              <DirectionsBus />
-              <span className="font-semibold">Destination: </span>
-              {names.map((destination, index) => (
-                <span key={index}>
-                  {destination.label}
-                  {index < names.length - 1 && ", "}
-                </span>
-              ))}
             </Typography>
 
             <Typography
