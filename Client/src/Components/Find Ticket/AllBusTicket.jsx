@@ -20,7 +20,7 @@ const AllBusTicket = ({ allBus }) => {
     _id,
     selectedZilla,
   } = allBus;
-  console.log(allBus)
+  // console.log(allBus)
 
   return (
     <div>

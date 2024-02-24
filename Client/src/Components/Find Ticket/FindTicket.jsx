@@ -5,7 +5,7 @@ import {
   Box,
   Typography,
   TextField,
-  Select,
+  // Select,
   MenuItem,
   FormControl,
   FormControlLabel,
@@ -18,19 +18,19 @@ import LocationOffIcon from "@mui/icons-material/LocationOff";
 import ShowTicket from "./ShowTicket";
 import { Helmet } from "react-helmet-async";
 import useAllZilla from "../../hooks/useAllZilla";
-// import Select from "react-select";
+import Select from "react-select";
 
 function FindTicket() {
   const [selectedOption, setSelectedOption] = useState(null);
   const [normalizedBusTickets, setNormalizedBusTickets] = useState([]);
   const { allZilla } = useAllZilla();
-  console.log("allZilla", allZilla);
+
 
   const { control, handleSubmit, register, setValue } = useForm();
 
   // Retrieve data from local storage
   const storedData = JSON.parse(localStorage.getItem("formData")) || {};
-  console.log("Stored Data:", storedData);
+
 
   useEffect(() => {
     Object.entries(storedData).forEach(([key, value]) => {
@@ -79,19 +79,23 @@ function FindTicket() {
 
 
   const onSubmit = (data) => {
+    data.selectedZilla = selectedOption;
     console.log("Form Data:", data);
   
-    const filteredBusData = allBusData.filter(
-      (bus) =>
-        bus.busType.toLowerCase() === data.type.toLowerCase() &&
-        bus.pickupPoint.label.toLowerCase() === data.pickupPoint.toLowerCase() &&
-        bus.droppingPoint.label.toLowerCase() === data.droppingPoint.toLowerCase() &&
+    const filteredBusData = allBusData.filter((bus) => {
+      const selectedZillaValues = data.selectedZilla.map((zilla) => zilla.value);
+  
+      return (
         (data.zillaSearch
-          ? data.zillaSearch.some((selectedZilla) =>
-              bus.zilla.toLowerCase().includes(selectedZilla.value.toLowerCase())
+          ? data.zillaSearch?.some((selectedZilla) =>
+              selectedZillaValues?.includes(selectedZilla?.value?.toLowerCase())
             )
-          : true)
-    );
+          : true) &&
+        bus?.busType?.toLowerCase() === data?.type?.toLowerCase()
+        // Additional conditions if needed
+      );
+    });
+    
   
     setNormalizedBusTickets(filteredBusData);
   
@@ -107,6 +111,7 @@ function FindTicket() {
     localStorage.setItem("formData", JSON.stringify(formDataToSave));
   };
   
+  console.log(normalizedBusTickets)
   
   return (
     <>
