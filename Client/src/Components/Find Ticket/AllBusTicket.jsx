@@ -17,34 +17,33 @@ const AllBusTicket = ({ allBus }) => {
     time,
     pickuptime,
     droppingtime,
-    names,
     _id,
+    selectedZilla,
   } = allBus;
+  // console.log(allBus)
 
   return (
     <div>
       {/* <img className=" h-20 w-20" src={busImg} alt="" /> */}
-      <div className="flex flex-wrap justify-center items-center bg-gray-50 rounded">
-        <div className="basis-6/12 grow mb-2 p-4">
-          <div>
-            <Typography className="font-semibold text-xl mb-5">
-              {busName} - {serialNumber}
-            </Typography>
+      <div className="flex flex-wrap justify-center items-center bg-white rounded">
+        <div className="flex justify-between capitalize w-full mt-5 items-center mx-4 border-b-2 pb-4 ">
+          <Typography className=" font-semibold text-xl ">
+            {busName} - {serialNumber}
+          </Typography>
 
-            <Typography
-              varient="span"
-              className="inline-block text-yellow-400 my-1"
-            >
-              <span className="font-semibold">Road Map: </span>
-              {names.map((destination, index) => (
-                <span key={index}>
-                  {destination.label}
-                  {index < names.length - 1 && ", "}
+          <Typography>
+            {selectedZilla &&
+              selectedZilla?.map((any, index) => (
+                <span key={index} className="text-xl text-gray-700">
+                  {any?.value}
+                  <span className="text-blue-600">
+                    {index < selectedZilla?.length - 1 && " > "}
+                  </span>
                 </span>
               ))}
-            </Typography>
-          </div>
-
+          </Typography>
+        </div>
+        <div className="basis-6/12 grow mb-2 p-4">
           <Typography className="font-semibold text-xl">
             {pickupPoint.value} - {droppingPoint.value}
           </Typography>
@@ -89,11 +88,10 @@ const AllBusTicket = ({ allBus }) => {
             </Typography>
           </div>
         </div>
-
         <div className="basis-6/12 flex justify-evenly grow p-2">
           <div>
             <Typography varient="p" className="text-md font-semibold">
-              {pickuptime} pm
+              {pickuptime} am
             </Typography>
             <Typography varient="p" className="text-gray-500">
               {pickupPoint.value}
@@ -114,7 +112,7 @@ const AllBusTicket = ({ allBus }) => {
             </Typography>
           </div>
         </div>
-        <div className="basis-full grow">
+        <div className="basis-full grow mb-5">
           <Link to={`/fixSeat/${_id}`}>
             <Button
               variant="contained"

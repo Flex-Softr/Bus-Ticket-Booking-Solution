@@ -5,7 +5,7 @@ import {
   Box,
   Typography,
   TextField,
-  Select,
+  // Select,
   MenuItem,
   FormControl,
   FormControlLabel,
@@ -17,16 +17,18 @@ import {
 import LocationOffIcon from "@mui/icons-material/LocationOff";
 import ShowTicket from "./ShowTicket";
 import { Helmet } from "react-helmet-async";
+import useAllZilla from "../../hooks/useAllZilla";
+import Select from "react-select";
 
 function FindTicket() {
+  const [selectedOption, setSelectedOption] = useState(null);
   const [normalizedBusTickets, setNormalizedBusTickets] = useState([]);
-  // const [roadmap, setRoadmap] = useState([]);
+  const { allZilla } = useAllZilla();
 
   const { control, handleSubmit, register, setValue } = useForm();
 
   // Retrieve data from local storage
   const storedData = JSON.parse(localStorage.getItem("formData")) || {};
-  // console.log("Stored Data:", storedData);
 
   useEffect(() => {
     Object.entries(storedData).forEach(([key, value]) => {
@@ -74,19 +76,39 @@ function FindTicket() {
   }, []);
 
   const onSubmit = (data) => {
+    data.selectedZilla = selectedOption;
     console.log("Form Data:", data);
 
-    const filteredBusData = allBusData.filter(
-      (bus) =>
-        bus.busType.toLowerCase() === data.type.toLowerCase() &&
-        bus.pickupPoint.label.toLowerCase() ===
-          data.pickupPoint.toLowerCase() &&
-        bus.droppingPoint.label.toLowerCase() ===
-          data.droppingPoint.toLowerCase()
-    );
+    const filteredBusData = allBusData.filter((bus) => {
+      const selectedZillaValues = data.selectedZilla.map(
+        (zilla) => zilla.value
+      );
+
+      return (
+        (data.zillaSearch
+          ? data.zillaSearch?.some((selectedZilla) =>
+              selectedZillaValues?.includes(selectedZilla?.value?.toLowerCase())
+            )
+          : true) && bus?.busType?.toLowerCase() === data?.type?.toLowerCase()
+        // Additional conditions if needed
+      );
+    });
 
     setNormalizedBusTickets(filteredBusData);
+
+    // Save form data to local storage
+    const formDataToSave = {
+      pickupPoint: { value: data.pickupPoint, label: data.pickupPoint },
+      droppingPoint: { value: data.droppingPoint, label: data.droppingPoint },
+      departureDate: data.departureDate,
+      zillaSearch: data.zillaSearch,
+      type: data.type,
+    };
+
+    localStorage.setItem("formData", JSON.stringify(formDataToSave));
   };
+
+  console.log(normalizedBusTickets);
 
   return (
     <>
@@ -154,6 +176,18 @@ function FindTicket() {
                           ))}
                         </Select>
                       )}
+                    />
+                  </FormControl>
+
+                  {/* -------------- multi selected input field ----------- */}
+
+                  <FormControl fullWidth className="p-2 m-1">
+                    <Select
+                      defaultValue={selectedOption}
+                      onChange={setSelectedOption}
+                      options={allZilla?.districts}
+                      placeholder="search by zilla 🚌"
+                      isMulti
                     />
                   </FormControl>
 
