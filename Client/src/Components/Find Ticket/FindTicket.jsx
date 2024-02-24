@@ -25,12 +25,10 @@ function FindTicket() {
   const [normalizedBusTickets, setNormalizedBusTickets] = useState([]);
   const { allZilla } = useAllZilla();
 
-
   const { control, handleSubmit, register, setValue } = useForm();
 
   // Retrieve data from local storage
   const storedData = JSON.parse(localStorage.getItem("formData")) || {};
-
 
   useEffect(() => {
     Object.entries(storedData).forEach(([key, value]) => {
@@ -77,28 +75,27 @@ function FindTicket() {
       .catch((error) => console.error("Error fetching all bus data:", error));
   }, []);
 
-
   const onSubmit = (data) => {
     data.selectedZilla = selectedOption;
     console.log("Form Data:", data);
-  
+
     const filteredBusData = allBusData.filter((bus) => {
-      const selectedZillaValues = data.selectedZilla.map((zilla) => zilla.value);
-  
+      const selectedZillaValues = data.selectedZilla.map(
+        (zilla) => zilla.value
+      );
+
       return (
         (data.zillaSearch
           ? data.zillaSearch?.some((selectedZilla) =>
               selectedZillaValues?.includes(selectedZilla?.value?.toLowerCase())
             )
-          : true) &&
-        bus?.busType?.toLowerCase() === data?.type?.toLowerCase()
+          : true) && bus?.busType?.toLowerCase() === data?.type?.toLowerCase()
         // Additional conditions if needed
       );
     });
-    
-  
+
     setNormalizedBusTickets(filteredBusData);
-  
+
     // Save form data to local storage
     const formDataToSave = {
       pickupPoint: { value: data.pickupPoint, label: data.pickupPoint },
@@ -107,12 +104,12 @@ function FindTicket() {
       zillaSearch: data.zillaSearch,
       type: data.type,
     };
-  
+
     localStorage.setItem("formData", JSON.stringify(formDataToSave));
   };
-  
-  console.log(normalizedBusTickets)
-  
+
+  console.log(normalizedBusTickets);
+
   return (
     <>
       <Helmet>
@@ -183,17 +180,16 @@ function FindTicket() {
                   </FormControl>
 
                   {/* -------------- multi selected input field ----------- */}
-                 
-                    <FormControl fullWidth className="p-2 m-1">
-                      <Select
-                        defaultValue={selectedOption}
-                        onChange={setSelectedOption}
-                        options={allZilla?.districts}
-                        placeholder="search by zilla 🚌"
-                        isMulti
-                      />
-                    </FormControl>
-                 
+
+                  <FormControl fullWidth className="p-2 m-1">
+                    <Select
+                      defaultValue={selectedOption}
+                      onChange={setSelectedOption}
+                      options={allZilla?.districts}
+                      placeholder="search by zilla 🚌"
+                      isMulti
+                    />
+                  </FormControl>
 
                   {/* Updated code for departure date */}
                   <FormControl fullWidth className="p-2 m-1">
