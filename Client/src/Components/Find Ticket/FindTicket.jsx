@@ -1,31 +1,33 @@
 import { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   Radio,
   Box,
   Typography,
   TextField,
   // Select,
-  MenuItem,
+  // MenuItem,
   FormControl,
   FormControlLabel,
   Button,
-  InputLabel,
+  // InputLabel,
   RadioGroup,
 } from "@mui/material";
 // import { ArrowForward, DirectionsBus } from "@mui/icons-material";
-import LocationOffIcon from "@mui/icons-material/LocationOff";
+// import LocationOffIcon from "@mui/icons-material/LocationOff";
 import ShowTicket from "./ShowTicket";
+// import SelectedTicket from "/SelectedTicket";
 import { Helmet } from "react-helmet-async";
 import useAllZilla from "../../hooks/useAllZilla";
 import Select from "react-select";
+import SetTicket from "./SetTicket";
 
 function FindTicket() {
   const [selectedOption, setSelectedOption] = useState(null);
   const [normalizedBusTickets, setNormalizedBusTickets] = useState([]);
   const { allZilla } = useAllZilla();
 
-  const { control, handleSubmit, register, setValue } = useForm();
+  const { handleSubmit, register, setValue } = useForm();
 
   // Retrieve data from local storage
   const storedData = JSON.parse(localStorage.getItem("formData")) || {};
@@ -46,23 +48,23 @@ function FindTicket() {
     setSelectedDate(event.target.value);
   };
 
-  const [tickets, setTickets] = useState([]);
+  // const [tickets, setTickets] = useState([]);
 
-  useEffect(() => {
-    fetch("http://localhost:5000/ticket") // Replace with your actual endpoint
-      .then((res) => res.json())
-      .then((data) => {
-        // Assuming the array of tickets is in the response
-        setTickets(data || []);
-      })
-      .catch((error) => console.error("Error fetching data:", error));
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://localhost:5000/ticket") // Replace with your actual endpoint
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       // Assuming the array of tickets is in the response
+  //       setTickets(data || []);
+  //     })
+  //     .catch((error) => console.error("Error fetching data:", error));
+  // }, []);
 
   // Convert the tickets array to options format required by react-select
-  const ticketOptions = tickets.map((ticket) => ({
-    value: ticket.name,
-    label: ticket.name,
-  }));
+  // const ticketOptions = tickets.map((ticket) => ({
+  //   value: ticket.name,
+  //   label: ticket.name,
+  // }));
 
   const [allBusData, setAllBusData] = useState([]);
 
@@ -115,7 +117,10 @@ function FindTicket() {
       <Helmet>
         <title> TravelTrek - Find Ticket </title>
       </Helmet>
+
+      <SetTicket />
       <div className="flex bg-slate-600">
+        {/* <SetTicket /> */}
         <div className="flex flex-wrap grow gap-4 pb-20 mt-10 bg-gray-200">
           {/* find ticket form section */}
           <div className="basis-3/12 grow">
@@ -126,7 +131,7 @@ function FindTicket() {
                     View Vehicle
                   </Typography>
 
-                  <FormControl fullWidth className="p-2 m-1">
+                  {/* <FormControl fullWidth className="p-2 m-1">
                     <InputLabel htmlFor="pickupPoint">
                       <LocationOffIcon fontSize="medium" /> pickupPoint
                     </InputLabel>
@@ -177,7 +182,7 @@ function FindTicket() {
                         </Select>
                       )}
                     />
-                  </FormControl>
+                  </FormControl> */}
 
                   {/* -------------- multi selected input field ----------- */}
 
