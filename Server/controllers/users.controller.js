@@ -23,6 +23,11 @@ exports.getTicket = async (req, res) => {
   res.send(result);
 };
 
+exports.getDestinationAll = async (req, res) => {
+  const result = await destinationCollection.find().toArray();
+  res.send(result);
+};
+
 exports.getAccount = async (req, res) => {
   const result = await accountsDataCollection.find().toArray();
   res.send(result);

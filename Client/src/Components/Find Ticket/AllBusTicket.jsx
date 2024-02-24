@@ -30,6 +30,19 @@ const AllBusTicket = ({ allBus }) => {
             <Typography className="font-semibold text-xl mb-5">
               {busName} - {serialNumber}
             </Typography>
+
+            <Typography
+              varient="span"
+              className="inline-block text-yellow-400 my-1"
+            >
+              <span className="font-semibold">Road Map: </span>
+              {names.map((destination, index) => (
+                <span key={index}>
+                  {destination.label}
+                  {index < names.length - 1 && ", "}
+                </span>
+              ))}
+            </Typography>
           </div>
 
           <Typography className="font-semibold text-xl">
@@ -46,20 +59,6 @@ const AllBusTicket = ({ allBus }) => {
             >
               <DirectionsBus />
               {busType}
-            </Typography>
-
-            <Typography
-              varient="span"
-              className="inline-block text-yellow-400 my-1"
-            >
-              <DirectionsBus />
-              <span className="font-semibold">Destination: </span>
-              {names.map((destination, index) => (
-                <span key={index}>
-                  {destination.label}
-                  {index < names.length - 1 && ", "}
-                </span>
-              ))}
             </Typography>
 
             <Typography
@@ -85,15 +84,16 @@ const AllBusTicket = ({ allBus }) => {
               className="inline-block text-yellow-400 my-1"
             >
               <DirectionsBus />
-              <span className=" font-semibold">Supervisor Number: </span>
-              {supervisorNumber}
+              <span className=" font-semibold">Number: </span>
+              {supervisorNumber.label}
             </Typography>
           </div>
         </div>
+
         <div className="basis-6/12 flex justify-evenly grow p-2">
           <div>
             <Typography varient="p" className="text-md font-semibold">
-              {pickuptime} am
+              {pickuptime} pm
             </Typography>
             <Typography varient="p" className="text-gray-500">
               {pickupPoint.value}
@@ -101,7 +101,6 @@ const AllBusTicket = ({ allBus }) => {
           </div>
           <div>
             <ArrowForward className="mx-auto block text-blue-400" />
-
             <Typography varient="p" className="text-sm mx-1 text-gray-500">
               {time}
             </Typography>
