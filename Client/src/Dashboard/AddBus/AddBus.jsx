@@ -17,29 +17,24 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Select from "react-select";
-
+import useAllZilla from "../../hooks/useAllZilla";
+import "./AddBus.css";
 const busTypes = ["AC", "Non-AC"];
 
 const AddBus = () => {
   const { allDistricts } = useAllDistricts();
   const { supervisors } = useSuoervisor();
-
-  const supervisorNames = supervisors.map((supervisor) => ({
-    label: supervisor.name,
-    value: supervisor._id,
-    phone: supervisor.phone,
-  }));
-
+  const { allZilla } = useAllZilla();
+  console.log(allZilla);
   const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
-
+  const [selectedOption, setSelectedOption] = useState(null);
   const locations = allDistricts.map((ticket) => ({
     value: ticket.name,
     label: ticket.name,
   }));
 
   const [names, setNames] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(null);
 
   const handleNameChange = (inputValue, actionMeta) => {
     let temp = [];
@@ -57,7 +52,6 @@ const AddBus = () => {
               label: n.name,
               value: n.name,
               color: "#" + Math.floor(Math.random() * 16777215).toString(),
-              // phone: n.phone,
             };
             temp.push(option);
           });
@@ -78,41 +72,12 @@ const AddBus = () => {
     formState: { errors },
   } = useForm();
 
-  // Function to fetch supervisor details based on supervisor number
-  // const fetchSupervisorDetailsByNumber = async (supervisorNumber) => {
-  //   try {
-  //     const response = await fetch(
-  //       `http://localhost:5000/supervisorDetailsByNumber/${supervisorNumber}`
-  //     );
-  //     const data = await response.json();
-
-  //     // Assuming the API returns an object with phone number
-  //     const supervisorPhone = data.phone;
-
-  //     setValue("supervisorNumber", {
-  //       label: supervisorPhone,
-  //       value: supervisorNumber,
-  //     });
-
-  //     // Assuming you want to set the supervisor name as well
-  //     const supervisor = supervisors.find(
-  //       (sup) => sup._id === supervisorNumber
-  //     );
-
-  //     setValue("supervisorName", {
-  //       label: supervisor.name,
-  //       value: supervisor._id,
-  //       phone: supervisor.phone,
-  //     });
-  //   } catch (error) {
-  //     console.error("Error fetching supervisor details:", error);
-  //   }
-  // };
-
   const onSubmit = (data) => {
+    data.selectedZilla = selectedOption;
     setLoading(true);
     data.names = selectedOption;
     console.log(data);
+
     axios
       .post("http://localhost:5000/addbus", data)
       .then((res) => {
@@ -268,20 +233,18 @@ const AddBus = () => {
             </div>
           </div>
 
-          <Select
-            className="bg-purple"
-            defaultValue={selectedOption}
-            onChange={setSelectedOption}
-            options={names}
-            isMulti
-            onInputChange={handleNameChange}
-            styles={{
-              container: (provided) => ({
-                ...provided,
-                zIndex: 9999, // Set your desired z-index value
-              }),
-            }}
-          />
+          {/* -------------- multi selected input field ----------- */}
+          <div className="mb-4 flex-1">
+            <FormControl fullWidth className="">
+              <Select
+                defaultValue={selectedOption}
+                onChange={setSelectedOption}
+                options={allZilla?.districts}
+                placeholder="select multiple districts"
+                isMulti
+              />
+            </FormControl>
+          </div>
 
           <br />
           <div className="flex gap-2 mb-4 w-full">
@@ -295,16 +258,15 @@ const AddBus = () => {
                   render={({ field }) => (
                     <Autocomplete
                       {...field}
-                      options={supervisorNames}
+                      options={supervisors.map((supervisor) => ({
+                        label: supervisor.name,
+                        value: supervisor._id,
+                      }))}
+                      freeSolo
                       renderInput={(params) => (
                         <TextField {...params} label="Supervisor Name" />
                       )}
-                      onChange={(_, value) => {
-                        setValue("supervisorName", value);
-                        if (value) {
-                          setValue("supervisorNumber", value.phone); // Set supervisorNumber directly to phone
-                        }
-                      }}
+                      onChange={(_, value) => setValue("supervisorName", value)}
                     />
                   )}
                 />
@@ -325,10 +287,22 @@ const AddBus = () => {
                   defaultValue=""
                   rules={{ required: "this field is required" }}
                   render={({ field }) => (
-                    <TextField {...field} label="Supervisor Number" />
+                    <Autocomplete
+                      {...field}
+                      options={supervisors.map((supervisor) => ({
+                        label: supervisor.phone,
+                        value: supervisor._id,
+                      }))}
+                      freeSolo
+                      renderInput={(params) => (
+                        <TextField {...params} label="Supervisor Number" />
+                      )}
+                      onChange={(_, value) =>
+                        setValue("supervisorNumber", value)
+                      }
+                    />
                   )}
                 />
-
                 {errors.supervisorNumber && (
                   <p className="text-red-600">
                     {errors.supervisorNumber.message}
@@ -337,6 +311,9 @@ const AddBus = () => {
               </FormControl>
             </div>
           </div>
+
+
+          {/* date and time */}
           <div className="flex md:gap-2 mb-4 md:w-full ">
             <div className="flex-1">
               <TextField
@@ -357,6 +334,8 @@ const AddBus = () => {
               />
             </div>
           </div>
+
+          {/* bus type */}
           <div className="mb-4">
             <FormControl fullWidth>
               <Controller

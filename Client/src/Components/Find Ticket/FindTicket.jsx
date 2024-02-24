@@ -5,7 +5,7 @@ import {
   Box,
   Typography,
   TextField,
-  Select,
+  // Select,
   MenuItem,
   FormControl,
   FormControlLabel,
@@ -17,22 +17,20 @@ import {
 import LocationOffIcon from "@mui/icons-material/LocationOff";
 import ShowTicket from "./ShowTicket";
 import { Helmet } from "react-helmet-async";
+import useAllZilla from "../../hooks/useAllZilla";
+import Select from "react-select";
 
 function FindTicket() {
+  const [selectedOption, setSelectedOption] = useState(null);
   const [normalizedBusTickets, setNormalizedBusTickets] = useState([]);
+  const { allZilla } = useAllZilla();
+
 
   const { control, handleSubmit, register, setValue } = useForm();
 
   // Retrieve data from local storage
   const storedData = JSON.parse(localStorage.getItem("formData")) || {};
-  console.log("Stored Data:", storedData);
 
-  // Set default values for form fields
-  // useEffect(() => {
-  //   Object.entries(storedData).forEach(([key, value]) => {
-  //     setValue(key, value.value);
-  //   });
-  // }, [storedData, setValue]);
 
   useEffect(() => {
     Object.entries(storedData).forEach(([key, value]) => {
@@ -68,45 +66,6 @@ function FindTicket() {
     label: ticket.name,
   }));
 
-  // const onSubmit = (data) => {
-  //   console.log(data);
-  //   console.log(normalizedBusTickets[1]);
-  //   const filteredBusTickets = normalizedBusTickets.filter(
-  //     (ticket) =>
-  //       ticket.busType.toLowerCase() === data.type.toLowerCase() &&
-  //       ticket.pickupPoint.label.toLowerCase() ===
-  //         data.pickupPoint.toLowerCase() &&
-  //       ticket.droppingPoint.label.toLowerCase() ===
-  //         data.droppingPoint.toLowerCase()
-  //   );
-
-  //   if (filteredBusTickets.length === 0) {
-  //     setNoDataAvailable(true); // Set flag to indicate no data found
-  //   } else {
-  //     setNoDataAvailable(false); // Reset the flag if data is found
-  //   }
-
-  //   setNormalizedBusTickets(filteredBusTickets);
-  //   console.log(filteredBusTickets);
-  //   // console.log(data.droppingPoint.toLowerCase());
-  //   // console.log(normalizedBusTickets[1].droppingPoint.label.toLowerCase());
-  // };
-
-  // const onSubmit = (data) => {
-  //   console.log("Form Data:", data);
-
-  //   const filteredBusTickets = normalizedBusTickets.filter(
-  //     (ticket) =>
-  //       ticket.busType.toLowerCase() === data.type.toLowerCase() &&
-  //       ticket.pickupPoint.label.toLowerCase() ===
-  //         data.pickupPoint.toLowerCase() &&
-  //       ticket.droppingPoint.label.toLowerCase() ===
-  //         data.droppingPoint.toLowerCase()
-  //   );
-
-  //   setNormalizedBusTickets(filteredBusTickets);
-  // };
-
   const [allBusData, setAllBusData] = useState([]);
 
   useEffect(() => {
@@ -118,30 +77,42 @@ function FindTicket() {
       .catch((error) => console.error("Error fetching all bus data:", error));
   }, []);
 
+
   const onSubmit = (data) => {
+    data.selectedZilla = selectedOption;
     console.log("Form Data:", data);
-
-    const filteredBusData = allBusData.filter(
-      (bus) =>
-        bus.busType.toLowerCase() === data.type.toLowerCase() &&
-        bus.pickupPoint.label.toLowerCase() ===
-          data.pickupPoint.toLowerCase() &&
-        bus.droppingPoint.label.toLowerCase() ===
-          data.droppingPoint.toLowerCase()
-    );
-
+  
+    const filteredBusData = allBusData.filter((bus) => {
+      const selectedZillaValues = data.selectedZilla.map((zilla) => zilla.value);
+  
+      return (
+        (data.zillaSearch
+          ? data.zillaSearch?.some((selectedZilla) =>
+              selectedZillaValues?.includes(selectedZilla?.value?.toLowerCase())
+            )
+          : true) &&
+        bus?.busType?.toLowerCase() === data?.type?.toLowerCase()
+        // Additional conditions if needed
+      );
+    });
+    
+  
     setNormalizedBusTickets(filteredBusData);
-
+  
     // Save form data to local storage
     const formDataToSave = {
       pickupPoint: { value: data.pickupPoint, label: data.pickupPoint },
       droppingPoint: { value: data.droppingPoint, label: data.droppingPoint },
       departureDate: data.departureDate,
+      zillaSearch: data.zillaSearch,
       type: data.type,
     };
-
+  
     localStorage.setItem("formData", JSON.stringify(formDataToSave));
   };
+  
+  console.log(normalizedBusTickets)
+  
   return (
     <>
       <Helmet>
@@ -211,26 +182,21 @@ function FindTicket() {
                     />
                   </FormControl>
 
+                  {/* -------------- multi selected input field ----------- */}
+                 
+                    <FormControl fullWidth className="p-2 m-1">
+                      <Select
+                        defaultValue={selectedOption}
+                        onChange={setSelectedOption}
+                        options={allZilla?.districts}
+                        placeholder="search by zilla 🚌"
+                        isMulti
+                      />
+                    </FormControl>
+                 
+
                   {/* Updated code for departure date */}
                   <FormControl fullWidth className="p-2 m-1">
-                    {/* <InputLabel htmlFor="departureDate">
-                      <LocationOffIcon fontSize="medium" /> Departure Date
-                    </InputLabel> */}
-                    {/* <Controller
-                      name="departureDate"
-                      control={control}
-                      defaultValue=""
-                      render={({ field }) => (
-                        <TextField
-                          {...field}
-                          className="w-full"
-                          type="date"
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                        />
-                      )}
-                    /> */}
                     <TextField
                       type="date"
                       label="Departure Date"
