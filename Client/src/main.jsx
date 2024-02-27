@@ -67,7 +67,7 @@ const router = createBrowserRouter([
         path: "/fixSeat/:_id",
         element: <FixSeat></FixSeat>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/allBus/${params._id}`),
+          fetch(`https://server-khaki-theta.vercel.app/allBus/${params._id}`),
       },
     ],
   },
@@ -109,7 +109,7 @@ const router = createBrowserRouter([
         path: "allsupervisor/updateSupervisor/:_id",
         element: <Update></Update>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/supervisors/${params._id}`),
+          fetch(`https://server-khaki-theta.vercel.app/supervisors/${params._id}`),
       },
     ],
   },

@@ -12,7 +12,7 @@ const useSingleUser = () => {
     queryKey: ["userdata", user?.email],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:5000/users/${user?.email}`
+        `https://server-khaki-theta.vercel.app/users/${user?.email}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");

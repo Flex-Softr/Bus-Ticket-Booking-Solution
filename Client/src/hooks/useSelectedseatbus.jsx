@@ -9,7 +9,7 @@ const useSelectedseatbus = (busId) => {
     queryKey: ["selectedseatbus"],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:5000/resarvedSeat?busId=${busId}`
+        `https://server-khaki-theta.vercel.app/resarvedSeat?busId=${busId}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");

@@ -44,7 +44,7 @@ const AddBus = () => {
     setLoading(true);
     console.log(data);
     axios
-      .post("http://localhost:5000/addbus", data)
+      .post("https://server-khaki-theta.vercel.app/addbus", data)
       .then((res) => {
         console.log("post", res.data);
         Swal.fire({

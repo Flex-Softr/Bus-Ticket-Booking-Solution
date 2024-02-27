@@ -74,7 +74,7 @@ const FixSeat = () => {
       }).then((result) => {
         if (result.isConfirmed) {
           // Make API request for seat reservation
-          fetch("http://localhost:5000/seat-reservation", {
+          fetch("https://server-khaki-theta.vercel.app/seat-reservation", {
             method: "POST",
             headers: {
               "content-type": "application/json",
@@ -118,7 +118,7 @@ const FixSeat = () => {
 
   // Fetch reservation data using useEffect
   useEffect(() => {
-    fetch(`http://localhost:5000/resarvedSeat/${thesis?._id}`)
+    fetch(`https://server-khaki-theta.vercel.app/resarvedSeat/${thesis?._id}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {

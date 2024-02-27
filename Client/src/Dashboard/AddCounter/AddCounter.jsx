@@ -48,7 +48,7 @@ const AddCounter = () => {
           role: data?.role,
         };
         console.log(saveAccount);
-        fetch("http://localhost:5000/add-account", {
+        fetch("https://server-khaki-theta.vercel.app/add-account", {
           method: "POST",
           headers: {
             "content-type": "application/json",
