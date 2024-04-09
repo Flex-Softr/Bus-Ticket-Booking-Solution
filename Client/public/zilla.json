@@ -1,5 +1,5 @@
-{
-    "districts": [
+
+    [
       {"label": "Bagerhat", "value": "bagerhat"},
       {"label": "Bandarban", "value": "bandarban"},
       {"label": "Barguna", "value": "barguna"},
@@ -66,7 +66,7 @@
       {"label": "Tangail", "value": "tangail"},
       {"label": "Thakurgaon", "value": "thakurgaon"}
     ]
-  }
+  
 
 
 

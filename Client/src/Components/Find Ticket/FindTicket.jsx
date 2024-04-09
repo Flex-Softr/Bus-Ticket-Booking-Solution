@@ -25,6 +25,8 @@ function FindTicket() {
   const [normalizedBusTickets, setNormalizedBusTickets] = useState([]);
   const { allZilla } = useAllZilla();
 
+  console.log(allZilla)
+
 
   const { control, handleSubmit, register, setValue } = useForm();
 
@@ -188,7 +190,7 @@ function FindTicket() {
                       <Select
                         defaultValue={selectedOption}
                         onChange={setSelectedOption}
-                        options={allZilla?.districts}
+                        options={allZilla}
                         placeholder="search by zilla 🚌"
                         isMulti
                       />
