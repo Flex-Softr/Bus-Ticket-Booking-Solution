@@ -23,12 +23,14 @@ const {
   getReservedData,
   getReservedSeatsByBusId,
   getDestination,
+  getDestinationAll,
   getAllZilla
 } = require("../controllers/users.controller");
 
 const router = express.Router();
 
 router.get("/allNames/:text", getDestination);
+router.get("/allNames", getDestinationAll);
 router.get("/supervisors", getSupervisors);
 router.get("/seats", getSeats);
 router.delete("/supervisors/:id", deleteSupervisors);

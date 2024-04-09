@@ -24,6 +24,13 @@ const busTypes = ["AC", "Non-AC"];
 const AddBus = () => {
   const { allDistricts } = useAllDistricts();
   const { supervisors } = useSuoervisor();
+
+  const supervisorNames = supervisors.map((supervisor) => ({
+    label: supervisor.name,
+    value: supervisor._id,
+    phone: supervisor.phone,
+  }));
+
   const { allZilla } = useAllZilla();
   console.log(allZilla);
   const [loading, setLoading] = useState(false);
@@ -258,15 +265,16 @@ const AddBus = () => {
                   render={({ field }) => (
                     <Autocomplete
                       {...field}
-                      options={supervisors.map((supervisor) => ({
-                        label: supervisor.name,
-                        value: supervisor._id,
-                      }))}
-                      freeSolo
+                      options={supervisorNames}
                       renderInput={(params) => (
                         <TextField {...params} label="Supervisor Name" />
                       )}
-                      onChange={(_, value) => setValue("supervisorName", value)}
+                      onChange={(_, value) => {
+                        setValue("supervisorName", value);
+                        if (value) {
+                          setValue("supervisorNumber", value.phone); // Set supervisorNumber directly to phone
+                        }
+                      }}
                     />
                   )}
                 />
@@ -287,22 +295,10 @@ const AddBus = () => {
                   defaultValue=""
                   rules={{ required: "this field is required" }}
                   render={({ field }) => (
-                    <Autocomplete
-                      {...field}
-                      options={supervisors.map((supervisor) => ({
-                        label: supervisor.phone,
-                        value: supervisor._id,
-                      }))}
-                      freeSolo
-                      renderInput={(params) => (
-                        <TextField {...params} label="Supervisor Number" />
-                      )}
-                      onChange={(_, value) =>
-                        setValue("supervisorNumber", value)
-                      }
-                    />
+                    <TextField {...field} label="Supervisor Number" />
                   )}
                 />
+
                 {errors.supervisorNumber && (
                   <p className="text-red-600">
                     {errors.supervisorNumber.message}
@@ -311,9 +307,6 @@ const AddBus = () => {
               </FormControl>
             </div>
           </div>
-
-
-          {/* date and time */}
           <div className="flex md:gap-2 mb-4 md:w-full ">
             <div className="flex-1">
               <TextField

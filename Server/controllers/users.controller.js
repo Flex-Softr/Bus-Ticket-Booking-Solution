@@ -25,6 +25,11 @@ exports.getTicket = async (req, res) => {
   res.send(result);
 };
 
+exports.getDestinationAll = async (req, res) => {
+  const result = await destinationCollection.find().toArray();
+  res.send(result);
+};
+
 exports.getAllZilla = async (req, res) => {
   const result = await allZillaCollection.find().toArray();
   res.send(result);
