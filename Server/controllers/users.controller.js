@@ -7,6 +7,7 @@ let supervisorDataCollection;
 let seatDataCollection;
 let reservationCollection;
 let destinationCollection;
+let allZillaCollection;
 
 exports.setupCollections = (collections) => {
   bdDistrictsCollection = collections.bdDistrictsCollection;
@@ -16,6 +17,7 @@ exports.setupCollections = (collections) => {
   seatDataCollection = collections.seatDataCollection;
   reservationCollection = collections.reservationCollection;
   destinationCollection = collections.destinationCollection;
+  allZillaCollection = collections.allZillaCollection;
 };
 
 exports.getTicket = async (req, res) => {
@@ -25,6 +27,11 @@ exports.getTicket = async (req, res) => {
 
 exports.getDestinationAll = async (req, res) => {
   const result = await destinationCollection.find().toArray();
+  res.send(result);
+};
+
+exports.getAllZilla = async (req, res) => {
+  const result = await allZillaCollection.find().toArray();
   res.send(result);
 };
 

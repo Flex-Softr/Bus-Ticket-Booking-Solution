@@ -24,6 +24,7 @@ const {
   getReservedSeatsByBusId,
   getDestination,
   getDestinationAll,
+  getAllZilla
 } = require("../controllers/users.controller");
 
 const router = express.Router();
@@ -55,5 +56,6 @@ router.delete("/delete-account/:id", deleteAccount);
 router.post("/addbus", addbus);
 router.delete("/deletebus/:id", deletebus);
 router.get("/ticket", getTicket);
+router.get("/allZilla", getAllZilla);
 
 module.exports = router;
