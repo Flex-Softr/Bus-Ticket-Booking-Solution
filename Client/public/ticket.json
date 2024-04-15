@@ -1,0 +1,48 @@
+[
+  {
+    "name": "Dhaka",
+    "bangla_name": "ঢাকা",
+    "web_link": "www.dhaka.gov.bd"
+  },
+
+  {
+    "name": "Chattogram",
+    "bangla_name": "চট্টগ্রাম",
+    "web_link": "www.chittagong.gov.bd"
+  },
+
+  {
+    "name": "Rajshahi",
+    "bangla_name": "রাজশাহী",
+    "web_link": "www.rajshahi.gov.bd"
+  },
+  {
+    "name": "Barishal",
+    "bangla_name": "বরিশাল",
+    "web_link": "www.barishal.gov.bd"
+  },
+
+  {
+    "name": "Khulna",
+    "bangla_name": "খুলনা",
+    "web_link": "www.khulna.gov.bd"
+  },
+
+  {
+    "name": "Sylhet",
+    "bangla_name": "সিলেট",
+    "web_link": "www.sylhet.gov.bd"
+  },
+
+  {
+    "name": "Rangpur",
+    "bangla_name": "রংপুর",
+    "web_link": "www.rangpur.gov.bd"
+  },
+
+  {
+    "name": "Mymensingh",
+    "bangla_name": "ময়মনসিংহ",
+    "web_link": "www.mymensingh.gov.bd"
+  }
+]

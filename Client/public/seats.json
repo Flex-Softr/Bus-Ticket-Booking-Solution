@@ -1,0 +1,92 @@
+[
+  {
+    "row": "A",
+    "seats": [
+      { "id": "A1", "imageSrc": "https://i.ibb.co/gdJgK50/A1.png" },
+      { "id": "A2", "imageSrc": "https://i.ibb.co/4WLTmGs/A2.png" },
+      { "id": "A3", "imageSrc": "https://i.ibb.co/TWTfMts/A3.png" },
+      { "id": "A4", "imageSrc": "https://i.ibb.co/vhXJCcL/A4.png" }
+    ]
+  },
+  {
+    "row": "B",
+    "seats": [
+      { "id": "B1", "imageSrc": "https://i.ibb.co/bNC357G/B1.png" },
+      { "id": "B2", "imageSrc": "https://i.ibb.co/HgQVr1J/B2.png" },
+      { "id": "B3", "imageSrc": "https://i.ibb.co/bNNyBcV/B3.png" },
+      { "id": "B4", "imageSrc": "https://i.ibb.co/2KLtLvd/B4.png" }
+    ]
+  },
+  {
+    "row": "C",
+    "seats": [
+      { "id": "C1", "imageSrc": "https://i.ibb.co/RgfBGhT/C1.png" },
+      { "id": "C2", "imageSrc": "https://i.ibb.co/y8cmrDx/C2.png" },
+      { "id": "C3", "imageSrc": "https://i.ibb.co/CtmrNK8/C3.png" },
+      { "id": "C4", "imageSrc": "https://i.ibb.co/bL4Hq3C/C4.png" }
+    ]
+  },
+  {
+    "row": "D",
+    "seats": [
+      { "id": "D1", "imageSrc": "https://i.ibb.co/kyZ6W0K/D1.png" },
+      { "id": "D2", "imageSrc": "https://i.ibb.co/xF7twF7/D2.png" },
+      { "id": "D3", "imageSrc": "https://i.ibb.co/DV9xm9j/D3.png" },
+      { "id": "D4", "imageSrc": "https://i.ibb.co/fGRghYw/D4.png" }
+    ]
+  },
+  {
+    "row": "E",
+    "seats": [
+      { "id": "E1", "imageSrc": "https://i.ibb.co/Jvd5kP6/E1.png" },
+      { "id": "E2", "imageSrc": "https://i.ibb.co/sj0Z1WR/E2.png" },
+      { "id": "E3", "imageSrc": "https://i.ibb.co/02Bk31w/E3.png" },
+      { "id": "E4", "imageSrc": "https://i.ibb.co/JpZ4BWB/E4.png" }
+    ]
+  },
+  {
+    "row": "F",
+    "seats": [
+      { "id": "F1", "imageSrc": "https://i.ibb.co/JCNXtHj/F1.png" },
+      { "id": "F2", "imageSrc": "https://i.ibb.co/8shdJzL/F2.png" },
+      { "id": "F3", "imageSrc": "https://i.ibb.co/1vQHJSz/F3.png" },
+      { "id": "F4", "imageSrc": "https://i.ibb.co/ZhBmF8B/F4.png" }
+    ]
+  },
+  {
+    "row": "G",
+    "seats": [
+      { "id": "G1", "imageSrc": "https://i.ibb.co/bWtrmXb/G1.png" },
+      { "id": "G2", "imageSrc": "https://i.ibb.co/R3tS16D/G2.png" },
+      { "id": "G3", "imageSrc": "https://i.ibb.co/17qTtS5/G3.png" },
+      { "id": "G4", "imageSrc": "https://i.ibb.co/q0GHmBG/G4.png" }
+    ]
+  },
+  {
+    "row": "H",
+    "seats": [
+      { "id": "H1", "imageSrc": "https://i.ibb.co/XsK7Fj5/H1.png" },
+      { "id": "H2", "imageSrc": "https://i.ibb.co/Q8Jgzx3/H2.png" },
+      { "id": "H3", "imageSrc": "https://i.ibb.co/864S97K/H3.png" },
+      { "id": "H4", "imageSrc": "https://i.ibb.co/1QBL7LM/H4.png" }
+    ]
+  },
+  {
+    "row": "I",
+    "seats": [
+      { "id": "I1", "imageSrc": "https://i.ibb.co/CVpm1dC/I1.png" },
+      { "id": "I2", "imageSrc": "https://i.ibb.co/bWn2rrB/I2.png" },
+      { "id": "I3", "imageSrc": "https://i.ibb.co/t3KNBrx/I3.png" },
+      { "id": "I4", "imageSrc": "https://i.ibb.co/2vnV9bb/I4.png" }
+    ]
+  },
+  {
+    "row": "J",
+    "seats": [
+      { "id": "J1", "imageSrc": "https://i.ibb.co/j49fTLq/J1.png" },
+      { "id": "J2", "imageSrc": "https://i.ibb.co/PQkCKJY/J2.png" },
+      { "id": "J3", "imageSrc": "https://i.ibb.co/VH7FyV7/J3.png" },
+      { "id": "J4", "imageSrc": "https://i.ibb.co/9hsmzCm/J4.png" }
+    ]
+  }
+]
