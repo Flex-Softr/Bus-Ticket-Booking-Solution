@@ -1,3 +1,219 @@
+// import { useEffect, useState, useMemo } from "react";
+// import { useForm, Controller } from "react-hook-form";
+// import { Box, Typography, TextField, FormControl, Button, RadioGroup, Radio, FormControlLabel } from "@mui/material";
+
+// import ShowTicket from "./ShowTicket";
+// import { Helmet } from "react-helmet-async";
+// import Select from "react-select";
+
+// function FindTicket() {
+//   const [selectedOption, setSelectedOption] = useState(null);
+//   const [normalizedBusTickets, setNormalizedBusTickets] = useState([]);
+//   const { control, handleSubmit, register, setValue } = useForm();
+
+//   // Retrieve data from local storage and memoize it
+//   const storedData = useMemo(() => {
+//     return JSON.parse(localStorage.getItem("formData")) || {};
+//   }, []);
+
+//   useEffect(() => {
+//     Object.entries(storedData).forEach(([key, value]) => {
+//       if (key !== "date") {
+//         setValue(key, value);
+//       }
+//     });
+//   }, [storedData, setValue]);
+
+//   const [selectedDate, setSelectedDate] = useState(storedData.departureDate || "");
+
+//   const handleDateChange = (event) => {
+//     setSelectedDate(event.target.value);
+//   };
+
+//   const [allZillaOptions, setAllZillaOptions] = useState([]);
+
+//   useEffect(() => {
+//     fetch("https://bus-server-ucdk.onrender.com/allZilla")
+//       .then((res) => res.json())
+//       .then((data) => {
+//         const zillaOptions = data.map((zilla) => ({
+//           value: zilla.value,
+//           label: zilla.label,
+//         }));
+//         setAllZillaOptions(zillaOptions);
+//       })
+//       .catch((error) => console.error("Error fetching data:", error));
+//   }, []);
+
+//   const [allBusData, setAllBusData] = useState([]);
+
+//   useEffect(() => {
+//     fetch("https://bus-server-ucdk.onrender.com/allbus")
+//       .then((res) => res.json())
+//       .then((data) => {
+//         setAllBusData(data || []);
+//       })
+//       .catch((error) => console.error("Error fetching all bus data:", error));
+//   }, []);
+
+//   const onSubmit = (data) => {
+//     data.selectedZilla = selectedOption;
+//     console.log("Form Data:", data);
+
+//     const filteredBusData = allBusData.filter((bus) => {
+//       const selectedZillaValues = data.selectedZilla.map((zilla) => zilla.value);
+
+//       return (
+//         (data.zillaSearch
+//           ? data.zillaSearch?.some((selectedZilla) =>
+//               selectedZillaValues?.includes(selectedZilla?.value?.toLowerCase())
+//             )
+//           : true) &&
+//         bus?.busType?.toLowerCase() === data?.type?.toLowerCase()
+//         // Additional conditions if needed
+//       );
+//     });
+
+//     setNormalizedBusTickets(filteredBusData);
+
+//     // Save form data to local storage
+//     const formDataToSave = {
+//       pickupPoint: data.pickupPoint,
+//       droppingPoint: data.droppingPoint,
+//       departureDate: data.departureDate,
+//       zillaSearch: data.zillaSearch,
+//       type: data.type,
+//     };
+
+//     localStorage.setItem("formData", JSON.stringify(formDataToSave));
+//   };
+
+//   console.log(normalizedBusTickets);
+
+//   return (
+//     <>
+//       <Helmet>
+//         <title> TravelTrek - Find Ticket </title>
+//       </Helmet>
+//       <div className="flex bg-slate-600">
+//         <div className="flex flex-wrap grow gap-4 pb-20 mt-10 bg-gray-200">
+//           {/* find ticket form section */}
+//           <div className="basis-3/12 grow">
+//             <div className="mt-12 px-4 h-full max-w-full">
+//               <Box component="form" className="bg-gray-50 rounded">
+//                 <div className="p-3 mr-2">
+//                   <Typography className="text-center text-xl p-3 font-semibold">
+//                     View Vehicle
+//                   </Typography>
+
+//                   <FormControl fullWidth className="p-2 m-1">
+//                     <Controller
+//                       name="pickupPoint"
+//                       control={control}
+//                       defaultValue=""
+//                       render={({ field }) => (
+//                         <Select
+//                           {...field}
+//                           isSearchable
+//                           options={allZillaOptions}
+//                           value={allZillaOptions.find(option => option.value === field.value)}
+//                           onChange={(val) => field.onChange(val.value)}
+//                           placeholder="Select PickUp Point"
+//                         />
+//                       )}
+//                     />
+//                   </FormControl>
+
+//                   <FormControl fullWidth className="p-2 m-1">
+//                     <Controller
+//                       name="droppingPoint"
+//                       control={control}
+//                       defaultValue=""
+//                       render={({ field }) => (
+//                         <Select
+//                           {...field}
+//                           isSearchable
+//                           options={allZillaOptions}
+//                           value={allZillaOptions.find(option => option.value === field.value)}
+//                           onChange={(val) => field.onChange(val.value)}
+//                           placeholder="Select Dropping Point"
+//                         />
+//                       )}
+//                     />
+//                   </FormControl>
+
+//                   {/* -------------- multi selected input field ----------- */}
+//                   <FormControl fullWidth className="p-2 m-1">
+//                     <Select
+//                       defaultValue={selectedOption}
+//                       onChange={setSelectedOption}
+//                       options={allZillaOptions}
+//                       placeholder="Search by Zilla 🚌"
+//                       isMulti
+//                     />
+//                   </FormControl>
+
+//                   {/* Updated code for departure date */}
+//                   <FormControl fullWidth className="p-2 m-1">
+//                     <TextField
+//                       type="date"
+//                       label="Departure Date"
+//                       {...register("departureDate")}
+//                       value={selectedDate}
+//                       onChange={handleDateChange}
+//                       InputLabelProps={{
+//                         shrink: true,
+//                       }}
+//                     />
+//                   </FormControl>
+
+//                   <Typography className="text-md font-semibold px-2 mt-2">
+//                     Vehicle Type
+//                   </Typography>
+
+//                   <FormControl component="fieldset">
+//                     <RadioGroup aria-label="type" name="type">
+//                       <FormControlLabel
+//                         value="Non-AC"
+//                         control={<Radio {...register("type")} />}
+//                         label="Non AC"
+//                       />
+//                       <FormControlLabel
+//                         value="ac"
+//                         control={<Radio {...register("type")} />}
+//                         label="AC"
+//                       />
+//                     </RadioGroup>
+//                   </FormControl>
+
+//                   <Button
+//                     fullWidth
+//                     onClick={handleSubmit(onSubmit)}
+//                     variant="contained"
+//                     className="mt-3 p-2"
+//                   >
+//                     Find Tickets
+//                   </Button>
+//                 </div>
+//               </Box>
+//             </div>
+//           </div>
+//           {/* all buses view section */}
+//           <div className="basis-8/12 grow">
+//             <ShowTicket
+//               normalizedBusTickets={normalizedBusTickets}
+//               setNormalizedBusTickets={setNormalizedBusTickets}
+//             />
+//           </div>
+//         </div>
+//       </div>
+//     </>
+//   );
+// }
+
+// export default FindTicket;
+
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
@@ -5,16 +221,14 @@ import {
   Box,
   Typography,
   TextField,
-  // Select,
-  MenuItem,
+ 
   FormControl,
   FormControlLabel,
   Button,
-  InputLabel,
+  
   RadioGroup,
 } from "@mui/material";
-// import { ArrowForward, DirectionsBus } from "@mui/icons-material";
-import LocationOffIcon from "@mui/icons-material/LocationOff";
+
 import ShowTicket from "./ShowTicket";
 import { Helmet } from "react-helmet-async";
 import useAllZilla from "../../hooks/useAllZilla";
@@ -24,82 +238,63 @@ function FindTicket() {
   const [selectedOption, setSelectedOption] = useState(null);
   const [normalizedBusTickets, setNormalizedBusTickets] = useState([]);
   const { allZilla } = useAllZilla();
-
-
   const { control, handleSubmit, register, setValue } = useForm();
 
   // Retrieve data from local storage
   const storedData = JSON.parse(localStorage.getItem("formData")) || {};
 
-
   useEffect(() => {
-    Object.entries(storedData).forEach(([key, value]) => {
-      if (key !== "date") {
-        setValue(key, value.value);
-      }
-    });
+    if (storedData) {
+      setValue("pickupPoint", storedData.pickupPoint.value);
+      setValue("droppingPoint", storedData.droppingPoint.value);
+      setSelectedDate(storedData.departureDate);
+      setSelectedOption(storedData.zillaSearch || null);
+    }
   }, [storedData, setValue]);
 
-  const [selectedDate, setSelectedDate] = useState(
-    storedData.departureDate || ""
-  );
-
+  const [selectedDate, setSelectedDate] = useState(storedData.departureDate || "");
   const handleDateChange = (event) => {
     setSelectedDate(event.target.value);
   };
 
   const [tickets, setTickets] = useState([]);
-
   useEffect(() => {
-    fetch("http://localhost:5000/ticket") // Replace with your actual endpoint
+    fetch("https://bus-server-ucdk.onrender.com/ticket") // Replace with your actual endpoint
       .then((res) => res.json())
-      .then((data) => {
-        // Assuming the array of tickets is in the response
-        setTickets(data || []);
-      })
+      .then((data) => setTickets(data || []))
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  // Convert the tickets array to options format required by react-select
   const ticketOptions = tickets.map((ticket) => ({
     value: ticket.name,
     label: ticket.name,
   }));
 
   const [allBusData, setAllBusData] = useState([]);
-
   useEffect(() => {
-    fetch("http://localhost:5000/allbus")
+    fetch("https://bus-server-ucdk.onrender.com/allbus")
       .then((res) => res.json())
-      .then((data) => {
-        setAllBusData(data || []);
-      })
+      .then((data) => setAllBusData(data || []))
       .catch((error) => console.error("Error fetching all bus data:", error));
   }, []);
 
-
   const onSubmit = (data) => {
     data.selectedZilla = selectedOption;
-    console.log("Form Data:", data);
-  
+
     const filteredBusData = allBusData.filter((bus) => {
-      const selectedZillaValues = data.selectedZilla.map((zilla) => zilla.value);
-  
+      const selectedZillaValues = data.selectedZilla?.map((zilla) => zilla.value);
+
       return (
-        (data.zillaSearch
-          ? data.zillaSearch?.some((selectedZilla) =>
-              selectedZillaValues?.includes(selectedZilla?.value?.toLowerCase())
-            )
-          : true) &&
-        bus?.busType?.toLowerCase() === data?.type?.toLowerCase()
-        // Additional conditions if needed
+        (!data.zillaSearch ||
+          data.zillaSearch.some((selectedZilla) =>
+            selectedZillaValues.includes(selectedZilla.value.toLowerCase())
+          )) &&
+        bus.busType.toLowerCase() === data.type.toLowerCase()
       );
     });
-    
-  
+
     setNormalizedBusTickets(filteredBusData);
-  
-    // Save form data to local storage
+
     const formDataToSave = {
       pickupPoint: { value: data.pickupPoint, label: data.pickupPoint },
       droppingPoint: { value: data.droppingPoint, label: data.droppingPoint },
@@ -107,16 +302,14 @@ function FindTicket() {
       zillaSearch: data.zillaSearch,
       type: data.type,
     };
-  
+
     localStorage.setItem("formData", JSON.stringify(formDataToSave));
   };
-  
-  console.log(normalizedBusTickets)
-  
+
   return (
     <>
       <Helmet>
-        <title> TravelTrek - Find Ticket </title>
+        <title>TravelTrek - Find Ticket</title>
       </Helmet>
       <div className="flex bg-slate-600">
         <div className="flex flex-wrap grow gap-4 pb-20 mt-10 bg-gray-200">
@@ -130,72 +323,58 @@ function FindTicket() {
                   </Typography>
 
                   <FormControl fullWidth className="p-2 m-1">
-                    <InputLabel htmlFor="pickupPoint">
-                      <LocationOffIcon fontSize="medium" /> pickupPoint
-                    </InputLabel>
+                    <h3 className="m-1 text-gray-500">PickUp Point</h3>
                     <Controller
                       name="pickupPoint"
                       control={control}
-                      defaultValue=""
+                      defaultValue={storedData.pickupPoint?.value || ""}
                       render={({ field }) => (
-                        <Select {...field} isSearchable>
-                          {storedData.pickupPoint && (
-                            <MenuItem value={storedData.pickupPoint.value}>
-                              {storedData.pickupPoint.label}
-                            </MenuItem>
-                          )}
-
-                          {ticketOptions.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                              {option.label}
-                            </MenuItem>
-                          ))}
-                        </Select>
+                        <Select
+                          {...field}
+                          options={ticketOptions}
+                          value={
+                            ticketOptions.find(
+                              (option) => option.value === field.value
+                            ) || null
+                          }
+                          onChange={(selected) => field.onChange(selected.value)}
+                        />
                       )}
                     />
                   </FormControl>
 
                   <FormControl fullWidth className="p-2 m-1">
-                    <InputLabel htmlFor="droppingPoint">
-                      <LocationOffIcon fontSize="medium" /> Dropping Point
-                    </InputLabel>
-
+                  <h3 className="m-1 text-gray-500">Dropping Point</h3>
                     <Controller
+                    
                       name="droppingPoint"
                       control={control}
-                      defaultValue=""
+                      defaultValue={storedData.droppingPoint?.value || ""}
                       render={({ field }) => (
-                        <Select {...field} displayEmpty>
-                          {storedData.droppingPoint && (
-                            <MenuItem value={storedData.droppingPoint.value}>
-                              {storedData.droppingPoint.label}
-                            </MenuItem>
-                          )}
-
-                          {ticketOptions.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                              {option.label}
-                            </MenuItem>
-                          ))}
-                        </Select>
+                        <Select
+                          {...field}
+                          options={ticketOptions}
+                          value={
+                            ticketOptions.find(
+                              (option) => option.value === field.value
+                            ) || null
+                          }
+                          onChange={(selected) => field.onChange(selected.value)}
+                        />
                       )}
                     />
                   </FormControl>
 
-                  {/* -------------- multi selected input field ----------- */}
-                 
-                    <FormControl fullWidth className="p-2 m-1">
-                      <Select
-                        defaultValue={selectedOption}
-                        onChange={setSelectedOption}
-                        options={allZilla}
-                        placeholder="search by zilla 🚌"
-                        isMulti
-                      />
-                    </FormControl>
-                 
+                  <FormControl fullWidth className="p-2 m-1">
+                    <Select
+                      defaultValue={selectedOption}
+                      onChange={setSelectedOption}
+                      options={allZilla}
+                      placeholder="search by zilla 🚌"
+                      isMulti
+                    />
+                  </FormControl>
 
-                  {/* Updated code for departure date */}
                   <FormControl fullWidth className="p-2 m-1">
                     <TextField
                       type="date"
@@ -212,7 +391,6 @@ function FindTicket() {
                   <Typography className="text-md font-semibold px-2 mt-2">
                     Vehicle Type
                   </Typography>
-
                   <FormControl component="fieldset">
                     <RadioGroup aria-label="type" name="type">
                       <FormControlLabel
@@ -221,7 +399,7 @@ function FindTicket() {
                         label="Non AC"
                       />
                       <FormControlLabel
-                        value="ac"
+                        value="AC"
                         control={<Radio {...register("type")} />}
                         label="AC"
                       />

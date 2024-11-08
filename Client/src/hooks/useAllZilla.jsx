@@ -8,7 +8,7 @@ const useAllZilla = () => {
   } = useQuery({
     queryKey: ["allZilla"],
     queryFn: async () => {
-      const response = await fetch("http://localhost:5000/allZilla");
+      const response = await fetch("https://bus-server-ucdk.onrender.com/allZilla");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

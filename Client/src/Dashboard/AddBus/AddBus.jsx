@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useForm, Controller } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -50,7 +51,7 @@ const AddBus = () => {
       try {
         (async () => {
           const data = await fetch(
-            `http://localhost:5000/allNames/${inputValue}`
+            `https://bus-server-ucdk.onrender.com/allNames/${inputValue}`
           );
 
           const result = await data.json();
@@ -86,7 +87,7 @@ const AddBus = () => {
     console.log(data);
 
     axios
-      .post("http://localhost:5000/addbus", data)
+      .post("https://bus-server-ucdk.onrender.com/addbus", data)
       .then((res) => {
         console.log("post", res.data);
         Swal.fire({

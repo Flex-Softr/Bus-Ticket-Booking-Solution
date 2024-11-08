@@ -51,9 +51,9 @@ ol {
   position: relative;
 }
 
-.seat:hover{
+/* .seat:hover{
   background: #b9b9b98a;
-}
+} */
 
 .seat label {
   display: block;

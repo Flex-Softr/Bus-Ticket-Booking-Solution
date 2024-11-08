@@ -8,7 +8,7 @@ const useAllDistricts = () => {
   } = useQuery({
     queryKey: ["allDistricts"],
     queryFn: async () => {
-      const response = await fetch("http://localhost:5000/ticket");
+      const response = await fetch("https://bus-server-ucdk.onrender.com/ticket");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

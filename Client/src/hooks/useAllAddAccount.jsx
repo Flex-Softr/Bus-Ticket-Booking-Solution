@@ -8,7 +8,7 @@ const useAllAddAccount = () => {
   } = useQuery({
     queryKey: ["allaccountData"],
     queryFn: async () => {
-      const response = await fetch("http://localhost:5000/add-account");
+      const response = await fetch("https://bus-server-ucdk.onrender.com/add-account");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

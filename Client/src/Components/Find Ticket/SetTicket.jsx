@@ -30,7 +30,7 @@ function FindTicket() {
   const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/ticket") // Replace with your actual endpoint
+    fetch("https://bus-server-ucdk.onrender.com/ticket") // Replace with your actual endpoint
       .then((res) => res.json())
       .then((data) => {
         // Assuming the array of tickets is in the response
@@ -48,7 +48,7 @@ function FindTicket() {
   const [allBusData, setAllBusData] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/allbus")
+    fetch("https://bus-server-ucdk.onrender.com/allbus")
       .then((res) => res.json())
       .then((data) => {
         setAllBusData(data || []);

@@ -74,7 +74,7 @@ const FixSeat = () => {
       }).then((result) => {
         if (result.isConfirmed) {
           // Make API request for seat reservation
-          fetch("http://localhost:5000/seat-reservation", {
+          fetch("https://bus-server-ucdk.onrender.com/seat-reservation", {
             method: "POST",
             headers: {
               "content-type": "application/json",
@@ -118,7 +118,7 @@ const FixSeat = () => {
 
   // Fetch reservation data using useEffect
   useEffect(() => {
-    fetch(`http://localhost:5000/resarvedSeat/${thesis?._id}`)
+    fetch(`https://bus-server-ucdk.onrender.com/resarvedSeat/${thesis?._id}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
@@ -160,9 +160,9 @@ const FixSeat = () => {
       </Helmet>
       <Box className="grid md:grid-cols-2 grid-cols-1 gap-[50px] md:w-10/12 mx-auto my-20">
         <form
-          className="w-full :"
+          className="w-full sm:ms-0 ms-12 px-2 :"
           onSubmit={handleSubmit(onSubmit)}
-          style={{ maxWidth: 450, height: 660 }}
+          
         >
           <Grid container spacing={2}>
             {/* <Grid item xs={12}>
@@ -292,152 +292,148 @@ const FixSeat = () => {
         {/* bus seat======================================> */}
 
         <div>
-          <div className="plane ps-7  py-3 w-full">
-            <ol>
-              <li>
-                <ol className="seats ">
-                  <li className="frontSiteofBus">
-                    <h3 className="font-extrabold">Door</h3>
-                  </li>
-                  <li className="frontSiteofBus">
-                    <img
-                      className="steering-wheel "
-                      src="https://i.ibb.co/wQHXVnv/wheel.png"
-                      alt=""
-                    />
-                  </li>
-                </ol>
-              </li>
+  <div className="plane ps-7 py-3 w-full">
+    <ol>
+      <li>
+        <ol className="seats">
+          <li className="frontSiteofBus">
+            <h3 className="font-extrabold">Door</h3>
+          </li>
+          <li className="frontSiteofBus">
+            <img
+              className="steering-wheel"
+              src="https://i.ibb.co/wQHXVnv/wheel.png"
+              alt=""
+            />
+          </li>
+        </ol>
+      </li>
 
-              {/* all seats */}
+      {/* all seats */}
+      <div>
+        <ul>
+          {allSeats.map((row) => (
+            <li key={row.row}>
+              <ol className="seats gap-1">
+                {row.seats.map((seat) => {
+                  const isSeatSelected = selectedSeats.includes(seat.id);
 
-              <div>
-                <ul>
-                  {allSeats.map((row) => (
-                    <li key={row.row}>
-                      <ol className="seats gap-1 ">
-                        {row.seats.map((seat) => {
-                          const isSeatSelected = selectedSeats.includes(
-                            seat.id
-                          );
+                  // Check if the seat is reserved for a specific gender
+                  const reservation =
+                    reservationData &&
+                    reservationData.find((reservation) =>
+                      reservation.seatIds.includes(seat.id)
+                    );
 
-                          // Check if the seat is reserved for a specific gender
-                          const reservation =
-                            reservationData &&
-                            reservationData.find((reservation) =>
-                              reservation.seatIds.includes(seat.id)
-                            );
+                  // Set seat image style based on reservation
+                  const seatImageStyle = {
+                    backgroundColor: "",
+                    borderRadius: "8px",
+                    border: isSeatSelected ? "2px solid #000" : "none",
+                    cursor: isSeatSelected ? "context-menu" : "pointer",
+                  };
 
-                          // Set seat image style based on reservation
-                          const seatImageStyle = {
-                            backgroundColor: "",
-                            borderRadius: "8px",
+                  // Set button disabled state for each gender
+                  let isButtonDisabled = false;
+                  if (reservation) {
+                    if (reservation.gender === "Male") {
+                      seatImageStyle.backgroundColor = "#9797D5";
+                      isButtonDisabled = true;
+                    } else if (reservation.gender === "Female") {
+                      seatImageStyle.backgroundColor = "#FA99BC";
+                      isButtonDisabled = true;
+                    } else if (reservation.gender === "Others") {
+                      seatImageStyle.backgroundColor = "#8BB3B4";
+                      isButtonDisabled = true;
+                    }
+                  }
 
-                            border: isSeatSelected ? "2px solid #000" : "none",
-                            cursor: isSeatSelected ? "context-menu" : "pointer",
-                          };
-
-                          // Set button disabled state for each gender
-                          let isButtonDisabled = false;
-                          if (reservation) {
-                            if (reservation.gender === "Male") {
-                              seatImageStyle.backgroundColor = "#9797D5";
-                              isButtonDisabled = true;
-                            } else if (reservation.gender === "Female") {
-                              seatImageStyle.backgroundColor = "#FA99BC";
-                              isButtonDisabled = true;
-                            } else if (reservation.gender === "Others") {
-                              seatImageStyle.backgroundColor = "#8BB3B4";
-                              isButtonDisabled = true;
-                            }
-                          }
-
-                          return (
-                            <li
-                              key={seat.id}
-                              className="seat cursor-pointer mb-1"
-                            >
-                              <img
-                                src={seat.imageSrc}
-                                alt=""
-                                style={seatImageStyle}
-                                onClick={() =>
-                                  !isButtonDisabled && handleSeatClick(seat.id)
-                                }
-                              />
-                            </li>
-                          );
-                        })}
-                      </ol>
+                  return (
+                    <li key={seat.id} className="seat cursor-pointer mb-1">
+                      <img
+                        src={seat.imageSrc}
+                        alt=""
+                        style={seatImageStyle}
+                        onClick={() =>
+                          !isButtonDisabled && handleSeatClick(seat.id)
+                        }
+                      />
                     </li>
-                  ))}
-                </ul>
-              </div>
-            </ol>
+                  );
+                })}
+              </ol>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </ol>
 
-            <Divider fullWidth />
-            <Box
-              textAlign="center"
-              className="demoseat"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              marginTop="35px"
-              marginBottom="20px"
-              gap="15px"
-            >
-              <h5 className="font-bold text-[#143f40]">Seat Indicator</h5>
-              {/* available seat*/}
-              <Box>
-                <img
-                  style={{ borderRadius: "45%" }}
-                  src="https://i.ibb.co/9whMc4Q/seat.png"
-                  alt=""
-                />
-                <p>available</p>
-              </Box>
+    <Divider fullWidth />
+    <Box
+      textAlign="center"
+      className="demoseat"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      marginTop="35px"
+      marginBottom="20px"
+      gap="15px"
+      flexWrap="wrap" // Allow items to wrap on smaller screens
+    >
+      <h5 className="font-bold text-[#143f40] w-full text-center">Seat Indicator</h5>
+      
+      {/* available seat */}
+      <Box className="flex flex-col items-center w-1/4 sm:w-1/5 md:w-1/6">
+        <img
+          style={{ borderRadius: "45%" }}
+          src="https://i.ibb.co/9whMc4Q/seat.png"
+          alt=""
+        />
+        <p>available</p>
+      </Box>
 
-              {/* when this seat is for female*/}
-              <Box>
-                <img
-                  style={{
-                    backgroundColor: "#f76399a6",
-                    borderRadius: "45%",
-                  }}
-                  src="https://i.ibb.co/9whMc4Q/seat.png"
-                  alt=""
-                />
-                <p>Female</p>
-              </Box>
+      {/* when this seat is for female */}
+      <Box className="flex flex-col items-center w-1/4 sm:w-1/5 md:w-1/6">
+        <img
+          style={{
+            backgroundColor: "#f76399a6",
+            borderRadius: "45%",
+          }}
+          src="https://i.ibb.co/9whMc4Q/seat.png"
+          alt=""
+        />
+        <p>Female</p>
+      </Box>
 
-              {/* when this seat is for male*/}
-              <Box>
-                <img
-                  style={{
-                    backgroundColor: "#544bb99a",
-                    borderRadius: "45%",
-                  }}
-                  src="https://i.ibb.co/9whMc4Q/seat.png"
-                  alt=""
-                />
-                <p>Male</p>
-              </Box>
+      {/* when this seat is for male */}
+      <Box className="flex flex-col items-center w-1/4 sm:w-1/5 md:w-1/6">
+        <img
+          style={{
+            backgroundColor: "#544bb99a",
+            borderRadius: "45%",
+          }}
+          src="https://i.ibb.co/9whMc4Q/seat.png"
+          alt=""
+        />
+        <p>Male</p>
+      </Box>
 
-              {/* when this seat is for others*/}
-              <Box>
-                <img
-                  style={{
-                    backgroundColor: "#2b75768b",
-                    borderRadius: "45%",
-                  }}
-                  src="https://i.ibb.co/9whMc4Q/seat.png"
-                  alt=""
-                />
-                <p>Others</p>
-              </Box>
-            </Box>
-          </div>
-        </div>
+      {/* when this seat is for others */}
+      <Box className="flex flex-col items-center w-1/4 sm:w-1/5 md:w-1/6">
+        <img
+          style={{
+            backgroundColor: "#2b75768b",
+            borderRadius: "45%",
+          }}
+          src="https://i.ibb.co/9whMc4Q/seat.png"
+          alt=""
+        />
+        <p>Others</p>
+      </Box>
+    </Box>
+  </div>
+</div>
+
 
         <ToastContainer />
       </Box>
