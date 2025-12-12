@@ -302,7 +302,7 @@ const FixSeat = () => {
           <li className="frontSiteofBus">
             <img
               className="steering-wheel"
-              src="https://i.ibb.co/wQHXVnv/wheel.png"
+              src="https://i.ibb.co.com/VWzzx4rT/steering-wheel.png"
               alt=""
             />
           </li>
@@ -386,7 +386,7 @@ const FixSeat = () => {
       <Box className="flex flex-col items-center w-1/4 sm:w-1/5 md:w-1/6">
         <img
           style={{ borderRadius: "45%" }}
-          src="https://i.ibb.co/9whMc4Q/seat.png"
+          src="https://i.ibb.co.com/m57QzfzM/seat.png"
           alt=""
         />
         <p>available</p>
