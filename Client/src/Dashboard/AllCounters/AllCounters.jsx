@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import useAllAddAccount from "../../hooks/useAllAddAccount";
 import { useState } from "react";
 import Box from "@mui/material/Box";
@@ -51,7 +52,7 @@ const AllCounters = () => {
       });
 
       if (result.isConfirmed) {
-        await axios.delete(`http://localhost:5000/delete-account/${id}`);
+        await axios.delete(`https://bus-server-ucdk.onrender.com/delete-account/${id}`);
         refetch();
         Swal.fire("Deleted!", "Your file has been deleted.", "success");
       }

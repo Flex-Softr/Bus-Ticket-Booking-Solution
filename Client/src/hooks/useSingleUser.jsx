@@ -12,7 +12,7 @@ const useSingleUser = () => {
     queryKey: ["userdata", user?.email],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:5000/users/${user?.email}`
+        `https://bus-server-ucdk.onrender.com/users/${user?.email}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");

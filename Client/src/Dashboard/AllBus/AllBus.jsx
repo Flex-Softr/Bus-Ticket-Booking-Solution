@@ -1,4 +1,4 @@
-import React from "react";
+
 import useAllBusData from "../../hooks/useAllBusData";
 import Box from "@mui/material/Box";
 import { useState } from "react";
@@ -68,7 +68,7 @@ const DataTable = () => {
       });
 
       if (result.isConfirmed) {
-        await axios.delete(`http://localhost:5000/deletebus/${id}`);
+        await axios.delete(`https://bus-server-ucdk.onrender.com/deletebus/${id}`);
         refetch();
         Swal.fire("Deleted!", "Your file has been deleted.", "success");
       }

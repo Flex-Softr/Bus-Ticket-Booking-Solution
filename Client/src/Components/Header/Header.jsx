@@ -18,7 +18,7 @@ import { AuthContext } from "../Providers/AuthProvider/AuthProvider";
 import Menu from "@mui/material/Menu";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
-import useSingleUser from "../../hooks/useSingleUser";
+// import useSingleUser from "../../hooks/useSingleUser";
 import Swal from "sweetalert2";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
@@ -29,7 +29,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [headerTop, setheaderTop] = useState(false);
   const [menuAnchor, setMenuAnchor] = useState(null);
-  const { userdata } = useSingleUser();
+  // const { userdata } = useSingleUser();
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
@@ -105,7 +105,7 @@ const Header = () => {
           open={Boolean(menuAnchor)}
           onClose={handleHeaderTop}
         >
-          {userdata?.role === "admin" && (
+          {/* {userdata?.role === "admin" && (
             <>
               <Link to="/dashboard">
                 <MenuItem>
@@ -115,16 +115,22 @@ const Header = () => {
               </Link>
               <Divider />
             </>
-          )} 
+          )}  */}
+          <Link to="/dashboard">
+                <MenuItem>
+                  <DashboardIcon sx={{ marginRight: 1 }} />
+                  Dashboard
+                </MenuItem>
+              </Link>
           <Link to="/profile"><MenuItem  onClick={handleHeaderTop}>
             <AccountCircleIcon sx={{ marginRight: 1 }} />
             Profile
           </MenuItem ></Link>
           <Divider />
-          <MenuItem onClick={handleLogout}>
+          {/* <MenuItem onClick={handleLogout}>
             <LogoutIcon sx={{ marginRight: 1 }} />
             Logout
-          </MenuItem>
+          </MenuItem> */}
         </Menu>
       </>
     );
@@ -201,11 +207,13 @@ const Header = () => {
               </IconButton>
 
               <Typography variant="">
+                <Link to="/">
                 <img
                   className="img-logo"
                   src={logo }
                   alt=""
                 />
+                </Link>
               </Typography>
 
               {/* Responsive Links (visible on small screens) */}
@@ -260,7 +268,7 @@ const Header = () => {
                   open={Boolean(menuAnchor)}
                   onClose={handleHeaderTop}
                 >
-                  {userdata?.role === "admin" && (
+                  {/* {userdata?.role === "admin" && (
                     <>
                       <Link to="/dashboard">
                         <MenuItem>
@@ -270,16 +278,22 @@ const Header = () => {
                       </Link>
                       <Divider />
                     </>
-                  )}
-                  <MenuItem onClick={handleHeaderTop}>
-                    <AccountCircleIcon sx={{ marginRight: 1 }} />
-                    Profile
-                  </MenuItem>
+                  )} */}
+                  <Link to="/dashboard">
+                <MenuItem>
+                  <DashboardIcon sx={{ marginRight: 1 }} />
+                  Dashboard
+                </MenuItem>
+              </Link>
+              <Link to="/profile"><MenuItem  onClick={handleHeaderTop}>
+            <AccountCircleIcon sx={{ marginRight: 1 }} />
+            Profile
+          </MenuItem ></Link>
                   <Divider />
-                  <MenuItem onClick={handleLogout}>
+                  {/* <MenuItem onClick={handleLogout}>
                     <LogoutIcon sx={{ marginRight: 1 }} />
                     Logout
-                  </MenuItem>
+                  </MenuItem> */}
                 </Menu>
                 <button onClick={handleHeaderTop} className="lg:hidden block">
                   <CiMenuKebab className="text-2xl" />

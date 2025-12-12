@@ -16,7 +16,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AuthProvider from "./Components/Providers/AuthProvider/AuthProvider.jsx";
-import PrivateRoute from "./route/PrivateRoute.jsx";
+// import PrivateRoute from "./route/PrivateRoute.jsx";
 import ErrorPage from "./ErrorPage.jsx";
 import AllBus from "./Dashboard/AllBus/AllBus.jsx";
 import AllCounters from "./Dashboard/AllCounters/AllCounters.jsx";
@@ -37,9 +37,9 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <PrivateRoute>
+      // <PrivateRoute>
         <Main></Main>
-      </PrivateRoute>
+      // </PrivateRoute>
     ),
     children: [
       {
@@ -67,7 +67,7 @@ const router = createBrowserRouter([
         path: "/fixSeat/:_id",
         element: <FixSeat></FixSeat>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/allBus/${params._id}`),
+          fetch(`https://bus-server-ucdk.onrender.com/allBus/${params._id}`),
       },
     ],
   },
@@ -109,7 +109,7 @@ const router = createBrowserRouter([
         path: "allsupervisor/updateSupervisor/:_id",
         element: <Update></Update>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/supervisors/${params._id}`),
+          fetch(`https://bus-server-ucdk.onrender.com/supervisors/${params._id}`),
       },
     ],
   },
